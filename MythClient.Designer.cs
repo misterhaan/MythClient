@@ -34,6 +34,7 @@
       this._ts = new System.Windows.Forms.ToolStrip();
       this._tsPlay = new System.Windows.Forms.ToolStripButton();
       this._tsDelete = new System.Windows.Forms.ToolStripButton();
+      this._tsRefresh = new System.Windows.Forms.ToolStripButton();
       this._tsSettings = new System.Windows.Forms.ToolStripButton();
       _tsLine = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -116,11 +117,13 @@
             this._tsPlay,
             this._tsDelete,
             _tsLine,
+            this._tsRefresh,
             this._tsSettings});
       this._ts.Location = new System.Drawing.Point(0, 3);
       this._ts.Name = "_ts";
-      this._ts.Size = new System.Drawing.Size(24, 86);
-      this._ts.TabIndex = 1;
+      this._ts.Size = new System.Drawing.Size(24, 109);
+      this._ts.TabIndex = 0;
+      this._ts.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this._ts_ItemClicked);
       // 
       // _tsPlay
       // 
@@ -145,6 +148,16 @@
       this._tsDelete.Text = "Delete";
       this._tsDelete.ToolTipText = "Delete selected episode from the MythTV server";
       this._tsDelete.Click += new System.EventHandler(this._tsDelete_Click);
+      // 
+      // _tsRefresh
+      // 
+      this._tsRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this._tsRefresh.Image = global::au.Applications.MythClient.Properties.Resources.Reload;
+      this._tsRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this._tsRefresh.Name = "_tsRefresh";
+      this._tsRefresh.Size = new System.Drawing.Size(22, 20);
+      this._tsRefresh.Text = "Refresh";
+      this._tsRefresh.ToolTipText = "Refresh the list of recordings";
       // 
       // _tsSettings
       // 
@@ -194,6 +207,7 @@
     private System.Windows.Forms.ColumnHeader _colRecorded;
     private System.Windows.Forms.ToolStripButton _tsPlay;
     private System.Windows.Forms.ToolStripButton _tsDelete;
+    private System.Windows.Forms.ToolStripButton _tsRefresh;
   }
 }
 

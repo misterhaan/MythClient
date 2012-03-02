@@ -12,7 +12,7 @@ namespace au.Applications.MythClient {
       _settings = settings;
       _txtServerName.Text = _settings.ServerName;
       _txtURL.Text = _settings.RecordedProgramsUrl;
-      if(File.Exists(_settings.RawFilesDirectory))
+      if(Directory.Exists(_settings.RawFilesDirectory))
         _fnbDirectory.FolderFullName = _settings.RawFilesDirectory;
     }
 

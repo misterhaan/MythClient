@@ -49,9 +49,6 @@ namespace au.Applications.MythClient {
           lvi.Tag = filename;
           _lvRecorded.Items.Add(lvi);
         }
-        _lvRecorded.DetailSort(_colRecorded, SortType.Date);
-        _lvRecorded.DetailSort(_colAired, SortType.Date);
-        _lvRecorded.DetailSort(_colShow, SortType.Title);
         _lvRecorded.EndUpdate();
         _deleteInfo = new Dictionary<string, DeleteInfo>();
         MatchCollection jsMatches = Regex.Matches(html, "file\\.title[^=]*= '(([^']*\\\\')*[^']*)';.+?file\\.subtitle[^=]*= '(([^']*\\\\')*[^']*)';.+?file\\.chanid[^=]*= '([^']*)';.+?file\\.starttime[^=]*= '([^']*)';.+?file\\.recgroup[^=]*= '([^']*)';.+?file\\.filename[^=]*= '([^']*)';.+?file\\.size[^=]*= '([^']*)';.+?file\\.length[^=]*= '([^']*)';.+?file\\.autoexpire[^=]*= ([0-9]+);", RegexOptions.Singleline | RegexOptions.Multiline);
@@ -125,6 +122,9 @@ namespace au.Applications.MythClient {
           col.Width = _settings.Display.ColumnWidths[c];
           _lvRecorded.Columns.Add(col);
         }
+        _lvRecorded.DetailSort(_colRecorded, SortType.Date);
+        _lvRecorded.DetailSort(_colAired, SortType.Date);
+        _lvRecorded.DetailSort(_colShow, SortType.Title);
       }
       RefreshRecordings();
     }
@@ -151,16 +151,20 @@ namespace au.Applications.MythClient {
       _settings.Save();
     }
 
-    private void _tsSettings_Click(object sender, EventArgs e) {
-      new MythServerConfig(_settings).ShowDialog(this);
-    }
-
     private void _tsPlay_Click(object sender, EventArgs e) {
       PlaySelected();
     }
 
     private void _tsDelete_Click(object sender, EventArgs e) {
       DeleteSelected();
+    }
+
+    private void _ts_ItemClicked(object sender, ToolStripItemClickedEventArgs e) {
+      RefreshRecordings();
+    }
+
+    private void _tsSettings_Click(object sender, EventArgs e) {
+      new MythServerConfig(_settings).ShowDialog(this);
     }
 
     private void _lvRecorded_SelectedIndexChanged(object sender, EventArgs e) {
@@ -186,6 +190,8 @@ namespace au.Applications.MythClient {
           PlaySelected();
         else if(e.KeyCode == Keys.Delete)
           DeleteSelected();
+        else if(e.KeyCode == Keys.F5)
+          RefreshRecordings();
     }
     #endregion Event Handlers
   }
