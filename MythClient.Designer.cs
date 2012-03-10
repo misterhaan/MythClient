@@ -46,7 +46,7 @@
       // _tsLine
       // 
       _tsLine.Name = "_tsLine";
-      _tsLine.Size = new System.Drawing.Size(22, 6);
+      _tsLine.Size = new System.Drawing.Size(30, 6);
       // 
       // toolStripContainer1
       // 
@@ -55,7 +55,7 @@
       // toolStripContainer1.ContentPanel
       // 
       this.toolStripContainer1.ContentPanel.Controls.Add(this._lvRecorded);
-      this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(600, 321);
+      this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(592, 321);
       this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
       // 
       // toolStripContainer1.LeftToolStripPanel
@@ -81,7 +81,7 @@
       this._lvRecorded.Location = new System.Drawing.Point(0, 0);
       this._lvRecorded.MultiSelect = false;
       this._lvRecorded.Name = "_lvRecorded";
-      this._lvRecorded.Size = new System.Drawing.Size(600, 321);
+      this._lvRecorded.Size = new System.Drawing.Size(592, 321);
       this._lvRecorded.TabIndex = 0;
       this._lvRecorded.UseCompatibleStateImageBehavior = false;
       this._lvRecorded.View = System.Windows.Forms.View.Details;
@@ -121,9 +121,8 @@
             this._tsSettings});
       this._ts.Location = new System.Drawing.Point(0, 3);
       this._ts.Name = "_ts";
-      this._ts.Size = new System.Drawing.Size(24, 109);
+      this._ts.Size = new System.Drawing.Size(32, 128);
       this._ts.TabIndex = 0;
-      this._ts.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this._ts_ItemClicked);
       // 
       // _tsPlay
       // 
@@ -132,7 +131,7 @@
       this._tsPlay.Image = global::au.Applications.MythClient.Properties.Resources.Play;
       this._tsPlay.ImageTransparentColor = System.Drawing.Color.Magenta;
       this._tsPlay.Name = "_tsPlay";
-      this._tsPlay.Size = new System.Drawing.Size(22, 20);
+      this._tsPlay.Size = new System.Drawing.Size(30, 20);
       this._tsPlay.Text = "Play";
       this._tsPlay.ToolTipText = "Play selected episode in default media player";
       this._tsPlay.Click += new System.EventHandler(this._tsPlay_Click);
@@ -144,7 +143,7 @@
       this._tsDelete.Image = global::au.Applications.MythClient.Properties.Resources.Delete;
       this._tsDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
       this._tsDelete.Name = "_tsDelete";
-      this._tsDelete.Size = new System.Drawing.Size(22, 20);
+      this._tsDelete.Size = new System.Drawing.Size(30, 20);
       this._tsDelete.Text = "Delete";
       this._tsDelete.ToolTipText = "Delete selected episode from the MythTV server";
       this._tsDelete.Click += new System.EventHandler(this._tsDelete_Click);
@@ -155,9 +154,10 @@
       this._tsRefresh.Image = global::au.Applications.MythClient.Properties.Resources.Reload;
       this._tsRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
       this._tsRefresh.Name = "_tsRefresh";
-      this._tsRefresh.Size = new System.Drawing.Size(22, 20);
+      this._tsRefresh.Size = new System.Drawing.Size(30, 20);
       this._tsRefresh.Text = "Refresh";
       this._tsRefresh.ToolTipText = "Refresh the list of recordings";
+      this._tsRefresh.Click += new System.EventHandler(this._tsRefresh_Click);
       // 
       // _tsSettings
       // 
@@ -166,7 +166,7 @@
       this._tsSettings.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
       this._tsSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
       this._tsSettings.Name = "_tsSettings";
-      this._tsSettings.Size = new System.Drawing.Size(22, 20);
+      this._tsSettings.Size = new System.Drawing.Size(30, 20);
       this._tsSettings.Text = "Settings";
       this._tsSettings.ToolTipText = "Configure MythTV server settings";
       this._tsSettings.Click += new System.EventHandler(this._tsSettings_Click);

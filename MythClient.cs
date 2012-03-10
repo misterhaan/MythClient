@@ -159,7 +159,7 @@ namespace au.Applications.MythClient {
       DeleteSelected();
     }
 
-    private void _ts_ItemClicked(object sender, ToolStripItemClickedEventArgs e) {
+    private void _tsRefresh_Click(object sender, EventArgs e) {
       RefreshRecordings();
     }
 
