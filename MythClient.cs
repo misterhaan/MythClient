@@ -44,7 +44,7 @@ namespace au.Applications.MythClient {
           items[_colShow.Index] = m.Groups[2].Captures[0].Value;
           items[_colEpisode.Index] = m.Groups[3].Captures[0].Value;
           items[_colAired.Index] = DateTime.Parse(m.Groups[4].Captures[0].Value).ToShortDateString();
-          items[_colRecorded.Index] = DateTime.Parse(m.Groups[5].Captures[0].Value.Replace("(", "").Replace(")","")).ToString();
+          items[_colRecorded.Index] = DateTime.Parse(m.Groups[5].Captures[0].Value.Replace("(", "").Replace(")", "")).ToString();
           ListViewItem lvi = new ListViewItem(items);
           lvi.Tag = filename;
           _lvRecorded.Items.Add(lvi);
@@ -168,7 +168,7 @@ namespace au.Applications.MythClient {
     }
 
     private void _lvRecorded_SelectedIndexChanged(object sender, EventArgs e) {
-      _tsDelete.Enabled = _tsPlay.Enabled = _lvRecorded.SelectedItems.Count > 0;
+      _cmnuDelete.Enabled = _cmnuPlay.Enabled = _tsDelete.Enabled = _tsPlay.Enabled = _lvRecorded.SelectedItems.Count > 0;
     }
 
     private void _lvRecorded_DoubleClick(object sender, EventArgs e) {

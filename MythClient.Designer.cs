@@ -23,6 +23,7 @@
     /// the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent() {
+      this.components = new System.ComponentModel.Container();
       System.Windows.Forms.ToolStripSeparator _tsLine;
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MythClient));
       this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
@@ -36,17 +37,21 @@
       this._tsDelete = new System.Windows.Forms.ToolStripButton();
       this._tsRefresh = new System.Windows.Forms.ToolStripButton();
       this._tsSettings = new System.Windows.Forms.ToolStripButton();
+      this._cmnuEpisode = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this._cmnuPlay = new System.Windows.Forms.ToolStripMenuItem();
+      this._cmnuDelete = new System.Windows.Forms.ToolStripMenuItem();
       _tsLine = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripContainer1.ContentPanel.SuspendLayout();
       this.toolStripContainer1.LeftToolStripPanel.SuspendLayout();
       this.toolStripContainer1.SuspendLayout();
       this._ts.SuspendLayout();
+      this._cmnuEpisode.SuspendLayout();
       this.SuspendLayout();
       // 
       // _tsLine
       // 
       _tsLine.Name = "_tsLine";
-      _tsLine.Size = new System.Drawing.Size(30, 6);
+      _tsLine.Size = new System.Drawing.Size(22, 6);
       // 
       // toolStripContainer1
       // 
@@ -55,7 +60,7 @@
       // toolStripContainer1.ContentPanel
       // 
       this.toolStripContainer1.ContentPanel.Controls.Add(this._lvRecorded);
-      this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(592, 321);
+      this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(600, 321);
       this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
       // 
       // toolStripContainer1.LeftToolStripPanel
@@ -76,12 +81,13 @@
             this._colShow,
             this._colAired,
             this._colRecorded});
+      this._lvRecorded.ContextMenuStrip = this._cmnuEpisode;
       this._lvRecorded.Dock = System.Windows.Forms.DockStyle.Fill;
       this._lvRecorded.FullRowSelect = true;
       this._lvRecorded.Location = new System.Drawing.Point(0, 0);
       this._lvRecorded.MultiSelect = false;
       this._lvRecorded.Name = "_lvRecorded";
-      this._lvRecorded.Size = new System.Drawing.Size(592, 321);
+      this._lvRecorded.Size = new System.Drawing.Size(600, 321);
       this._lvRecorded.TabIndex = 0;
       this._lvRecorded.UseCompatibleStateImageBehavior = false;
       this._lvRecorded.View = System.Windows.Forms.View.Details;
@@ -121,7 +127,7 @@
             this._tsSettings});
       this._ts.Location = new System.Drawing.Point(0, 3);
       this._ts.Name = "_ts";
-      this._ts.Size = new System.Drawing.Size(32, 128);
+      this._ts.Size = new System.Drawing.Size(24, 109);
       this._ts.TabIndex = 0;
       // 
       // _tsPlay
@@ -131,7 +137,7 @@
       this._tsPlay.Image = global::au.Applications.MythClient.Properties.Resources.Play;
       this._tsPlay.ImageTransparentColor = System.Drawing.Color.Magenta;
       this._tsPlay.Name = "_tsPlay";
-      this._tsPlay.Size = new System.Drawing.Size(30, 20);
+      this._tsPlay.Size = new System.Drawing.Size(22, 20);
       this._tsPlay.Text = "Play";
       this._tsPlay.ToolTipText = "Play selected episode in default media player";
       this._tsPlay.Click += new System.EventHandler(this._tsPlay_Click);
@@ -143,7 +149,7 @@
       this._tsDelete.Image = global::au.Applications.MythClient.Properties.Resources.Delete;
       this._tsDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
       this._tsDelete.Name = "_tsDelete";
-      this._tsDelete.Size = new System.Drawing.Size(30, 20);
+      this._tsDelete.Size = new System.Drawing.Size(22, 20);
       this._tsDelete.Text = "Delete";
       this._tsDelete.ToolTipText = "Delete selected episode from the MythTV server";
       this._tsDelete.Click += new System.EventHandler(this._tsDelete_Click);
@@ -154,7 +160,7 @@
       this._tsRefresh.Image = global::au.Applications.MythClient.Properties.Resources.Reload;
       this._tsRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
       this._tsRefresh.Name = "_tsRefresh";
-      this._tsRefresh.Size = new System.Drawing.Size(30, 20);
+      this._tsRefresh.Size = new System.Drawing.Size(22, 20);
       this._tsRefresh.Text = "Refresh";
       this._tsRefresh.ToolTipText = "Refresh the list of recordings";
       this._tsRefresh.Click += new System.EventHandler(this._tsRefresh_Click);
@@ -166,10 +172,36 @@
       this._tsSettings.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
       this._tsSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
       this._tsSettings.Name = "_tsSettings";
-      this._tsSettings.Size = new System.Drawing.Size(30, 20);
+      this._tsSettings.Size = new System.Drawing.Size(22, 20);
       this._tsSettings.Text = "Settings";
       this._tsSettings.ToolTipText = "Configure MythTV server settings";
       this._tsSettings.Click += new System.EventHandler(this._tsSettings_Click);
+      // 
+      // _cmnuEpisode
+      // 
+      this._cmnuEpisode.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._cmnuPlay,
+            this._cmnuDelete});
+      this._cmnuEpisode.Name = "_cmnuEpisode";
+      this._cmnuEpisode.Size = new System.Drawing.Size(153, 70);
+      // 
+      // _cmnuPlay
+      // 
+      this._cmnuPlay.Enabled = false;
+      this._cmnuPlay.Image = global::au.Applications.MythClient.Properties.Resources.Play;
+      this._cmnuPlay.Name = "_cmnuPlay";
+      this._cmnuPlay.Size = new System.Drawing.Size(152, 22);
+      this._cmnuPlay.Text = "&Play";
+      this._cmnuPlay.Click += new System.EventHandler(this._tsPlay_Click);
+      // 
+      // _cmnuDelete
+      // 
+      this._cmnuDelete.Enabled = false;
+      this._cmnuDelete.Image = global::au.Applications.MythClient.Properties.Resources.Delete;
+      this._cmnuDelete.Name = "_cmnuDelete";
+      this._cmnuDelete.Size = new System.Drawing.Size(152, 22);
+      this._cmnuDelete.Text = "&Delete";
+      this._cmnuDelete.Click += new System.EventHandler(this._tsDelete_Click);
       // 
       // MythClient
       // 
@@ -191,6 +223,7 @@
       this.toolStripContainer1.PerformLayout();
       this._ts.ResumeLayout(false);
       this._ts.PerformLayout();
+      this._cmnuEpisode.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -208,6 +241,9 @@
     private System.Windows.Forms.ToolStripButton _tsPlay;
     private System.Windows.Forms.ToolStripButton _tsDelete;
     private System.Windows.Forms.ToolStripButton _tsRefresh;
+    private System.Windows.Forms.ContextMenuStrip _cmnuEpisode;
+    private System.Windows.Forms.ToolStripMenuItem _cmnuPlay;
+    private System.Windows.Forms.ToolStripMenuItem _cmnuDelete;
   }
 }
 
