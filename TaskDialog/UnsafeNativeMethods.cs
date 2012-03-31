@@ -297,7 +297,7 @@ namespace Microsoft.Samples {
     /// <summary>
     /// TASKDIALOGCONFIG taken from commctl.h.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode, Pack = 1)]
     internal struct TASKDIALOGCONFIG {
       /// <summary>
       /// Size of the structure in bytes.
