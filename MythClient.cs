@@ -65,6 +65,13 @@ namespace au.Applications.MythClient {
     }
 
     /// <summary>
+    /// Launch the selected video file using a different application.
+    /// </summary>
+    private void PlaySelectedWith() {
+      Process.Start("rundll32.exe", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "shell32.dll") + ",OpenAs_RunDLL " + Path.Combine(_settings.RawFilesDirectory, (string)_lvRecorded.SelectedItems[0].Tag));
+    }
+
+    /// <summary>
     /// Prompt for whether the selected episode should be rerecorded (with
     /// option to cancel), then ask the web server to delete it.
     /// </summary>
@@ -155,6 +162,11 @@ namespace au.Applications.MythClient {
       PlaySelected();
     }
 
+    private void _tsPlayWith_Click(object sender, EventArgs e)
+    {
+      PlaySelectedWith();
+    }
+
     private void _tsDelete_Click(object sender, EventArgs e) {
       DeleteSelected();
     }
@@ -168,7 +180,7 @@ namespace au.Applications.MythClient {
     }
 
     private void _lvRecorded_SelectedIndexChanged(object sender, EventArgs e) {
-      _cmnuDelete.Enabled = _cmnuPlay.Enabled = _tsDelete.Enabled = _tsPlay.Enabled = _lvRecorded.SelectedItems.Count > 0;
+      _cmnuDelete.Enabled = _cmnuPlayWith.Enabled = _cmnuPlay.Enabled = _tsDelete.Enabled = _tsPlayWith.Enabled = _tsPlay.Enabled = _lvRecorded.SelectedItems.Count > 0;
     }
 
     private void _lvRecorded_DoubleClick(object sender, EventArgs e) {

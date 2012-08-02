@@ -32,20 +32,22 @@
       this._colShow = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this._colAired = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this._colRecorded = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this._cmnuEpisode = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this._cmnuPlay = new System.Windows.Forms.ToolStripMenuItem();
+      this._cmnuDelete = new System.Windows.Forms.ToolStripMenuItem();
       this._ts = new System.Windows.Forms.ToolStrip();
       this._tsPlay = new System.Windows.Forms.ToolStripButton();
       this._tsDelete = new System.Windows.Forms.ToolStripButton();
       this._tsRefresh = new System.Windows.Forms.ToolStripButton();
       this._tsSettings = new System.Windows.Forms.ToolStripButton();
-      this._cmnuEpisode = new System.Windows.Forms.ContextMenuStrip(this.components);
-      this._cmnuPlay = new System.Windows.Forms.ToolStripMenuItem();
-      this._cmnuDelete = new System.Windows.Forms.ToolStripMenuItem();
+      this._tsPlayWith = new System.Windows.Forms.ToolStripButton();
+      this._cmnuPlayWith = new System.Windows.Forms.ToolStripMenuItem();
       _tsLine = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripContainer1.ContentPanel.SuspendLayout();
       this.toolStripContainer1.LeftToolStripPanel.SuspendLayout();
       this.toolStripContainer1.SuspendLayout();
-      this._ts.SuspendLayout();
       this._cmnuEpisode.SuspendLayout();
+      this._ts.SuspendLayout();
       this.SuspendLayout();
       // 
       // _tsLine
@@ -116,18 +118,46 @@
       this._colRecorded.Text = "Recorded";
       this._colRecorded.Width = 129;
       // 
+      // _cmnuEpisode
+      // 
+      this._cmnuEpisode.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._cmnuPlay,
+            this._cmnuPlayWith,
+            this._cmnuDelete});
+      this._cmnuEpisode.Name = "_cmnuEpisode";
+      this._cmnuEpisode.Size = new System.Drawing.Size(132, 70);
+      // 
+      // _cmnuPlay
+      // 
+      this._cmnuPlay.Enabled = false;
+      this._cmnuPlay.Image = global::au.Applications.MythClient.Properties.Resources.Play;
+      this._cmnuPlay.Name = "_cmnuPlay";
+      this._cmnuPlay.Size = new System.Drawing.Size(131, 22);
+      this._cmnuPlay.Text = "&Play";
+      this._cmnuPlay.Click += new System.EventHandler(this._tsPlay_Click);
+      // 
+      // _cmnuDelete
+      // 
+      this._cmnuDelete.Enabled = false;
+      this._cmnuDelete.Image = global::au.Applications.MythClient.Properties.Resources.Delete;
+      this._cmnuDelete.Name = "_cmnuDelete";
+      this._cmnuDelete.Size = new System.Drawing.Size(131, 22);
+      this._cmnuDelete.Text = "&Delete";
+      this._cmnuDelete.Click += new System.EventHandler(this._tsDelete_Click);
+      // 
       // _ts
       // 
       this._ts.Dock = System.Windows.Forms.DockStyle.None;
       this._ts.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._tsPlay,
+            this._tsPlayWith,
             this._tsDelete,
             _tsLine,
             this._tsRefresh,
             this._tsSettings});
       this._ts.Location = new System.Drawing.Point(0, 3);
       this._ts.Name = "_ts";
-      this._ts.Size = new System.Drawing.Size(24, 109);
+      this._ts.Size = new System.Drawing.Size(24, 132);
       this._ts.TabIndex = 0;
       // 
       // _tsPlay
@@ -177,31 +207,25 @@
       this._tsSettings.ToolTipText = "Configure MythTV server settings";
       this._tsSettings.Click += new System.EventHandler(this._tsSettings_Click);
       // 
-      // _cmnuEpisode
+      // _tsPlayWith
       // 
-      this._cmnuEpisode.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._cmnuPlay,
-            this._cmnuDelete});
-      this._cmnuEpisode.Name = "_cmnuEpisode";
-      this._cmnuEpisode.Size = new System.Drawing.Size(153, 70);
+      this._tsPlayWith.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this._tsPlayWith.Enabled = false;
+      this._tsPlayWith.Image = global::au.Applications.MythClient.Properties.Resources.PlayWith;
+      this._tsPlayWith.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this._tsPlayWith.Name = "_tsPlayWith";
+      this._tsPlayWith.Size = new System.Drawing.Size(22, 20);
+      this._tsPlayWith.Text = "toolStripButton1";
+      this._tsPlayWith.Click += new System.EventHandler(this._tsPlayWith_Click);
       // 
-      // _cmnuPlay
+      // _cmnuPlayWith
       // 
-      this._cmnuPlay.Enabled = false;
-      this._cmnuPlay.Image = global::au.Applications.MythClient.Properties.Resources.Play;
-      this._cmnuPlay.Name = "_cmnuPlay";
-      this._cmnuPlay.Size = new System.Drawing.Size(152, 22);
-      this._cmnuPlay.Text = "&Play";
-      this._cmnuPlay.Click += new System.EventHandler(this._tsPlay_Click);
-      // 
-      // _cmnuDelete
-      // 
-      this._cmnuDelete.Enabled = false;
-      this._cmnuDelete.Image = global::au.Applications.MythClient.Properties.Resources.Delete;
-      this._cmnuDelete.Name = "_cmnuDelete";
-      this._cmnuDelete.Size = new System.Drawing.Size(152, 22);
-      this._cmnuDelete.Text = "&Delete";
-      this._cmnuDelete.Click += new System.EventHandler(this._tsDelete_Click);
+      this._cmnuPlayWith.Enabled = false;
+      this._cmnuPlayWith.Image = global::au.Applications.MythClient.Properties.Resources.PlayWith;
+      this._cmnuPlayWith.Name = "_cmnuPlayWith";
+      this._cmnuPlayWith.Size = new System.Drawing.Size(131, 22);
+      this._cmnuPlayWith.Text = "Play &with...";
+      this._cmnuPlayWith.Click += new System.EventHandler(this._tsPlayWith_Click);
       // 
       // MythClient
       // 
@@ -221,9 +245,9 @@
       this.toolStripContainer1.LeftToolStripPanel.PerformLayout();
       this.toolStripContainer1.ResumeLayout(false);
       this.toolStripContainer1.PerformLayout();
+      this._cmnuEpisode.ResumeLayout(false);
       this._ts.ResumeLayout(false);
       this._ts.PerformLayout();
-      this._cmnuEpisode.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -244,6 +268,8 @@
     private System.Windows.Forms.ContextMenuStrip _cmnuEpisode;
     private System.Windows.Forms.ToolStripMenuItem _cmnuPlay;
     private System.Windows.Forms.ToolStripMenuItem _cmnuDelete;
+    private System.Windows.Forms.ToolStripMenuItem _cmnuPlayWith;
+    private System.Windows.Forms.ToolStripButton _tsPlayWith;
   }
 }
 
