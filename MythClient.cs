@@ -37,14 +37,14 @@ namespace au.Applications.MythClient {
         HttpWebRequest req = (HttpWebRequest)WebRequest.Create(_settings.RecordedProgramsUrl);
         req.Headers.Add(HttpRequestHeader.AcceptLanguage, "en-us,en;q=0.5");  // without this we get spanish or something
         string html = new StreamReader(req.GetResponse().GetResponseStream()).ReadToEnd();
-        MatchCollection dispMatches = Regex.Matches(html, "\\/get_pixmap\\/.+?([0-9]+_[0-9]+\\.[^\\.]+)\\..+?class=\"x-title\".+?title=\"Recording Details\">([^<]*)<\\/a>.+?class=\"x-subtitle\".+?title=\"Recording Details\">([^<]*)<\\/a>.+?class=\"x-originalairdate\">([^<]+)<\\/td>.+?class=\"x-airdate\">([^<]+)<\\/td>", RegexOptions.Singleline);
+        MatchCollection dispMatches = Regex.Matches(html, "\\/get_pixmap\\/.+?([0-9]+_[0-9]+\\.[^\\.]+)\\..+?class=\"x-title\".+?title=\"Recording Details\">([^<]*)<\\/a>.+?class=\"x-subtitle\".+?title=\"Recording Details\">([^<]*)<\\/a>.+?class=\"x-originalairdate\">([^<]*)<\\/td>.+?class=\"x-airdate\">([^<]+)<\\/td>", RegexOptions.Singleline);
         foreach(Match m in dispMatches) {
           string filename = m.Groups[1].Captures[0].Value;
           string[] items = new string[_lvRecorded.Columns.Count];
           items[_colShow.Index] = m.Groups[2].Captures[0].Value;
           items[_colEpisode.Index] = m.Groups[3].Captures[0].Value;
-          items[_colAired.Index] = DateTime.Parse(m.Groups[4].Captures[0].Value).ToShortDateString();
           items[_colRecorded.Index] = DateTime.Parse(m.Groups[5].Captures[0].Value.Replace("(", "").Replace(")", "")).ToString();
+          items[_colAired.Index] = string.IsNullOrEmpty(m.Groups[4].Captures[0].Value) ? "" : DateTime.Parse(m.Groups[4].Captures[0].Value).ToShortDateString();
           ListViewItem lvi = new ListViewItem(items);
           lvi.Tag = filename;
           _lvRecorded.Items.Add(lvi);
