@@ -1,4 +1,6 @@
-﻿using System;
+﻿using au.util.comctl;
+using Microsoft.Samples;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -6,8 +8,6 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
-using au.util.comctl;
-using Microsoft.Samples;
 
 namespace au.Applications.MythClient {
   public partial class MythClient : Form {
@@ -37,14 +37,14 @@ namespace au.Applications.MythClient {
         HttpWebRequest req = (HttpWebRequest)WebRequest.Create(_settings.RecordedProgramsUrl);
         req.Headers.Add(HttpRequestHeader.AcceptLanguage, "en-us,en;q=0.5");  // without this we get spanish or something
         string html = new StreamReader(req.GetResponse().GetResponseStream()).ReadToEnd();
-        MatchCollection dispMatches = Regex.Matches(html, "\\/get_pixmap\\/.+?([0-9]+_[0-9]+\\.[^\\.]+)\\..+?class=\"x-title\".+?title=\"Recording Details\">([^<]*)<\\/a>.+?class=\"x-subtitle\".+?title=\"Recording Details\">([^<]*)<\\/a>.+?class=\"x-originalairdate\">([^<]*)<\\/td>.+?class=\"x-airdate\">([^<]+)<\\/td>", RegexOptions.Singleline);
+        MatchCollection dispMatches = Regex.Matches(html, "\\/get_pixmap\\/.+?([0-9]+_[0-9]+\\.[^\\.]+)\\..+?class=\"x-title\".+?title=\"Recording Details\">([^<]*)<\\/a>.+?class=\"x-subtitle\".+?title=\"Recording Details\">([^<]*)<\\/a>.+?class=\"x-originalairdate\">([^<]+)<\\/td>.+?class=\"x-airdate\">([^<]+)<\\/td>", RegexOptions.Singleline);
         foreach(Match m in dispMatches) {
           string filename = m.Groups[1].Captures[0].Value;
           string[] items = new string[_lvRecorded.Columns.Count];
           items[_colShow.Index] = m.Groups[2].Captures[0].Value;
           items[_colEpisode.Index] = m.Groups[3].Captures[0].Value;
+          items[_colAired.Index] = DateTime.Parse(m.Groups[4].Captures[0].Value).ToShortDateString();
           items[_colRecorded.Index] = DateTime.Parse(m.Groups[5].Captures[0].Value.Replace("(", "").Replace(")", "")).ToString();
-          items[_colAired.Index] = string.IsNullOrEmpty(m.Groups[4].Captures[0].Value) ? "" : DateTime.Parse(m.Groups[4].Captures[0].Value).ToShortDateString();
           ListViewItem lvi = new ListViewItem(items);
           lvi.Tag = filename;
           _lvRecorded.Items.Add(lvi);
@@ -69,6 +69,107 @@ namespace au.Applications.MythClient {
     /// </summary>
     private void PlaySelectedWith() {
       Process.Start("rundll32.exe", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "shell32.dll") + ",OpenAs_RunDLL " + Path.Combine(_settings.RawFilesDirectory, (string)_lvRecorded.SelectedItems[0].Tag));
+    }
+
+    /// <summary>
+    /// Export the selected video file with a readable name.
+    /// </summary>
+    private void ExportSelected() {
+      ExportVideos export = new ExportVideos(_settings.Export, _lvRecorded.SelectedItems[0], _colShow.Index, _colEpisode.Index, _colAired.Index);
+      if(export.ShowDialog(this) == DialogResult.OK) {
+        switch(_settings.Export.How) {
+          case ExportSettings.HowType.Show:
+            switch(_settings.Export.What) {
+              case ExportSettings.WhatType.Episode:
+                if(!ExportNonEpisodic(_lvRecorded.SelectedItems[0]))
+                  MessageBox.Show(this, "Unable to save selected recording.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                break;
+              case ExportSettings.WhatType.Show:
+                string match = _lvRecorded.SelectedItems[0].SubItems[_colShow.Index].Text;
+                int errors = 0;
+                foreach(ListViewItem lvi in _lvRecorded.Items)
+                  if(lvi.SubItems[_colShow.Index].Text == match)
+                    if(!ExportNonEpisodic(lvi))
+                      errors++;
+                if(errors > 0)
+                  MessageBox.Show(this, "Unable to save " + errors + " recordings.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                break;
+              case ExportSettings.WhatType.All:
+                errors = 0;
+                foreach(ListViewItem lvi in _lvRecorded.Items)
+                  if(!ExportNonEpisodic(lvi))
+                    errors++;
+                if(errors > 0)
+                  MessageBox.Show(this, "Unable to save " + errors + " recordings.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                break;
+            }
+            break;
+          case ExportSettings.HowType.ShowDateEpisode:
+            switch(_settings.Export.What) {
+              case ExportSettings.WhatType.Episode:
+                if(!ExportEpisodic(_lvRecorded.SelectedItems[0]))
+                  MessageBox.Show(this, "Unable to save selected recording.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                break;
+              case ExportSettings.WhatType.Show:
+                string match = _lvRecorded.SelectedItems[0].SubItems[_colShow.Index].Text;
+                int errors = 0;
+                foreach(ListViewItem lvi in _lvRecorded.Items)
+                  if(lvi.SubItems[_colShow.Index].Text == match)
+                    if(!ExportEpisodic(lvi))
+                      errors++;
+                if(errors > 0)
+                  MessageBox.Show(this, "Unable to save " + errors + " recordings.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                break;
+              case ExportSettings.WhatType.All:
+                errors = 0;
+                foreach(ListViewItem lvi in _lvRecorded.Items)
+                  if(!ExportEpisodic(lvi))
+                    errors++;
+                if(errors > 0)
+                  MessageBox.Show(this, "Unable to save " + errors + " recordings.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                break;
+            }
+            break;
+        }
+      }
+    }
+
+    /// <summary>
+    /// Export the specified recording named as the show title.
+    /// </summary>
+    /// <param name="recording"></param>
+    /// <returns></returns>
+    private bool ExportNonEpisodic(ListViewItem recording) {
+      FileInfo source = new FileInfo(Path.Combine(_settings.RawFilesDirectory, (string)_lvRecorded.SelectedItems[0].Tag));
+      try {
+        source.CopyTo(Path.Combine(_settings.Export.Where, SanitizeFilename(recording.SubItems[_colShow.Index].Text)) + "." + source.Extension);
+      } catch(Exception e) {
+        Trace.WriteLine("MythClient.ExportNonEpisodic() ERROR exporting file.  Details:\n" + e);
+        return false;
+      }
+      return true;
+    }
+
+    /// <summary>
+    /// Export the specified recording named as the show title, airdate, and episode title.
+    /// </summary>
+    /// <param name="recording"></param>
+    /// <returns></returns>
+    private bool ExportEpisodic(ListViewItem recording) {
+      FileInfo source = new FileInfo(Path.Combine(_settings.RawFilesDirectory, (string)_lvRecorded.SelectedItems[0].Tag));
+      try {
+        source.CopyTo(Path.Combine(_settings.Export.Where, SanitizeFilename(recording.SubItems[_colShow.Index].Text + " - " + DateTime.Parse(recording.SubItems[_colAired.Index].Text).ToString("yyyyy.MM.dd") + " - " + recording.SubItems[_colEpisode.Index].Text)) + source.Extension);
+      } catch(Exception e) {
+        Trace.WriteLine("MythClient.ExportNonEpisodic() ERROR exporting file.  Details:\n" + e);
+        return false;
+      }
+      return true;
+    }
+
+    private string SanitizeFilename(string dirty) {
+      foreach(char c in Path.GetInvalidFileNameChars())
+        dirty = dirty.Replace(c.ToString(), "");
+      return dirty;
     }
 
     /// <summary>
@@ -167,6 +268,10 @@ namespace au.Applications.MythClient {
       PlaySelectedWith();
     }
 
+    private void _tsExport_Click(object sender, EventArgs e) {
+      ExportSelected();
+    }
+
     private void _tsDelete_Click(object sender, EventArgs e) {
       DeleteSelected();
     }
@@ -180,7 +285,7 @@ namespace au.Applications.MythClient {
     }
 
     private void _lvRecorded_SelectedIndexChanged(object sender, EventArgs e) {
-      _cmnuDelete.Enabled = _cmnuPlayWith.Enabled = _cmnuPlay.Enabled = _tsDelete.Enabled = _tsPlayWith.Enabled = _tsPlay.Enabled = _lvRecorded.SelectedItems.Count > 0;
+      _cmnuDelete.Enabled = _cmnuExport.Enabled = _cmnuPlayWith.Enabled = _cmnuPlay.Enabled = _tsDelete.Enabled = _tsExport.Enabled = _tsPlayWith.Enabled = _tsPlay.Enabled = _lvRecorded.SelectedItems.Count > 0;
     }
 
     private void _lvRecorded_DoubleClick(object sender, EventArgs e) {

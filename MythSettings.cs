@@ -46,6 +46,16 @@ namespace au.Applications.MythClient {
     }
     private DisplaySettings _display;
 
+    public ExportSettings Export {
+      get {
+        if(_export == null)
+          _export = new ExportSettings();
+        return _export;
+      }
+      private set { _export = value; }
+    }
+    private ExportSettings _export;
+
     public bool Load() {
       if(File.Exists(SettingsFilePath)) {
         using(FileStream stream = File.Open(SettingsFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
@@ -65,6 +75,9 @@ namespace au.Applications.MythClient {
                   break;
                 case "Display":
                   Display = new DisplaySettings(node);
+                  break;
+                case "Export":
+                  Export = new ExportSettings(node);
                   break;
               }
             } catch(Exception e) {
@@ -89,6 +102,8 @@ namespace au.Applications.MythClient {
         myth.AddElement("RawFilesDirectory", RawFilesDirectory);
       XmlNode disp = myth.AddElement("Display");
       Display.SaveTo(disp);
+      XmlNode export = myth.AddElement("Export");
+      Export.SaveTo(export);
       using(FileStream stream = File.Open(SettingsFilePath, FileMode.Create, FileAccess.Write, FileShare.None))
         xml.Save(stream);
     }
