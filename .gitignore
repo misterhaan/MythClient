@@ -1,0 +1,9 @@
+.vs
+/TaskDialog/bin
+/TaskDialog/obj
+/build
+/installer/bin
+/installer/obj
+/installer/*.msi
+/installer/*.wixpdb
+/obj
