@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -195,7 +196,7 @@ namespace au.Applications.MythClient {
         CaptionedPictureBox cpb = new CaptionedPictureBox();
         cpb.Tag = e;
         cpb.Image = e.Thumb != null ? e.Thumb : Properties.Resources.Static1080p;
-        cpb.Text = e.Name;
+        cpb.Text = e.Name ?? e.FirstAired.ToString("M/d/yyyy");
         cpb.Width = 212;
         cpb.Height = 125 + cpb.CaptionHeight;
         cpb.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -268,8 +269,9 @@ namespace au.Applications.MythClient {
         _pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoNumSeasons, s.Seasons.Count)));
       _pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoRecordedRange, s.OldestEpisode.Recorded, s.NewestEpisode.Recorded)));
       _pnlInfo.Controls.Add(MakeInfoLabel(s.Duration.ToStringUnit()));
-      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Play, "Play oldest", "Play the oldest recorded episode of this show", btnShowPlay_Click));
-      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete, "Delete oldest", "Delete the oldest recorded episode of this show", btnShowDelete_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Play, Properties.Resources.ActionPlayOldest, Properties.Resources.TipPlayOldestShow, btnShowPlay_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Export, Properties.Resources.ActionExport, Properties.Resources.TipExportShow, btnShowExport_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete, Properties.Resources.ActionDeleteOldest, Properties.Resources.TipDeleteOldestShow, btnShowDelete_Click));
     }
 
     /// <summary>
@@ -284,8 +286,9 @@ namespace au.Applications.MythClient {
       _pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoNumEpisodes, s.Episodes.Count)));
       _pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoRecordedRange, s.OldestEpisode.Recorded, s.NewestEpisode.Recorded)));
       _pnlInfo.Controls.Add(MakeInfoLabel(s.Duration.ToStringUnit()));
-      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Play, "Play oldest", "Play the oldest recorded episode of this season", btnSeasonPlay_Click));
-      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete, "Delete oldest", "Delete the oldest recorded episode of this season", btnSeasonDelete_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Play, Properties.Resources.ActionPlayOldest, Properties.Resources.TipPlayOldestSeason, btnSeasonPlay_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Export, Properties.Resources.ActionExport, Properties.Resources.TipExportSeason, btnSeasonExport_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete, Properties.Resources.ActionDeleteOldest, Properties.Resources.TipDeleteOldestSeason, btnSeasonDelete_Click));
     }
 
     /// <summary>
@@ -295,7 +298,9 @@ namespace au.Applications.MythClient {
     private void ShowEpisodeInfo(Episode e) {
       _pnlInfo.Controls.Clear();
       _pnlInfo.Tag = e;
-      string title = string.Format(Properties.Resources.InfoEpisodeTitle, e.Season.Show.Title, e.Name);
+      string title = string.IsNullOrEmpty(e.Name)
+        ? string.Format(Properties.Resources.InfoEpisodeTitleNameless, e.Season.Show.Title, e.FirstAired)
+        : string.Format(Properties.Resources.InfoEpisodeTitle, e.Season.Show.Title, e.Name);
       _pnlInfo.Controls.Add(MakeInfoTitleLabel(title));
       if(e.InProgress) {
         Label lbl = MakeInfoLabel(string.Format(Properties.Resources.InfoEpisodeStillRecording, (e.DoneRecording - DateTime.Now).ToStringUnit()));
@@ -308,10 +313,10 @@ namespace au.Applications.MythClient {
         _pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoEpisodeFirstAired, e.FirstAired)));
       _pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoEpisodeRecorded, e.Recorded)));
       _pnlInfo.Controls.Add(MakeInfoLabel(e.Duration.ToStringUnit()));
-      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Play, "Play", string.Format("Play {0} with the default video player", title), btnEpisodePlay_Click));
-      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.PlayWith, "Play with...", string.Format("Choose an alternate player to play {0}", title), btnEpisodePlayWith_Click));
-      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Export, "Export...", string.Format("Export {0} with a readable filename", title), btnEpisodeExport_Click));
-      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete, "Delete", string.Format("Delete {0} from MythTV", title), btnEpisodeDelete_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Play, Properties.Resources.ActionPlay, string.Format(Properties.Resources.TipPlay, title), btnEpisodePlay_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.PlayWith, Properties.Resources.ActionPlayWith, string.Format(Properties.Resources.TipPlayWith, title), btnEpisodePlayWith_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Export, Properties.Resources.ActionExport, string.Format(Properties.Resources.TipExportEpisode, title), btnEpisodeExport_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete, Properties.Resources.ActionDelete, string.Format(Properties.Resources.TipDelete, title), btnEpisodeDelete_Click));
     }
 
     /// <summary>
@@ -403,8 +408,135 @@ namespace au.Applications.MythClient {
     /// </summary>
     /// <param name="e">Episode to export</param>
     private void ExportEpisode(Episode e) {
-      // TODO:  rewrite / adapt export
-      MessageBox.Show("Not implemented");
+      string fileFormat = AskExportFileFormat(e, false);
+      if(!string.IsNullOrEmpty(fileFormat)) {
+        _dlgExportFolder.SelectedPath = _settings.LastExportDirectory;
+        switch(_dlgExportFolder.ShowDialog(this)) {
+          case DialogResult.OK:
+          case DialogResult.Yes:
+            _settings.LastExportDirectory = _dlgExportFolder.SelectedPath;
+            ExportEpisodeTo(e, _dlgExportFolder.SelectedPath, fileFormat);
+            break;
+        }
+      }
+    }
+
+    /// <summary>
+    /// Export all Episodes of the specified Season with readable filenames.
+    /// </summary>
+    /// <param name="s">Season containing the Episodes to export</param>
+    private void ExportSeasonEpisodes(Season s) {
+      string fileFormat = AskExportFileFormat(s.OldestEpisode, true);
+      if(!string.IsNullOrEmpty(fileFormat)) {
+        _dlgExportFolder.SelectedPath = _settings.LastExportDirectory;
+        switch(_dlgExportFolder.ShowDialog(this)) {
+          case DialogResult.OK:
+          case DialogResult.Yes:
+            _settings.LastExportDirectory = _dlgExportFolder.SelectedPath;
+            foreach(Episode e in s.Episodes)
+              ExportEpisodeTo(e, _dlgExportFolder.SelectedPath, fileFormat);
+            break;
+        }
+      }
+    }
+
+    /// <summary>
+    /// Export all Episodes of the specified Show with readable filenames.
+    /// </summary>
+    /// <param name="s">Show containing the Episodes to export</param>
+    private void ExportShowEpisodes(Show s) {
+      string nameFormat, exportPath;
+      if(AskExportDetails(s.OldestEpisode, true, out nameFormat, out exportPath))
+        foreach(Season season in s.Seasons)
+          foreach(Episode e in season.Episodes)
+            ExportEpisodeTo(e, exportPath, nameFormat);
+    }
+
+    /// <summary>
+    /// Export a single Episode to the specified path with the specified
+    /// filename format.
+    /// </summary>
+    /// <param name="e">Episode to export</param>
+    /// <param name="exportPath">Path to save Episode</param>
+    /// <param name="nameFormat">Filename format to use</param>
+    private void ExportEpisodeTo(Episode e, string exportPath, string nameFormat) {
+      // TODO:  show system file copy dialog
+      FileInfo fi = new FileInfo(Path.Combine(_settings.RawFilesDirectory, e.Filename));
+      fi.CopyTo(Path.Combine(exportPath, SanitizeFilename(string.Format(nameFormat, e.Season.Show.Title, e.Name, e.FirstAired, e.Season.Number, e.Number) + "." + fi.Extension)));
+    }
+
+    /// <summary>
+    /// Prompt for choices needed to export episodes:  filename format and
+    /// export path.
+    /// </summary>
+    /// <param name="exampleEpisode">Episode to determine available options and use for examples</param>
+    /// <param name="plural">Whether more than one episode will be exported</param>
+    /// <param name="filenameFormat">Chosen filename format, or null if canceled</param>
+    /// <param name="exportPath">Chosen export path, or null if canceled</param>
+    /// <returns>True if all details have been chosen without cancelling</returns>
+    private bool AskExportDetails(Episode exampleEpisode, bool plural, out string filenameFormat, out string exportPath) {
+      exportPath = null;
+      filenameFormat = AskExportFileFormat(exampleEpisode, plural);
+      if(string.IsNullOrEmpty(filenameFormat))
+        return false;
+      _dlgExportFolder.SelectedPath = _settings.LastExportDirectory;
+      switch(_dlgExportFolder.ShowDialog(this)) {
+        case DialogResult.OK:
+        case DialogResult.Yes:
+          exportPath = _settings.LastExportDirectory = _dlgExportFolder.SelectedPath;
+          return true;
+        default:
+          return false;
+      }
+    }
+    
+    /// <summary>
+    /// Show a dialog to choose a filename format with examples and available
+    /// options based on the specified episode.
+    /// </summary>
+    /// <param name="e">Episode to determine available options and use for examples</param>
+    /// <param name="plural">Whether more than one episode will be exported</param>
+    /// <returns>Chosen filename format, or null if canceled</returns>
+    private string AskExportFileFormat(Episode e, bool plural) {
+      TaskDialog td = new TaskDialog();
+      td.WindowTitle = plural ? Properties.Resources.TitleExportPlural : Properties.Resources.TitleExportOne;
+      td.MainInstruction = Properties.Resources.InstrExport;
+      td.Content = Properties.Resources.NoteExport;
+      td.CommonButtons = TaskDialogCommonButtons.Cancel;
+      List<TaskDialogButton> buttons = new List<TaskDialogButton>();
+      if(string.IsNullOrEmpty(e.Name)) {
+        buttons.Add(new TaskDialogButton(83, Properties.Resources.ExportOptionYear + "\n" + SanitizeFilename(string.Format(Properties.Resources.ExportYear, e.Season.Show.Title, e.Name, e.FirstAired, e.Season.Number, e.Number))));
+        buttons.Add(new TaskDialogButton(84, Properties.Resources.ExportOptionDate + "\n" + SanitizeFilename(string.Format(Properties.Resources.ExportDate, e.Season.Show.Title, e.Name, e.FirstAired, e.Season.Number, e.Number))));
+        buttons.Add(new TaskDialogButton(85, Properties.Resources.ExportOptionTitle + "\n" + SanitizeFilename(string.Format(Properties.Resources.ExportTitle, e.Season.Show.Title, e.Name, e.FirstAired, e.Season.Number, e.Number))));
+      } else {
+        if(e.Season.Number > 0 && e.Number > 0)
+          buttons.Add(new TaskDialogButton(80, Properties.Resources.ExportOptionSeasonEpisode + "\n" + SanitizeFilename(string.Format(Properties.Resources.ExportSeasonEpisode, e.Season.Show.Title, e.Name, e.FirstAired, e.Season.Number, e.Number))));
+        buttons.Add(new TaskDialogButton(81, Properties.Resources.ExportOptionDateEpisode + "\n" + SanitizeFilename(string.Format(Properties.Resources.ExportDateEpisode, e.Season.Show.Title, e.Name, e.FirstAired, e.Season.Number, e.Number))));
+        buttons.Add(new TaskDialogButton(82, Properties.Resources.ExportOptionEpisode + "\n" + SanitizeFilename(string.Format(Properties.Resources.ExportEpisode, e.Season.Show.Title, e.Name, e.FirstAired, e.Season.Number, e.Number))));
+      }
+      td.Buttons = buttons.ToArray();
+      td.PositionRelativeToWindow = true;
+      td.UseCommandLinks = true;
+      switch(td.Show(this)) {
+        case 80: return Properties.Resources.ExportSeasonEpisode;
+        case 81: return Properties.Resources.ExportDateEpisode;
+        case 82: return Properties.Resources.ExportEpisode;
+        case 83: return Properties.Resources.ExportYear;
+        case 84: return Properties.Resources.ExportDate;
+        case 85: return Properties.Resources.ExportTitle;
+        default: return null;
+      }
+    }
+
+    /// <summary>
+    /// Strip disallowed characters from a string so it can be used as a filename.
+    /// </summary>
+    /// <param name="dirty">String which needs to be sanitized</param>
+    /// <returns>String with disallowed characters removed</returns>
+    private string SanitizeFilename(string dirty) {
+      foreach(char c in Path.GetInvalidFileNameChars())
+        dirty = dirty.Replace(c.ToString(), "");
+      return dirty;
     }
 
     /// <summary>
@@ -413,11 +545,14 @@ namespace au.Applications.MythClient {
     /// <param name="e">Episode to delete</param>
     private void DeleteEpisode(Episode e) {
       TaskDialog td = new TaskDialog();
-      td.WindowTitle = "Delete Episode";
-      td.MainInstruction = "Record this episode again?";
-      td.Content = "If this recording was in some way unsatisfactory, MythTV can record it again the next time it comes on.";
+      td.WindowTitle = Properties.Resources.TitleDelete;
+      td.MainInstruction = Properties.Resources.InstrDelete;
+      td.Content = Properties.Resources.NoteDelete;
       td.CommonButtons = TaskDialogCommonButtons.Cancel;
-      td.Buttons = new TaskDialogButton[] { new TaskDialogButton(80, "Delete\nMythTV will not record this episode again."), new TaskDialogButton(81, "Delete + Rerecord\nMythTV will record this episode if it comes on again.") };
+      td.Buttons = new TaskDialogButton[] {
+        new TaskDialogButton(80, string.Format(Properties.Resources.DeleteOption, "\n")),
+        new TaskDialogButton(81, string.Format(Properties.Resources.DeleteRerecordOption, "\n"))
+      };
       td.DefaultButton = 80;
       td.PositionRelativeToWindow = true;
       td.UseCommandLinks = true;
@@ -643,12 +778,20 @@ namespace au.Applications.MythClient {
       PlayEpisode(((Show)_pnlInfo.Tag).OldestEpisode);
     }
 
+    private void btnShowExport_Click(object sender, EventArgs e) {
+      ExportShowEpisodes((Show)_pnlInfo.Tag);
+    }
+
     private void btnShowDelete_Click(object sender, EventArgs e) {
       DeleteEpisode(((Show)_pnlInfo.Tag).OldestEpisode);
     }
 
     private void btnSeasonPlay_Click(object sender, EventArgs e) {
       PlayEpisode(((Season)_pnlInfo.Tag).OldestEpisode);
+    }
+
+    private void btnSeasonExport_Click(object sender, EventArgs e) {
+      ExportSeasonEpisodes((Season)_pnlInfo.Tag);
     }
 
     private void btnSeasonDelete_Click(object sender, EventArgs e) {
@@ -671,109 +814,6 @@ namespace au.Applications.MythClient {
       DeleteEpisode((Episode)_pnlInfo.Tag);
     }
     #endregion Info Event Handlers
-
-    #region old export code
-    /// <summary>
-    /// Export the selected video file with a readable name.
-    /// </summary>
-    private void ExportSelected() {
-      ExportVideos export = new ExportVideos(_settings.Export, _lvRecorded.SelectedItems[0], _colShow.Index, _colEpisode.Index, _colAired.Index);
-      if(export.ShowDialog(this) == DialogResult.OK) {
-        switch(_settings.Export.How) {
-          case ExportSettings.HowType.Show:
-            switch(_settings.Export.What) {
-              case ExportSettings.WhatType.Episode:
-                if(!ExportNonEpisodic(_lvRecorded.SelectedItems[0]))
-                  MessageBox.Show(this, "Unable to save selected recording.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                break;
-              case ExportSettings.WhatType.Show:
-                string match = _lvRecorded.SelectedItems[0].SubItems[_colShow.Index].Text;
-                int errors = 0;
-                foreach(ListViewItem lvi in _lvRecorded.Items)
-                  if(lvi.SubItems[_colShow.Index].Text == match)
-                    if(!ExportNonEpisodic(lvi))
-                      errors++;
-                if(errors > 0)
-                  MessageBox.Show(this, "Unable to save " + errors + " recordings.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                break;
-              case ExportSettings.WhatType.All:
-                errors = 0;
-                foreach(ListViewItem lvi in _lvRecorded.Items)
-                  if(!ExportNonEpisodic(lvi))
-                    errors++;
-                if(errors > 0)
-                  MessageBox.Show(this, "Unable to save " + errors + " recordings.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                break;
-            }
-            break;
-          case ExportSettings.HowType.ShowDateEpisode:
-            switch(_settings.Export.What) {
-              case ExportSettings.WhatType.Episode:
-                if(!ExportEpisodic(_lvRecorded.SelectedItems[0]))
-                  MessageBox.Show(this, "Unable to save selected recording.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                break;
-              case ExportSettings.WhatType.Show:
-                string match = _lvRecorded.SelectedItems[0].SubItems[_colShow.Index].Text;
-                int errors = 0;
-                foreach(ListViewItem lvi in _lvRecorded.Items)
-                  if(lvi.SubItems[_colShow.Index].Text == match)
-                    if(!ExportEpisodic(lvi))
-                      errors++;
-                if(errors > 0)
-                  MessageBox.Show(this, "Unable to save " + errors + " recordings.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                break;
-              case ExportSettings.WhatType.All:
-                errors = 0;
-                foreach(ListViewItem lvi in _lvRecorded.Items)
-                  if(!ExportEpisodic(lvi))
-                    errors++;
-                if(errors > 0)
-                  MessageBox.Show(this, "Unable to save " + errors + " recordings.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                break;
-            }
-            break;
-        }
-      }
-    }
-
-    /// <summary>
-    /// Export the specified recording named as the show title.
-    /// </summary>
-    /// <param name="recording"></param>
-    /// <returns></returns>
-    private bool ExportNonEpisodic(ListViewItem recording) {
-      FileInfo source = new FileInfo(Path.Combine(_settings.RawFilesDirectory, (string)_lvRecorded.SelectedItems[0].Tag));
-      try {
-        source.CopyTo(Path.Combine(_settings.Export.Where, SanitizeFilename(recording.SubItems[_colShow.Index].Text)) + "." + source.Extension);
-      } catch(Exception e) {
-        Trace.WriteLine("MythClient.ExportNonEpisodic() ERROR exporting file.  Details:\n" + e);
-        return false;
-      }
-      return true;
-    }
-
-    /// <summary>
-    /// Export the specified recording named as the show title, airdate, and episode title.
-    /// </summary>
-    /// <param name="recording"></param>
-    /// <returns></returns>
-    private bool ExportEpisodic(ListViewItem recording) {
-      FileInfo source = new FileInfo(Path.Combine(_settings.RawFilesDirectory, (string)_lvRecorded.SelectedItems[0].Tag));
-      try {
-        source.CopyTo(Path.Combine(_settings.Export.Where, SanitizeFilename(recording.SubItems[_colShow.Index].Text + " - " + DateTime.Parse(recording.SubItems[_colAired.Index].Text).ToString("yyyyy.MM.dd") + " - " + recording.SubItems[_colEpisode.Index].Text)) + source.Extension);
-      } catch(Exception e) {
-        Trace.WriteLine("MythClient.ExportNonEpisodic() ERROR exporting file.  Details:\n" + e);
-        return false;
-      }
-      return true;
-    }
-
-    private string SanitizeFilename(string dirty) {
-      foreach(char c in Path.GetInvalidFileNameChars())
-        dirty = dirty.Replace(c.ToString(), "");
-      return dirty;
-    }
-    #endregion old code
   }
 
   /// <summary>

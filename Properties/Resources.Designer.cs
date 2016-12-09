@@ -61,6 +61,60 @@ namespace au.Applications.MythClient.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string ActionDelete {
+            get {
+                return ResourceManager.GetString("ActionDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete oldest.
+        /// </summary>
+        internal static string ActionDeleteOldest {
+            get {
+                return ResourceManager.GetString("ActionDeleteOldest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download....
+        /// </summary>
+        internal static string ActionExport {
+            get {
+                return ResourceManager.GetString("ActionExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play.
+        /// </summary>
+        internal static string ActionPlay {
+            get {
+                return ResourceManager.GetString("ActionPlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play oldest.
+        /// </summary>
+        internal static string ActionPlayOldest {
+            get {
+                return ResourceManager.GetString("ActionPlayOldest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play with....
+        /// </summary>
+        internal static string ActionPlayWith {
+            get {
+                return ResourceManager.GetString("ActionPlayWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Back {
@@ -100,12 +154,138 @@ namespace au.Applications.MythClient.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete{0}MythTV will not record this episode again..
+        /// </summary>
+        internal static string DeleteOption {
+            get {
+                return ResourceManager.GetString("DeleteOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete + Rerecord{0}MythTV will record this episode if it comes on again..
+        /// </summary>
+        internal static string DeleteRerecordOption {
+            get {
+                return ResourceManager.GetString("DeleteRerecordOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Export {
             get {
                 object obj = ResourceManager.GetObject("Export", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} ({2:yyyy.MM.dd}).
+        /// </summary>
+        internal static string ExportDate {
+            get {
+                return ResourceManager.GetString("ExportDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} - {2:yyyy.MM.dd} - {1}.
+        /// </summary>
+        internal static string ExportDateEpisode {
+            get {
+                return ResourceManager.GetString("ExportDateEpisode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} - {1}.
+        /// </summary>
+        internal static string ExportEpisode {
+            get {
+                return ResourceManager.GetString("ExportEpisode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Airdate.
+        /// </summary>
+        internal static string ExportOptionDate {
+            get {
+                return ResourceManager.GetString("ExportOptionDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Airdate.
+        /// </summary>
+        internal static string ExportOptionDateEpisode {
+            get {
+                return ResourceManager.GetString("ExportOptionDateEpisode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title - Subtitle.
+        /// </summary>
+        internal static string ExportOptionEpisode {
+            get {
+                return ResourceManager.GetString("ExportOptionEpisode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Season / Episode.
+        /// </summary>
+        internal static string ExportOptionSeasonEpisode {
+            get {
+                return ResourceManager.GetString("ExportOptionSeasonEpisode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        internal static string ExportOptionTitle {
+            get {
+                return ResourceManager.GetString("ExportOptionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Year.
+        /// </summary>
+        internal static string ExportOptionYear {
+            get {
+                return ResourceManager.GetString("ExportOptionYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} - s{3:00}e{4:00} - {1}.
+        /// </summary>
+        internal static string ExportSeasonEpisode {
+            get {
+                return ResourceManager.GetString("ExportSeasonEpisode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}.
+        /// </summary>
+        internal static string ExportTitle {
+            get {
+                return ResourceManager.GetString("ExportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} ({2:yyyy}).
+        /// </summary>
+        internal static string ExportYear {
+            get {
+                return ResourceManager.GetString("ExportYear", resourceCulture);
             }
         }
         
@@ -155,6 +335,15 @@ namespace au.Applications.MythClient.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} - {1:M/d/yyyy}.
+        /// </summary>
+        internal static string InfoEpisodeTitleNameless {
+            get {
+                return ResourceManager.GetString("InfoEpisodeTitleNameless", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} Episodes.
         /// </summary>
         internal static string InfoNumEpisodes {
@@ -191,6 +380,24 @@ namespace au.Applications.MythClient.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Record this episode again?.
+        /// </summary>
+        internal static string InstrDelete {
+            get {
+                return ResourceManager.GetString("InstrDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose a file naming option..
+        /// </summary>
+        internal static string InstrExport {
+            get {
+                return ResourceManager.GetString("InstrExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Menu {
@@ -207,6 +414,24 @@ namespace au.Applications.MythClient.Properties {
             get {
                 object obj = ResourceManager.GetObject("MythTV", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If this recording was in some way unsatisfactory, MythTV can record it again the next time it comes on..
+        /// </summary>
+        internal static string NoteDelete {
+            get {
+                return ResourceManager.GetString("NoteDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video file format and extension will be left unchanged..
+        /// </summary>
+        internal static string NoteExport {
+            get {
+                return ResourceManager.GetString("NoteExport", resourceCulture);
             }
         }
         
@@ -320,6 +545,123 @@ namespace au.Applications.MythClient.Properties {
         internal static string TimeSpanMinutes {
             get {
                 return ResourceManager.GetString("TimeSpanMinutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete {0} from MythTV.
+        /// </summary>
+        internal static string TipDelete {
+            get {
+                return ResourceManager.GetString("TipDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete the oldest recorded episode of this season.
+        /// </summary>
+        internal static string TipDeleteOldestSeason {
+            get {
+                return ResourceManager.GetString("TipDeleteOldestSeason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete the oldest recorded episode of this show.
+        /// </summary>
+        internal static string TipDeleteOldestShow {
+            get {
+                return ResourceManager.GetString("TipDeleteOldestShow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export {0} with a readable filename.
+        /// </summary>
+        internal static string TipExportEpisode {
+            get {
+                return ResourceManager.GetString("TipExportEpisode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download all episodes from this season with readable filenames.
+        /// </summary>
+        internal static string TipExportSeason {
+            get {
+                return ResourceManager.GetString("TipExportSeason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download all episodes from this show with readable filenames.
+        /// </summary>
+        internal static string TipExportShow {
+            get {
+                return ResourceManager.GetString("TipExportShow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play {0} with the default video player.
+        /// </summary>
+        internal static string TipPlay {
+            get {
+                return ResourceManager.GetString("TipPlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play the oldest recorded episode of this season.
+        /// </summary>
+        internal static string TipPlayOldestSeason {
+            get {
+                return ResourceManager.GetString("TipPlayOldestSeason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play the oldest recorded episode of this show.
+        /// </summary>
+        internal static string TipPlayOldestShow {
+            get {
+                return ResourceManager.GetString("TipPlayOldestShow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose an alternate player to play {0}.
+        /// </summary>
+        internal static string TipPlayWith {
+            get {
+                return ResourceManager.GetString("TipPlayWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Recording.
+        /// </summary>
+        internal static string TitleDelete {
+            get {
+                return ResourceManager.GetString("TitleDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download Recording.
+        /// </summary>
+        internal static string TitleExportOne {
+            get {
+                return ResourceManager.GetString("TitleExportOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download Recordings.
+        /// </summary>
+        internal static string TitleExportPlural {
+            get {
+                return ResourceManager.GetString("TitleExportPlural", resourceCulture);
             }
         }
     }

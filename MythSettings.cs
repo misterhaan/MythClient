@@ -25,6 +25,7 @@ namespace au.Applications.MythClient {
     public string ServerName = null;
     public int ServerPort = MythRecordings.DefaultMythtvPort;
     public string RawFilesDirectory = null;
+    public string LastExportDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
 
     /// <summary>
     /// Settings pertaining to the display.
@@ -38,16 +39,6 @@ namespace au.Applications.MythClient {
       private set { _display = value; }
     }
     private DisplaySettings _display;
-
-    public ExportSettings Export {
-      get {
-        if(_export == null)
-          _export = new ExportSettings();
-        return _export;
-      }
-      private set { _export = value; }
-    }
-    private ExportSettings _export;
 
     public bool Load() {
       if(File.Exists(SettingsFilePath)) {
@@ -66,11 +57,28 @@ namespace au.Applications.MythClient {
                 case "RawFilesDirectory":
                   RawFilesDirectory = node.InnerText;
                   break;
+                case "LastExportDirectory":
+                  LastExportDirectory = node.InnerText;
+                  try {
+                    while(!Directory.Exists(LastExportDirectory)) {
+                      LastExportDirectory = Directory.GetParent(LastExportDirectory).FullName;
+                    }
+                  } catch {
+                    LastExportDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
+                  }
+                  break;
                 case "Display":
                   Display = new DisplaySettings(node);
                   break;
-                case "Export":
-                  Export = new ExportSettings(node);
+                case "Export":  // pre-1.0 setting that translates to 1.0
+                  LastExportDirectory = ((XmlElement)node).ElementValue("Where");
+                  try {
+                    while(!Directory.Exists(LastExportDirectory)) {
+                      LastExportDirectory = Directory.GetParent(LastExportDirectory).FullName;
+                    }
+                  } catch {
+                    LastExportDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
+                  }
                   break;
               }
             } catch(Exception e) {
@@ -93,10 +101,10 @@ namespace au.Applications.MythClient {
         myth.AddElement("ServerPort", ServerPort);
       if(!string.IsNullOrEmpty(RawFilesDirectory))
         myth.AddElement("RawFilesDirectory", RawFilesDirectory);
+      if(LastExportDirectory != Environment.GetFolderPath(Environment.SpecialFolder.MyVideos))
+        myth.AddElement("LastExportDirectory", LastExportDirectory);
       XmlNode disp = myth.AddElement("Display");
       Display.SaveTo(disp);
-      XmlNode export = myth.AddElement("Export");
-      Export.SaveTo(export);
       using(FileStream stream = File.Open(SettingsFilePath, FileMode.Create, FileAccess.Write, FileShare.None))
         xml.Save(stream);
     }

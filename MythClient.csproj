@@ -77,13 +77,6 @@
       <DependentUpon>AboutMythClient.cs</DependentUpon>
     </Compile>
     <Compile Include="DisplaySettings.cs" />
-    <Compile Include="ExportSettings.cs" />
-    <Compile Include="ExportVideos.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ExportVideos.Designer.cs">
-      <DependentUpon>ExportVideos.cs</DependentUpon>
-    </Compile>
     <Compile Include="MythClient.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,9 +98,6 @@
     </Compile>
     <EmbeddedResource Include="AboutMythClient.resx">
       <DependentUpon>AboutMythClient.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ExportVideos.resx">
-      <DependentUpon>ExportVideos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MythClient.resx">
       <DependentUpon>MythClient.cs</DependentUpon>

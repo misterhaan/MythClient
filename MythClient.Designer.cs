@@ -25,11 +25,6 @@
     private void InitializeComponent() {
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MythClient));
-      this._lvRecorded = new System.Windows.Forms.ListView();
-      this._colEpisode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this._colShow = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this._colAired = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this._colRecorded = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this._cmnuEpisode = new System.Windows.Forms.ContextMenuStrip(this.components);
       this._cmnuEpisodePlay = new System.Windows.Forms.ToolStripMenuItem();
       this._cmnuEpisodePlayWith = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,6 +47,7 @@
       this._cmnuMain = new System.Windows.Forms.ContextMenuStrip(this.components);
       this._cmnuMainSettings = new System.Windows.Forms.ToolStripMenuItem();
       this._cmnuMainAbout = new System.Windows.Forms.ToolStripMenuItem();
+      this._dlgExportFolder = new System.Windows.Forms.FolderBrowserDialog();
       this._cmnuEpisode.SuspendLayout();
       this._pnlHead.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this._pbMenu)).BeginInit();
@@ -61,43 +57,6 @@
       this._cmnuShow.SuspendLayout();
       this._cmnuMain.SuspendLayout();
       this.SuspendLayout();
-      // 
-      // _lvRecorded
-      // 
-      this._lvRecorded.AllowColumnReorder = true;
-      this._lvRecorded.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this._colEpisode,
-            this._colShow,
-            this._colAired,
-            this._colRecorded});
-      this._lvRecorded.FullRowSelect = true;
-      this._lvRecorded.Location = new System.Drawing.Point(32, 46);
-      this._lvRecorded.MultiSelect = false;
-      this._lvRecorded.Name = "_lvRecorded";
-      this._lvRecorded.Size = new System.Drawing.Size(487, 250);
-      this._lvRecorded.TabIndex = 0;
-      this._lvRecorded.UseCompatibleStateImageBehavior = false;
-      this._lvRecorded.View = System.Windows.Forms.View.Details;
-      // 
-      // _colEpisode
-      // 
-      this._colEpisode.Text = "Episode";
-      this._colEpisode.Width = 227;
-      // 
-      // _colShow
-      // 
-      this._colShow.Text = "Show";
-      this._colShow.Width = 138;
-      // 
-      // _colAired
-      // 
-      this._colAired.Text = "Air Date";
-      this._colAired.Width = 71;
-      // 
-      // _colRecorded
-      // 
-      this._colRecorded.Text = "Recorded";
-      this._colRecorded.Width = 129;
       // 
       // _cmnuEpisode
       // 
@@ -310,6 +269,10 @@
       this._cmnuMainAbout.Text = "&About";
       this._cmnuMainAbout.Click += new System.EventHandler(this._cmnuMainAbout_Click);
       // 
+      // _dlgExportFolder
+      // 
+      this._dlgExportFolder.Description = "Choose a directory for downloaded recordings.";
+      // 
       // MythClient
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -318,7 +281,6 @@
       this.Controls.Add(this._pnlMain);
       this.Controls.Add(this._pnlInfo);
       this.Controls.Add(this._pnlHead);
-      this.Controls.Add(this._lvRecorded);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.KeyPreview = true;
       this.Name = "MythClient";
@@ -341,11 +303,6 @@
     }
 
     #endregion
-    private System.Windows.Forms.ListView _lvRecorded;
-    private System.Windows.Forms.ColumnHeader _colShow;
-    private System.Windows.Forms.ColumnHeader _colEpisode;
-    private System.Windows.Forms.ColumnHeader _colAired;
-    private System.Windows.Forms.ColumnHeader _colRecorded;
     private System.Windows.Forms.ContextMenuStrip _cmnuEpisode;
     private System.Windows.Forms.ToolStripMenuItem _cmnuEpisodePlay;
     private System.Windows.Forms.ToolStripMenuItem _cmnuEpisodeDelete;
@@ -368,6 +325,7 @@
     private System.Windows.Forms.ContextMenuStrip _cmnuMain;
     private System.Windows.Forms.ToolStripMenuItem _cmnuMainSettings;
     private System.Windows.Forms.ToolStripMenuItem _cmnuMainAbout;
+    private System.Windows.Forms.FolderBrowserDialog _dlgExportFolder;
   }
 }
 
