@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Xml;
+using au.Applications.MythClient.Data;
 using au.util.io;
 
 namespace au.Applications.MythClient {
@@ -22,16 +23,8 @@ namespace au.Applications.MythClient {
     private string _settingsFilePath = null;
 
     public string ServerName = null;
-    public string RecordedProgramsUrlSetting = null;
+    public int ServerPort = MythRecordings.DefaultMythtvPort;
     public string RawFilesDirectory = null;
-
-    public string RecordedProgramsUrl {
-      get {
-        if(string.IsNullOrEmpty(RecordedProgramsUrlSetting) && !string.IsNullOrEmpty(ServerName))
-          return "http://" + ServerName + "/mythweb/tv/recorded";
-        return RecordedProgramsUrlSetting;
-      }
-    }
 
     /// <summary>
     /// Settings pertaining to the display.
@@ -67,8 +60,8 @@ namespace au.Applications.MythClient {
                 case "ServerName":
                   ServerName = node.InnerText;
                   break;
-                case "RecordedProgramsUrl":
-                  RecordedProgramsUrlSetting = node.InnerText;
+                case "ServerPort":
+                  int.TryParse(node.InnerText, out ServerPort);
                   break;
                 case "RawFilesDirectory":
                   RawFilesDirectory = node.InnerText;
@@ -96,8 +89,8 @@ namespace au.Applications.MythClient {
       xml.AppendChild(myth);
       if(!string.IsNullOrEmpty(ServerName))
         myth.AddElement("ServerName", ServerName);
-      if(!string.IsNullOrEmpty(RecordedProgramsUrlSetting))
-        myth.AddElement("RecordedProgramsUrl", RecordedProgramsUrlSetting);
+      if(ServerPort != MythRecordings.DefaultMythtvPort)
+        myth.AddElement("ServerPort", ServerPort);
       if(!string.IsNullOrEmpty(RawFilesDirectory))
         myth.AddElement("RawFilesDirectory", RawFilesDirectory);
       XmlNode disp = myth.AddElement("Display");

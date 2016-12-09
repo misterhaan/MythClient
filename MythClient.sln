@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MythClient", "MythClient.csproj", "{243655BB-B552-4733-B5E1-5E1F4F8D72C1}"
 EndProject
@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MythData", "MythData\MythData.csproj", "{95AB460C-D83E-4C36-A9F7-74410131C029}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{87803172-C58B-41AB-9C98-9EC2C80EA376}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{87803172-C58B-41AB-9C98-9EC2C80EA376}.Release|Any CPU.ActiveCfg = Release|x64
 		{87803172-C58B-41AB-9C98-9EC2C80EA376}.Release|Any CPU.Build.0 = Release|x64
+		{95AB460C-D83E-4C36-A9F7-74410131C029}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95AB460C-D83E-4C36-A9F7-74410131C029}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95AB460C-D83E-4C36-A9F7-74410131C029}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95AB460C-D83E-4C36-A9F7-74410131C029}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

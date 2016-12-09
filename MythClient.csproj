@@ -54,27 +54,28 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="au.util.comctl, Version=4.0.0.0, Culture=neutral, PublicKeyToken=19e5e8259cf75c6c, processorArchitecture=MSIL">
+    <Reference Include="au.util.comctl, Version=4.1.0.0, Culture=neutral, PublicKeyToken=19e5e8259cf75c6c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\au.util.comctl\v4.0_4.0.0.0__19e5e8259cf75c6c\au.util.comctl.dll</HintPath>
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\au.util.comctl\v4.0_4.1.0.0__19e5e8259cf75c6c\au.util.comctl.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="au.util.io, Version=4.0.0.0, Culture=neutral, PublicKeyToken=57531b787f745070, processorArchitecture=MSIL">
+    <Reference Include="au.util.io, Version=4.1.0.0, Culture=neutral, PublicKeyToken=57531b787f745070, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\au.util.io\v4.0_4.0.0.0__57531b787f745070\au.util.io.dll</HintPath>
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\au.util.io\v4.0_4.1.0.0__57531b787f745070\au.util.io.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web.Extensions">
-      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Web.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeleteInfo.cs" />
+    <Compile Include="AboutMythClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutMythClient.Designer.cs">
+      <DependentUpon>AboutMythClient.cs</DependentUpon>
+    </Compile>
     <Compile Include="DisplaySettings.cs" />
     <Compile Include="ExportSettings.cs" />
     <Compile Include="ExportVideos.cs">
@@ -102,6 +103,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AboutMythClient.resx">
+      <DependentUpon>AboutMythClient.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ExportVideos.resx">
       <DependentUpon>ExportVideos.cs</DependentUpon>
     </EmbeddedResource>
@@ -120,6 +124,10 @@
     <Content Include="mythtv.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="MythData\MythData.csproj">
+      <Project>{95ab460c-d83e-4c36-a9f7-74410131c029}</Project>
+      <Name>MythData</Name>
+    </ProjectReference>
     <ProjectReference Include="TaskDialog\TaskDialog.csproj">
       <Project>{5BF15AF5-DEB8-46A8-99C7-21993617D0C8}</Project>
       <Name>TaskDialog</Name>

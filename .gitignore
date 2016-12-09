@@ -7,3 +7,4 @@
 /installer/*.msi
 /installer/*.wixpdb
 /obj
+/MythData/obj

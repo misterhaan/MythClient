@@ -10,26 +10,17 @@ namespace au.Applications.MythClient {
     public MythServerConfig(MythSettings settings) {
       InitializeComponent();
       _settings = settings;
+      _tip.SetToolTip(_txtServerName, _tip.GetToolTip(_lblServerName));
       _txtServerName.Text = _settings.ServerName;
-      _txtURL.Text = _settings.RecordedProgramsUrl;
+      _tip.SetToolTip(_numPort, _tip.GetToolTip(_lblPort));
+      _numPort.Value = _settings.ServerPort;
+      _tip.SetToolTip(_fnbDirectory, _tip.GetToolTip(_lblDirectory));
       if(Directory.Exists(_settings.RawFilesDirectory))
         _fnbDirectory.FolderFullName = _settings.RawFilesDirectory;
     }
 
     private void _txtServerName_TextChanged(object sender, EventArgs e) {
       _settings.ServerName = _txtServerName.Text;
-      if(string.IsNullOrEmpty(_settings.RecordedProgramsUrlSetting))
-        _txtURL.Text = _settings.RecordedProgramsUrl;
-    }
-
-    private void _txtURL_TextChanged(object sender, EventArgs e) {
-      if(ActiveControl == _txtURL)
-        _settings.RecordedProgramsUrlSetting = _txtURL.Text;
-      _lnkURL.Visible = !string.IsNullOrEmpty(_txtURL.Text);
-    }
-
-    private void _lnkURL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-      Process.Start(_txtURL.Text);
     }
 
     private void _fnbDirectory_Changed(object sender) {
@@ -38,6 +29,14 @@ namespace au.Applications.MythClient {
 
     private void _btnOK_Click(object sender, EventArgs e) {
       Close();
+    }
+
+    private void _numPort_ValueChanged(object sender, EventArgs e) {
+      _settings.ServerPort = (int)_numPort.Value;
+    }
+
+    private void _lnkTest_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+      Process.Start(string.Format("http://{0}:{1}/", _settings.ServerName, _settings.ServerPort));
     }
   }
 }

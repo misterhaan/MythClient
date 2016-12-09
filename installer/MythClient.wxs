@@ -6,13 +6,13 @@
   <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
   <?endif ?>
 
-  <Product Name="MythTV Recorded Programs" Id="*" UpgradeCode="76C57DB0-30C4-4603-ADE6-9C98C04D2372" Language="1033" Codepage="1252" Version="0.3.0" Manufacturer="the analog underground">
+  <Product Name="MythTV Recorded Programs" Id="*" UpgradeCode="76C57DB0-30C4-4603-ADE6-9C98C04D2372" Language="1033" Codepage="1252" Version="1.0.0" Manufacturer="the analog underground">
     <Package Id="*" Keywords="tv, mythtv, recorded, watch, program, episode" Description="Translates the MythWeb Recorded Programs page into a Windows form listing that directly launches the raw recording files." Comments="the analog underground only releases free software" Manufacturer="the analog underground" InstallerVersion="200" Languages="1033" Compressed="yes" SummaryCodepage="1252" />
 
     <MajorUpgrade Schedule="afterInstallInitialize" DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." />
     <Upgrade Id="76C57DB0-30C4-4603-ADE6-9C98C04D2372">
-      <UpgradeVersion Minimum="0.0.0" IncludeMinimum="yes" Maximum="0.3.0" IncludeMaximum="no" Property="OLDERVERSIONBEINGUPGRADED"/>
-      <UpgradeVersion Minimum="0.3.0" OnlyDetect="yes" Property="NEWERVERSIONDETECTED"/>
+      <UpgradeVersion Minimum="0.0.0" IncludeMinimum="yes" Maximum="1.0.0" IncludeMaximum="no" Property="OLDERVERSIONBEINGUPGRADED"/>
+      <UpgradeVersion Minimum="1.0.0" OnlyDetect="yes" Property="NEWERVERSIONDETECTED"/>
     </Upgrade>
     <Condition Message="A later version of [ProductName] is already installed. Setup will now exit">
       NOT NEWERVERSIONDETECTED OR Installed
@@ -33,6 +33,9 @@
     <DirectoryRef Id="INSTALLDIR">
       <Component Id="mythclientcomponent" Guid="0E63AD56-BF54-4C81-BFDE-BA0207846101">
         <File Id="MythClient.exe" Name="MythClient.exe" DiskId="1" Source="..\build\MythClient.exe" />
+      </Component>
+      <Component Id="mythdatacomponent" Guid="95ab460c-d83e-4c36-a9f7-74410131c029">
+        <File Id="MythData.dll" Name="MythData.dll" DiskId="1" Source="..\build\MythData.dll" />
       </Component>
       <Component Id="taskdialogcomponent" Guid="CD71AEBF-A802-4F9E-B1A9-A1FA0735246D">
         <File Id="TaskDialog.dll" Name="TaskDialog.dll" DiskId="1" Source="..\build\TaskDialog.dll" />
@@ -63,6 +66,7 @@
     <Feature Id="Binaries" Level="1" Title="MythTV Recorded Programs" Description="Binary files needed to run MythTV Recorded Programs" ConfigurableDirectory="INSTALLDIR">
       <Feature Id="mythclientfeat" Title="MythClient" Description="The actual application along with libraries (required to run the application)" Level="1">
         <ComponentRef Id="mythclientcomponent" />
+        <ComponentRef Id="mythdatacomponent" />
         <ComponentRef Id="taskdialogcomponent" />
         <ComponentRef Id="comctlcomponent" />
         <ComponentRef Id="auiocomponent" />
