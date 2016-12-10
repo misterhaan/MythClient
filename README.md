@@ -8,6 +8,7 @@ Download the latest installer from [track7.org](http://www.track7.org/analogu/ne
 ### 1.0.0
 * Switch to API instead of parsing MythWeb.
 * New show-based user interface.
+* Export (download) now shows progress window and doesn't block the main window.
 
 ### 0.3.0
 * Add export feature.

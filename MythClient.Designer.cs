@@ -48,6 +48,8 @@
       this._cmnuMainSettings = new System.Windows.Forms.ToolStripMenuItem();
       this._cmnuMainAbout = new System.Windows.Forms.ToolStripMenuItem();
       this._dlgExportFolder = new System.Windows.Forms.FolderBrowserDialog();
+      this._cmnuShowExport = new System.Windows.Forms.ToolStripMenuItem();
+      this._cmnuSeasonExport = new System.Windows.Forms.ToolStripMenuItem();
       this._cmnuEpisode.SuspendLayout();
       this._pnlHead.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this._pbMenu)).BeginInit();
@@ -66,7 +68,7 @@
             this._cmnuEpisodeExport,
             this._cmnuEpisodeDelete});
       this._cmnuEpisode.Name = "_cmnuEpisode";
-      this._cmnuEpisode.Size = new System.Drawing.Size(132, 92);
+      this._cmnuEpisode.Size = new System.Drawing.Size(153, 114);
       this._cmnuEpisode.Opening += new System.ComponentModel.CancelEventHandler(this._cmnuEpisode_Opening);
       // 
       // _cmnuEpisodePlay
@@ -89,8 +91,8 @@
       // 
       this._cmnuEpisodeExport.Image = global::au.Applications.MythClient.Properties.Resources.Export;
       this._cmnuEpisodeExport.Name = "_cmnuEpisodeExport";
-      this._cmnuEpisodeExport.Size = new System.Drawing.Size(131, 22);
-      this._cmnuEpisodeExport.Text = "E&xport...";
+      this._cmnuEpisodeExport.Size = new System.Drawing.Size(152, 22);
+      this._cmnuEpisodeExport.Text = "Dow&nload...";
       this._cmnuEpisodeExport.Click += new System.EventHandler(this._cmnuEpisodeExport_Click);
       // 
       // _cmnuEpisodeDelete
@@ -200,16 +202,17 @@
       // 
       this._cmnuSeason.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._cmnuSeasonPlay,
+            this._cmnuSeasonExport,
             this._cmnuSeasonDelete});
       this._cmnuSeason.Name = "_cmnuSeason";
-      this._cmnuSeason.Size = new System.Drawing.Size(177, 48);
+      this._cmnuSeason.Size = new System.Drawing.Size(202, 70);
       this._cmnuSeason.Opening += new System.ComponentModel.CancelEventHandler(this._cmnuSeason_Opening);
       // 
       // _cmnuSeasonPlay
       // 
       this._cmnuSeasonPlay.Image = global::au.Applications.MythClient.Properties.Resources.Play;
       this._cmnuSeasonPlay.Name = "_cmnuSeasonPlay";
-      this._cmnuSeasonPlay.Size = new System.Drawing.Size(176, 22);
+      this._cmnuSeasonPlay.Size = new System.Drawing.Size(201, 22);
       this._cmnuSeasonPlay.Text = "&Play next episode";
       this._cmnuSeasonPlay.Click += new System.EventHandler(this._cmnuSeasonPlay_Click);
       // 
@@ -217,7 +220,7 @@
       // 
       this._cmnuSeasonDelete.Image = global::au.Applications.MythClient.Properties.Resources.Delete;
       this._cmnuSeasonDelete.Name = "_cmnuSeasonDelete";
-      this._cmnuSeasonDelete.Size = new System.Drawing.Size(176, 22);
+      this._cmnuSeasonDelete.Size = new System.Drawing.Size(201, 22);
       this._cmnuSeasonDelete.Text = "&Delete next episode";
       this._cmnuSeasonDelete.Click += new System.EventHandler(this._cmnuSeasonDelete_Click);
       // 
@@ -225,16 +228,17 @@
       // 
       this._cmnuShow.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._cmnuShowPlay,
+            this._cmnuShowExport,
             this._cmnuShowDelete});
       this._cmnuShow.Name = "_cmnuShow";
-      this._cmnuShow.Size = new System.Drawing.Size(177, 48);
+      this._cmnuShow.Size = new System.Drawing.Size(202, 70);
       this._cmnuShow.Opening += new System.ComponentModel.CancelEventHandler(this._cmnuShow_Opening);
       // 
       // _cmnuShowPlay
       // 
       this._cmnuShowPlay.Image = global::au.Applications.MythClient.Properties.Resources.Play;
       this._cmnuShowPlay.Name = "_cmnuShowPlay";
-      this._cmnuShowPlay.Size = new System.Drawing.Size(176, 22);
+      this._cmnuShowPlay.Size = new System.Drawing.Size(201, 22);
       this._cmnuShowPlay.Text = "&Play next episode";
       this._cmnuShowPlay.Click += new System.EventHandler(this._cmnuShowPlay_Click);
       // 
@@ -242,7 +246,7 @@
       // 
       this._cmnuShowDelete.Image = global::au.Applications.MythClient.Properties.Resources.Delete;
       this._cmnuShowDelete.Name = "_cmnuShowDelete";
-      this._cmnuShowDelete.Size = new System.Drawing.Size(176, 22);
+      this._cmnuShowDelete.Size = new System.Drawing.Size(201, 22);
       this._cmnuShowDelete.Text = "&Delete next episode";
       this._cmnuShowDelete.Click += new System.EventHandler(this._cmnuShowDelete_Click);
       // 
@@ -272,6 +276,22 @@
       // _dlgExportFolder
       // 
       this._dlgExportFolder.Description = "Choose a directory for downloaded recordings.";
+      // 
+      // _cmnuShowExport
+      // 
+      this._cmnuShowExport.Image = global::au.Applications.MythClient.Properties.Resources.Export;
+      this._cmnuShowExport.Name = "_cmnuShowExport";
+      this._cmnuShowExport.Size = new System.Drawing.Size(201, 22);
+      this._cmnuShowExport.Text = "Dow&nload all episodes...";
+      this._cmnuShowExport.Click += new System.EventHandler(this._cmnuShowExport_Click);
+      // 
+      // _cmnuSeasonExport
+      // 
+      this._cmnuSeasonExport.Image = global::au.Applications.MythClient.Properties.Resources.Export;
+      this._cmnuSeasonExport.Name = "_cmnuSeasonExport";
+      this._cmnuSeasonExport.Size = new System.Drawing.Size(201, 22);
+      this._cmnuSeasonExport.Text = "Dow&nload all episodes...";
+      this._cmnuSeasonExport.Click += new System.EventHandler(this._cmnuSeasonExport_Click);
       // 
       // MythClient
       // 
@@ -326,6 +346,8 @@
     private System.Windows.Forms.ToolStripMenuItem _cmnuMainSettings;
     private System.Windows.Forms.ToolStripMenuItem _cmnuMainAbout;
     private System.Windows.Forms.FolderBrowserDialog _dlgExportFolder;
+    private System.Windows.Forms.ToolStripMenuItem _cmnuShowExport;
+    private System.Windows.Forms.ToolStripMenuItem _cmnuSeasonExport;
   }
 }
 

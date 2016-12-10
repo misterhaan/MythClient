@@ -114,6 +114,10 @@
     <Content Include="mythtv.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="FileOperation\FileOperation.csproj">
+      <Project>{57f6ef31-f4e2-4c8d-adfe-6798b06a5711}</Project>
+      <Name>FileOperation</Name>
+    </ProjectReference>
     <ProjectReference Include="MythData\MythData.csproj">
       <Project>{95ab460c-d83e-4c36-a9f7-74410131c029}</Project>
       <Name>MythData</Name>

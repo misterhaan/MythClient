@@ -37,6 +37,9 @@
       <Component Id="mythdatacomponent" Guid="95ab460c-d83e-4c36-a9f7-74410131c029">
         <File Id="MythData.dll" Name="MythData.dll" DiskId="1" Source="..\build\MythData.dll" />
       </Component>
+      <Component Id="fileoperationcomponent" Guid="57f6ef31-f4e2-4c8d-adfe-6798b06a5711">
+        <File Id="FileOperation.dll" Name="FileOperation.dll" DiskId="1" Source="..\build\FileOperation.dll" />
+      </Component>
       <Component Id="taskdialogcomponent" Guid="CD71AEBF-A802-4F9E-B1A9-A1FA0735246D">
         <File Id="TaskDialog.dll" Name="TaskDialog.dll" DiskId="1" Source="..\build\TaskDialog.dll" />
       </Component>
@@ -67,6 +70,7 @@
       <Feature Id="mythclientfeat" Title="MythClient" Description="The actual application along with libraries (required to run the application)" Level="1">
         <ComponentRef Id="mythclientcomponent" />
         <ComponentRef Id="mythdatacomponent" />
+        <ComponentRef Id="fileoperationcomponent" />
         <ComponentRef Id="taskdialogcomponent" />
         <ComponentRef Id="comctlcomponent" />
         <ComponentRef Id="auiocomponent" />

@@ -20,16 +20,18 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "MythClient_x64", "installer
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "installer", "installer", "{86BB94D0-8B66-4D6E-99C4-FCFDAB13E6D7}"
-	ProjectSection(SolutionItems) = preProject
-		installer\MythClient.wxs = installer\MythClient.wxs
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CD0C4D85-1845-4507-B3DD-8671612F7671}"
 	ProjectSection(SolutionItems) = preProject
+		installer\MythClient.wxs = installer\MythClient.wxs
 		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MythData", "MythData\MythData.csproj", "{95AB460C-D83E-4C36-A9F7-74410131C029}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileOperation", "FileOperation\FileOperation.csproj", "{57F6EF31-F4E2-4C8D-ADFE-6798B06A5711}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shell Integration", "Shell Integration", "{031FE493-10B7-4020-9D34-E404CE493C8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,12 +57,18 @@ Global
 		{95AB460C-D83E-4C36-A9F7-74410131C029}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95AB460C-D83E-4C36-A9F7-74410131C029}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95AB460C-D83E-4C36-A9F7-74410131C029}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57F6EF31-F4E2-4C8D-ADFE-6798B06A5711}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57F6EF31-F4E2-4C8D-ADFE-6798B06A5711}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57F6EF31-F4E2-4C8D-ADFE-6798B06A5711}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57F6EF31-F4E2-4C8D-ADFE-6798B06A5711}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{5BF15AF5-DEB8-46A8-99C7-21993617D0C8} = {031FE493-10B7-4020-9D34-E404CE493C8E}
 		{1E2FE4E7-ED9F-47B6-8200-1B44BBC9A264} = {86BB94D0-8B66-4D6E-99C4-FCFDAB13E6D7}
 		{87803172-C58B-41AB-9C98-9EC2C80EA376} = {86BB94D0-8B66-4D6E-99C4-FCFDAB13E6D7}
+		{57F6EF31-F4E2-4C8D-ADFE-6798B06A5711} = {031FE493-10B7-4020-9D34-E404CE493C8E}
 	EndGlobalSection
 EndGlobal

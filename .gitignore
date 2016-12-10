@@ -7,4 +7,7 @@
 /installer/*.msi
 /installer/*.wixpdb
 /obj
+/MythData/bin
 /MythData/obj
+/FileOperation/bin
+/FileOperation/obj

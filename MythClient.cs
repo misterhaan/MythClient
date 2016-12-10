@@ -4,8 +4,10 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using au.Applications.MythClient.Data;
+using au.util.FileOperation;
 using au.util.comctl;
 using Microsoft.Samples;
 
@@ -383,6 +385,7 @@ namespace au.Applications.MythClient {
       b.MouseEnter += ActionButton_MouseEnter;
       b.MouseLeave += ActionButton_MouseLeave;
       b.Click += clickAction;
+      b.Click += ActionButton_Click;
       _tip.SetToolTip(b, tooltip);
       return b;
     }
@@ -408,17 +411,25 @@ namespace au.Applications.MythClient {
     /// </summary>
     /// <param name="e">Episode to export</param>
     private void ExportEpisode(Episode e) {
-      string fileFormat = AskExportFileFormat(e, false);
-      if(!string.IsNullOrEmpty(fileFormat)) {
-        _dlgExportFolder.SelectedPath = _settings.LastExportDirectory;
-        switch(_dlgExportFolder.ShowDialog(this)) {
-          case DialogResult.OK:
-          case DialogResult.Yes:
-            _settings.LastExportDirectory = _dlgExportFolder.SelectedPath;
-            ExportEpisodeTo(e, _dlgExportFolder.SelectedPath, fileFormat);
-            break;
-        }
+      string nameFormat, exportPath;
+      if(AskExportDetails(e, false, out nameFormat, out exportPath)) {
+        Thread exportThread = new Thread(() => ExportEpisode(e, exportPath, nameFormat));
+        exportThread.TrySetApartmentState(ApartmentState.MTA);
+        exportThread.Name = "ExportEpisode";
+        exportThread.Start();
       }
+    }
+
+    /// <summary>
+    /// Export the specified Episode with a readable filename to the specified
+    /// path with the specified filename format.
+    /// </summary>
+    /// <param name="e">Episode to export</param>
+    /// <param name="exportPath">Path to save exported episode</param>
+    /// <param name="nameFormat">Name format for exported episode</param>
+    private void ExportEpisode(Episode e, string exportPath, string nameFormat) {
+      using(FileOperation fo = new FileOperation())
+        ExportEpisodeTo(e, exportPath, nameFormat, fo);
     }
 
     /// <summary>
@@ -426,18 +437,26 @@ namespace au.Applications.MythClient {
     /// </summary>
     /// <param name="s">Season containing the Episodes to export</param>
     private void ExportSeasonEpisodes(Season s) {
-      string fileFormat = AskExportFileFormat(s.OldestEpisode, true);
-      if(!string.IsNullOrEmpty(fileFormat)) {
-        _dlgExportFolder.SelectedPath = _settings.LastExportDirectory;
-        switch(_dlgExportFolder.ShowDialog(this)) {
-          case DialogResult.OK:
-          case DialogResult.Yes:
-            _settings.LastExportDirectory = _dlgExportFolder.SelectedPath;
-            foreach(Episode e in s.Episodes)
-              ExportEpisodeTo(e, _dlgExportFolder.SelectedPath, fileFormat);
-            break;
-        }
+      string nameFormat, exportPath;
+      if(AskExportDetails(s.OldestEpisode, true, out nameFormat, out exportPath)) {
+        Thread exportThread = new Thread(() => ExportSeasonEpisodes(s, exportPath, nameFormat));
+        exportThread.TrySetApartmentState(ApartmentState.MTA);
+        exportThread.Name = "ExportSeasonEpisodes";
+        exportThread.Start();
       }
+    }
+
+    /// <summary>
+    /// Export all Episodes of the specified Season with readable filenames to
+    /// the specified path with the specified filename format.
+    /// </summary>
+    /// <param name="s">Season containing the Episodes to export</param>
+    /// <param name="exportPath">Path to save exported episodes</param>
+    /// <param name="nameFormat">Name format for exported episodes</param>
+    private void ExportSeasonEpisodes(Season s, string exportPath, string nameFormat) {
+      using(FileOperation fo = new FileOperation())
+        foreach(Episode e in s.Episodes)
+          ExportEpisodeTo(e, exportPath, nameFormat, fo);
     }
 
     /// <summary>
@@ -446,10 +465,26 @@ namespace au.Applications.MythClient {
     /// <param name="s">Show containing the Episodes to export</param>
     private void ExportShowEpisodes(Show s) {
       string nameFormat, exportPath;
-      if(AskExportDetails(s.OldestEpisode, true, out nameFormat, out exportPath))
+      if(AskExportDetails(s.OldestEpisode, true, out nameFormat, out exportPath)) {
+        Thread exportThread = new Thread(() => ExportShowEpisodes(s, exportPath, nameFormat));
+        exportThread.TrySetApartmentState(ApartmentState.MTA);
+        exportThread.Name = "ExportShowEpisodes";
+        exportThread.Start();
+      }
+    }
+
+    /// <summary>
+    /// Export all Episodes of the specified Show with readable filenames to
+    /// the specified path with the specified filename format.
+    /// </summary>
+    /// <param name="s">Show containing the Episodes to export</param>
+    /// <param name="exportPath">Path to save exported episodes</param>
+    /// <param name="nameFormat">Name format for exported episodes</param>
+    private void ExportShowEpisodes(Show s, string exportPath, string nameFormat) {
+      using(FileOperation fo = new FileOperation())
         foreach(Season season in s.Seasons)
           foreach(Episode e in season.Episodes)
-            ExportEpisodeTo(e, exportPath, nameFormat);
+            ExportEpisodeTo(e, exportPath, nameFormat, fo);
     }
 
     /// <summary>
@@ -459,10 +494,9 @@ namespace au.Applications.MythClient {
     /// <param name="e">Episode to export</param>
     /// <param name="exportPath">Path to save Episode</param>
     /// <param name="nameFormat">Filename format to use</param>
-    private void ExportEpisodeTo(Episode e, string exportPath, string nameFormat) {
-      // TODO:  show system file copy dialog
+    private void ExportEpisodeTo(Episode e, string exportPath, string nameFormat, FileOperation fo) {
       FileInfo fi = new FileInfo(Path.Combine(_settings.RawFilesDirectory, e.Filename));
-      fi.CopyTo(Path.Combine(exportPath, SanitizeFilename(string.Format(nameFormat, e.Season.Show.Title, e.Name, e.FirstAired, e.Season.Number, e.Number) + "." + fi.Extension)));
+      fo.QueueFileCopy(fi, exportPath, SanitizeFilename(string.Format(nameFormat, e.Season.Show.Title, e.Name, e.FirstAired, e.Season.Number, e.Number)) + fi.Extension);
     }
 
     /// <summary>
@@ -728,6 +762,10 @@ namespace au.Applications.MythClient {
       PlayEpisode(((Show)_cmnuShow.SourceControl.Tag).OldestEpisode);
     }
 
+    private void _cmnuShowExport_Click(object sender, EventArgs e) {
+      ExportShowEpisodes((Show)((Control)sender).Tag);
+    }
+
     private void _cmnuShowDelete_Click(object sender, EventArgs e) {
       DeleteEpisode(((Show)_cmnuShow.SourceControl.Tag).OldestEpisode);
     }
@@ -738,6 +776,10 @@ namespace au.Applications.MythClient {
 
     private void _cmnuSeasonPlay_Click(object sender, EventArgs e) {
       PlayEpisode(((Season)_cmnuSeason.SourceControl.Tag).OldestEpisode);
+    }
+
+    private void _cmnuSeasonExport_Click(object sender, EventArgs e) {
+      ExportSeasonEpisodes((Season)((Control)sender).Tag);
     }
 
     private void _cmnuSeasonDelete_Click(object sender, EventArgs e) {
@@ -772,6 +814,10 @@ namespace au.Applications.MythClient {
 
     private void ActionButton_MouseLeave(object sender, EventArgs e) {
       ((Button)sender).ForeColor = _pnlInfo.ForeColor;
+    }
+
+    private void ActionButton_Click(object sender, EventArgs e) {
+      _pnlMain.Focus();
     }
 
     private void btnShowPlay_Click(object sender, EventArgs e) {
