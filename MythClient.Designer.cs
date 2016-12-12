@@ -32,6 +32,7 @@
       this._cmnuEpisodeDelete = new System.Windows.Forms.ToolStripMenuItem();
       this._pnlMain = new System.Windows.Forms.FlowLayoutPanel();
       this._pnlHead = new System.Windows.Forms.Panel();
+      this._pbSort = new System.Windows.Forms.PictureBox();
       this._lblTitle = new System.Windows.Forms.Label();
       this._pbMenu = new System.Windows.Forms.PictureBox();
       this._pbReload = new System.Windows.Forms.PictureBox();
@@ -50,14 +51,19 @@
       this._cmnuMainSettings = new System.Windows.Forms.ToolStripMenuItem();
       this._cmnuMainAbout = new System.Windows.Forms.ToolStripMenuItem();
       this._dlgExportFolder = new System.Windows.Forms.FolderBrowserDialog();
+      this._cmnuSort = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this._cmnuSortDate = new System.Windows.Forms.ToolStripMenuItem();
+      this._cmnuSortTitle = new System.Windows.Forms.ToolStripMenuItem();
       this._cmnuEpisode.SuspendLayout();
       this._pnlHead.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this._pbSort)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this._pbMenu)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this._pbReload)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this._pbBack)).BeginInit();
       this._cmnuSeason.SuspendLayout();
       this._cmnuShow.SuspendLayout();
       this._cmnuMain.SuspendLayout();
+      this._cmnuSort.SuspendLayout();
       this.SuspendLayout();
       // 
       // _cmnuEpisode
@@ -123,6 +129,7 @@
       // _pnlHead
       // 
       this._pnlHead.BackColor = System.Drawing.SystemColors.Window;
+      this._pnlHead.Controls.Add(this._pbSort);
       this._pnlHead.Controls.Add(this._lblTitle);
       this._pnlHead.Controls.Add(this._pbMenu);
       this._pnlHead.Controls.Add(this._pbReload);
@@ -134,6 +141,22 @@
       this._pnlHead.Size = new System.Drawing.Size(946, 40);
       this._pnlHead.TabIndex = 1;
       // 
+      // _pbSort
+      // 
+      this._pbSort.Anchor = System.Windows.Forms.AnchorStyles.Right;
+      this._pbSort.Image = global::au.Applications.MythClient.Properties.Resources.SortTitle24;
+      this._pbSort.Location = new System.Drawing.Point(874, 4);
+      this._pbSort.Margin = new System.Windows.Forms.Padding(0, 4, 4, 4);
+      this._pbSort.Name = "_pbSort";
+      this._pbSort.Size = new System.Drawing.Size(32, 32);
+      this._pbSort.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+      this._pbSort.TabIndex = 7;
+      this._pbSort.TabStop = false;
+      this._tip.SetToolTip(this._pbSort, "Sort options");
+      this._pbSort.Click += new System.EventHandler(this._pbSort_Click);
+      this._pbSort.MouseEnter += new System.EventHandler(this.pbButton_MouseEnter);
+      this._pbSort.MouseLeave += new System.EventHandler(this.pbButton_MouseLeave);
+      // 
       // _lblTitle
       // 
       this._lblTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -141,7 +164,7 @@
       this._lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this._lblTitle.Location = new System.Drawing.Point(75, 0);
       this._lblTitle.Name = "_lblTitle";
-      this._lblTitle.Size = new System.Drawing.Size(832, 40);
+      this._lblTitle.Size = new System.Drawing.Size(796, 40);
       this._lblTitle.TabIndex = 3;
       this._lblTitle.Text = "MythTV Recorded Programs";
       this._lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -158,7 +181,8 @@
       this._pbMenu.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
       this._pbMenu.TabIndex = 6;
       this._pbMenu.TabStop = false;
-      this._pbMenu.MouseClick += new System.Windows.Forms.MouseEventHandler(this._pbMenu_MouseClick);
+      this._tip.SetToolTip(this._pbMenu, "More options");
+      this._pbMenu.Click += new System.EventHandler(this._pbMenu_Click);
       this._pbMenu.MouseEnter += new System.EventHandler(this.pbButton_MouseEnter);
       this._pbMenu.MouseLeave += new System.EventHandler(this.pbButton_MouseLeave);
       // 
@@ -308,6 +332,32 @@
       // 
       this._dlgExportFolder.Description = "Choose a directory for downloaded recordings.";
       // 
+      // _cmnuSort
+      // 
+      this._cmnuSort.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._cmnuSortDate,
+            this._cmnuSortTitle});
+      this._cmnuSort.Name = "_cmnuSort";
+      this._cmnuSort.Size = new System.Drawing.Size(153, 70);
+      // 
+      // _cmnuSortDate
+      // 
+      this._cmnuSortDate.Image = global::au.Applications.MythClient.Properties.Resources.Date18;
+      this._cmnuSortDate.Name = "_cmnuSortDate";
+      this._cmnuSortDate.Size = new System.Drawing.Size(152, 22);
+      this._cmnuSortDate.Text = "Earliest Aired";
+      this._cmnuSortDate.Click += new System.EventHandler(this._cmnuSortDate_Click);
+      // 
+      // _cmnuSortTitle
+      // 
+      this._cmnuSortTitle.Checked = true;
+      this._cmnuSortTitle.CheckState = System.Windows.Forms.CheckState.Checked;
+      this._cmnuSortTitle.Image = global::au.Applications.MythClient.Properties.Resources.Title18;
+      this._cmnuSortTitle.Name = "_cmnuSortTitle";
+      this._cmnuSortTitle.Size = new System.Drawing.Size(161, 22);
+      this._cmnuSortTitle.Text = "Title";
+      this._cmnuSortTitle.Click += new System.EventHandler(this._cmnuSortTitle_Click);
+      // 
       // MythClient
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -318,6 +368,7 @@
       this.Controls.Add(this._pnlHead);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.KeyPreview = true;
+      this.MinimumSize = new System.Drawing.Size(516, 443);
       this.Name = "MythClient";
       this.Text = "MythTV Recorded Programs";
       this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MythClient_FormClosed);
@@ -327,12 +378,14 @@
       this.Resize += new System.EventHandler(this.MythClient_Resize);
       this._cmnuEpisode.ResumeLayout(false);
       this._pnlHead.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this._pbSort)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this._pbMenu)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this._pbReload)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this._pbBack)).EndInit();
       this._cmnuSeason.ResumeLayout(false);
       this._cmnuShow.ResumeLayout(false);
       this._cmnuMain.ResumeLayout(false);
+      this._cmnuSort.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -363,6 +416,10 @@
     private System.Windows.Forms.FolderBrowserDialog _dlgExportFolder;
     private System.Windows.Forms.ToolStripMenuItem _cmnuShowExport;
     private System.Windows.Forms.ToolStripMenuItem _cmnuSeasonExport;
+    private System.Windows.Forms.PictureBox _pbSort;
+    private System.Windows.Forms.ContextMenuStrip _cmnuSort;
+    private System.Windows.Forms.ToolStripMenuItem _cmnuSortDate;
+    private System.Windows.Forms.ToolStripMenuItem _cmnuSortTitle;
   }
 }
 

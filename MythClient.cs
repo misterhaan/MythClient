@@ -32,6 +32,13 @@ namespace au.Applications.MythClient {
       _settings = new MythSettings();
       if(!_settings.Load() || string.IsNullOrEmpty(_settings.ServerName))
         new MythServerConfig(_settings).ShowDialog(this);
+      switch(_settings.SortOption) {
+        case RecordingSortOption.OldestRecorded:
+          _pbSort.Image = Properties.Resources.SortDate24;
+          _cmnuSortTitle.Checked = false;
+          _cmnuSortDate.Checked = true;
+          break;
+      }
       if(_settings.Display.Size.Width != -42 && _settings.Display.Size.Height != -42)
         Size = _settings.Display.Size;
       if(_settings.Display.Location.X != -42 && _settings.Display.Location.Y != -42)
@@ -48,7 +55,7 @@ namespace au.Applications.MythClient {
     /// </summary>
     public void RefreshRecordings() {
       if(!string.IsNullOrEmpty(_settings.ServerName)) {
-        _recordings = new MythRecordings(_settings.ServerName, _settings.ServerPort);
+        _recordings = new MythRecordings(_settings.ServerName, _settings.ServerPort, _settings.SortOption);
         if(_selected != null) {
           if(_selected.Tag is Show)
             ListShows(((Show)_selected.Tag).Title);
@@ -740,7 +747,35 @@ namespace au.Applications.MythClient {
       RefreshRecordings();
     }
 
-    private void _pbMenu_MouseClick(object sender, MouseEventArgs e) {
+    private void _pbSort_Click(object sender, EventArgs e) {
+      _cmnuSort.Show(_pbSort, _pbSort.Width - _cmnuSort.Width, _pbSort.Height);
+    }
+
+    private void _cmnuSortDate_Click(object sender, EventArgs e) {
+      if(_recordings != null && _recordings.SortOption != RecordingSortOption.OldestRecorded) {
+        _pbSort.Image = Properties.Resources.SortDate24;
+        _cmnuSortDate.Checked = true;
+        _cmnuSortTitle.Checked = false;
+        _recordings.SortOption = _settings.SortOption = RecordingSortOption.OldestRecorded;
+        _recordings.Sort();
+        if(_pnlMain.Tag is MythRecordings)
+          ListShows(((Show)_selected.Tag).Title);
+      }
+    }
+
+    private void _cmnuSortTitle_Click(object sender, EventArgs e) {
+      if(_recordings != null && _recordings.SortOption != RecordingSortOption.Title) {
+        _pbSort.Image = Properties.Resources.SortTitle24;
+        _cmnuSortTitle.Checked = true;
+        _cmnuSortDate.Checked = false;
+        _recordings.SortOption = _settings.SortOption = RecordingSortOption.Title;
+        _recordings.Sort();
+        if(_pnlMain.Tag is MythRecordings)
+          ListShows(((Show)_selected.Tag).Title);
+      }
+    }
+
+    private void _pbMenu_Click(object sender, EventArgs e) {
       _cmnuMain.Show(_pbMenu, new Point(-_cmnuMain.Width + _pbMenu.Width, _pbMenu.Height));
     }
 

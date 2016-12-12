@@ -26,6 +26,7 @@ namespace au.Applications.MythClient {
     public int ServerPort = MythRecordings.DefaultMythtvPort;
     public string RawFilesDirectory = null;
     public string LastExportDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
+    public RecordingSortOption SortOption = RecordingSortOption.Title;
 
     /// <summary>
     /// Settings pertaining to the display.
@@ -67,6 +68,18 @@ namespace au.Applications.MythClient {
                     LastExportDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
                   }
                   break;
+                case "SortOption":
+                  int so;
+                  if(int.TryParse(node.InnerText, out so))
+                    switch(so) {
+                      case (int)RecordingSortOption.Title:
+                        SortOption = RecordingSortOption.Title;
+                        break;
+                      case (int)RecordingSortOption.OldestRecorded:
+                        SortOption = RecordingSortOption.OldestRecorded;
+                        break;
+                    }
+                  break;
                 case "Display":
                   Display = new DisplaySettings(node);
                   break;
@@ -103,6 +116,8 @@ namespace au.Applications.MythClient {
         myth.AddElement("RawFilesDirectory", RawFilesDirectory);
       if(LastExportDirectory != Environment.GetFolderPath(Environment.SpecialFolder.MyVideos))
         myth.AddElement("LastExportDirectory", LastExportDirectory);
+      if(SortOption != RecordingSortOption.Title)
+        myth.AddElement("SortOption", (int)SortOption);
       XmlNode disp = myth.AddElement("Display");
       Display.SaveTo(disp);
       using(FileStream stream = File.Open(SettingsFilePath, FileMode.Create, FileAccess.Write, FileShare.None))

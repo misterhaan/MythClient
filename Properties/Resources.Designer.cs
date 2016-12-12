@@ -156,6 +156,16 @@ namespace au.Applications.MythClient.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Date18 {
+            get {
+                object obj = ResourceManager.GetObject("Date18", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Delete18 {
             get {
                 object obj = ResourceManager.GetObject("Delete18", resourceCulture);
@@ -524,6 +534,26 @@ namespace au.Applications.MythClient.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap SortDate24 {
+            get {
+                object obj = ResourceManager.GetObject("SortDate24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SortTitle24 {
+            get {
+                object obj = ResourceManager.GetObject("SortTitle24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Static1080p {
             get {
                 object obj = ResourceManager.GetObject("Static1080p", resourceCulture);
@@ -645,6 +675,16 @@ namespace au.Applications.MythClient.Properties {
         internal static string TipPlayWith {
             get {
                 return ResourceManager.GetString("TipPlayWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Title18 {
+            get {
+                object obj = ResourceManager.GetObject("Title18", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

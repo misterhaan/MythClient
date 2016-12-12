@@ -24,6 +24,11 @@ namespace au.Applications.MythClient.Data {
     public List<Show> Shows { get { return _shows; } }
     private List<Show> _shows = new List<Show>();
 
+    /// <summary>
+    /// How recordings should be sorted.
+    /// </summary>
+    public RecordingSortOption SortOption = RecordingSortOption.Title;
+
     public int NumEpisodes {
       get {
         int num = 0;
@@ -38,17 +43,26 @@ namespace au.Applications.MythClient.Data {
     /// </summary>
     /// <param name="mythhost">Hostname or IP address for the MythTV backend</param>
     /// <param name="mythport">Services API port for the MythTV backend</param>
-    public MythRecordings(string mythhost, int mythport) {
+    /// <param name="sortOption">How the shows should be sorted</param>
+    public MythRecordings(string mythhost, int mythport, RecordingSortOption sortOption) {
       _mythHost = mythhost;
       _mythPort = mythport;
+      SortOption = sortOption;
       Refresh();
     }
+
+    /// <summary>
+    /// Create a new set of recordings data for the specified MythTV backend.
+    /// </summary>
+    /// <param name="mythhost">Hostname or IP address for the MythTV backend</param>
+    /// <param name="mythport">Services API port for the MythTV backend</param>
+    public MythRecordings(string mythhost, int mythport) : this(mythhost, mythport, RecordingSortOption.Title) { }
 
     /// <summary>
     /// Create a new set of recordings data for the specified MythTV backend hostname.
     /// </summary>
     /// <param name="mythhost">Hostname or IP address for the MythTV backend</param>
-    public MythRecordings(string host) : this(host, DefaultMythtvPort) { }
+    public MythRecordings(string host) : this(host, DefaultMythtvPort, RecordingSortOption.Title) { }
 
     /// <summary>
     /// Check whether the specified show has any recordings.

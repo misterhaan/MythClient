@@ -145,8 +145,13 @@ namespace au.Applications.MythClient.Data {
     /// <param name="show">Show to compare</param>
     /// <returns>Sort relation between this Show and show</returns>
     public int CompareTo(Show show) {
-      return SortTitle.CompareTo(show.SortTitle);
-      // TODO:  handle other sort options:  oldest / newest airdate, numepisodes
+      switch(Recordings.SortOption) {
+        case RecordingSortOption.OldestRecorded:
+          return OldestEpisode.FirstAired.CompareTo(show.OldestEpisode.FirstAired);
+        case RecordingSortOption.Title:
+        default:
+          return SortTitle.CompareTo(show.SortTitle);
+      }
     }
 
     /// <summary>

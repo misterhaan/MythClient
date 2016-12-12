@@ -149,6 +149,9 @@
     <value>Back to {0}</value>
     <comment>0 - title of page to go back to</comment>
   </data>
+  <data name="Date18" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\date.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Delete18" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -290,6 +293,12 @@
   <data name="Settings18" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="SortDate24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\sort-date.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SortTitle24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\sort-title.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Static1080p" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\static1080p.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -339,6 +348,9 @@
   <data name="TipPlayWith" xml:space="preserve">
     <value>Choose an alternate player to play {0}</value>
     <comment>0 - episode title and name</comment>
+  </data>
+  <data name="Title18" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\title.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TitleDelete" xml:space="preserve">
     <value>Delete Recording</value>
