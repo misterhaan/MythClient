@@ -30,7 +30,7 @@ namespace au.Applications.MythClient {
 
     private void MythClient_Load(object sender, EventArgs e) {
       _settings = new MythSettings();
-      if(!_settings.Load())
+      if(!_settings.Load() || string.IsNullOrEmpty(_settings.ServerName))
         new MythServerConfig(_settings).ShowDialog(this);
       if(_settings.Display.Size.Width != -42 && _settings.Display.Size.Height != -42)
         Size = _settings.Display.Size;
@@ -271,9 +271,9 @@ namespace au.Applications.MythClient {
         _pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoNumSeasons, s.Seasons.Count)));
       _pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoRecordedRange, s.OldestEpisode.Recorded, s.NewestEpisode.Recorded)));
       _pnlInfo.Controls.Add(MakeInfoLabel(s.Duration.ToStringUnit()));
-      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Play, Properties.Resources.ActionPlayOldest, Properties.Resources.TipPlayOldestShow, btnShowPlay_Click));
-      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Export, Properties.Resources.ActionExport, Properties.Resources.TipExportShow, btnShowExport_Click));
-      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete, Properties.Resources.ActionDeleteOldest, Properties.Resources.TipDeleteOldestShow, btnShowDelete_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Play18, Properties.Resources.ActionPlayOldest, Properties.Resources.TipPlayOldestShow, btnShowPlay_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Export18, Properties.Resources.ActionExport, Properties.Resources.TipExportShow, btnShowExport_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete18, Properties.Resources.ActionDeleteOldest, Properties.Resources.TipDeleteOldestShow, btnShowDelete_Click));
     }
 
     /// <summary>
@@ -288,9 +288,9 @@ namespace au.Applications.MythClient {
       _pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoNumEpisodes, s.Episodes.Count)));
       _pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoRecordedRange, s.OldestEpisode.Recorded, s.NewestEpisode.Recorded)));
       _pnlInfo.Controls.Add(MakeInfoLabel(s.Duration.ToStringUnit()));
-      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Play, Properties.Resources.ActionPlayOldest, Properties.Resources.TipPlayOldestSeason, btnSeasonPlay_Click));
-      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Export, Properties.Resources.ActionExport, Properties.Resources.TipExportSeason, btnSeasonExport_Click));
-      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete, Properties.Resources.ActionDeleteOldest, Properties.Resources.TipDeleteOldestSeason, btnSeasonDelete_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Play18, Properties.Resources.ActionPlayOldest, Properties.Resources.TipPlayOldestSeason, btnSeasonPlay_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Export18, Properties.Resources.ActionExport, Properties.Resources.TipExportSeason, btnSeasonExport_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete18, Properties.Resources.ActionDeleteOldest, Properties.Resources.TipDeleteOldestSeason, btnSeasonDelete_Click));
     }
 
     /// <summary>
@@ -315,10 +315,10 @@ namespace au.Applications.MythClient {
         _pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoEpisodeFirstAired, e.FirstAired)));
       _pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoEpisodeRecorded, e.Recorded)));
       _pnlInfo.Controls.Add(MakeInfoLabel(e.Duration.ToStringUnit()));
-      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Play, Properties.Resources.ActionPlay, string.Format(Properties.Resources.TipPlay, title), btnEpisodePlay_Click));
-      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.PlayWith, Properties.Resources.ActionPlayWith, string.Format(Properties.Resources.TipPlayWith, title), btnEpisodePlayWith_Click));
-      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Export, Properties.Resources.ActionExport, string.Format(Properties.Resources.TipExportEpisode, title), btnEpisodeExport_Click));
-      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete, Properties.Resources.ActionDelete, string.Format(Properties.Resources.TipDelete, title), btnEpisodeDelete_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Play18, Properties.Resources.ActionPlay, string.Format(Properties.Resources.TipPlay, title), btnEpisodePlay_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.PlayWith18, Properties.Resources.ActionPlayWith, string.Format(Properties.Resources.TipPlayWith, title), btnEpisodePlayWith_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Export18, Properties.Resources.ActionExport, string.Format(Properties.Resources.TipExportEpisode, title), btnEpisodeExport_Click));
+      _pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete18, Properties.Resources.ActionDelete, string.Format(Properties.Resources.TipDelete, title), btnEpisodeDelete_Click));
     }
 
     /// <summary>
@@ -365,9 +365,9 @@ namespace au.Applications.MythClient {
     private Control MakeInfoAction(Image icon, string text, string tooltip, EventHandler clickAction) {
       Button b = new Button();
       b.UseMnemonic = false;
-      b.FlatAppearance.BorderColor = SystemColors.ControlDark;
-      b.FlatAppearance.MouseDownBackColor = SystemColors.Highlight;
-      b.FlatAppearance.MouseOverBackColor = SystemColors.Highlight;
+      b.FlatAppearance.BorderColor = SystemColors.Control;
+      b.FlatAppearance.MouseDownBackColor = SystemColors.GradientActiveCaption;
+      b.FlatAppearance.MouseOverBackColor = SystemColors.GradientActiveCaption;
       b.FlatStyle = FlatStyle.Flat;
       b.TabStop = false;
       b.Image = icon;
@@ -709,7 +709,7 @@ namespace au.Applications.MythClient {
     }
 
     private void _pbBack_EnabledChanged(object sender, EventArgs e) {
-      _pbBack.Image = _pbBack.Enabled ? Properties.Resources.Back : Properties.Resources.BackDisabled;
+      _pbBack.Image = _pbBack.Enabled ? Properties.Resources.Back24 : Properties.Resources.BackDisabled24;
     }
 
     private void _pbBack_Click(object sender, EventArgs e) {
@@ -726,7 +726,7 @@ namespace au.Applications.MythClient {
 
     private void _cmnuMainSettings_Click(object sender, EventArgs e) {
       new MythServerConfig(_settings).ShowDialog(this);
-      if(!_recordings.Equals(_settings.ServerName, _settings.ServerPort)) {
+      if(!string.IsNullOrEmpty(_settings.ServerName) && (_recordings == null || !_recordings.Equals(_settings.ServerName, _settings.ServerPort))) {
         _recordings = new MythRecordings(_settings.ServerName, _settings.ServerPort);
         RefreshRecordings();
       }
@@ -809,11 +809,11 @@ namespace au.Applications.MythClient {
 
     #region Info Event Handlers
     private void ActionButton_MouseEnter(object sender, EventArgs e) {
-      ((Button)sender).ForeColor = SystemColors.HighlightText;
+      ((Button)sender).FlatAppearance.BorderColor = SystemColors.Highlight;
     }
 
     private void ActionButton_MouseLeave(object sender, EventArgs e) {
-      ((Button)sender).ForeColor = _pnlInfo.ForeColor;
+      ((Button)sender).FlatAppearance.BorderColor = _pnlInfo.BackColor;
     }
 
     private void ActionButton_Click(object sender, EventArgs e) {

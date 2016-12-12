@@ -107,7 +107,7 @@
       this._lnkTest.Location = new System.Drawing.Point(477, 34);
       this._lnkTest.Name = "_lnkTest";
       this._lnkTest.Size = new System.Drawing.Size(28, 13);
-      this._lnkTest.TabIndex = 10;
+      this._lnkTest.TabIndex = 4;
       this._lnkTest.TabStop = true;
       this._lnkTest.Text = "Test";
       this._tip.SetToolTip(this._lnkTest, "Launch MythTV services in the default browser to verify the hostname and port.");
@@ -121,7 +121,7 @@
       this._lblPort.Margin = new System.Windows.Forms.Padding(0);
       this._lblPort.Name = "_lblPort";
       this._lblPort.Size = new System.Drawing.Size(10, 13);
-      this._lblPort.TabIndex = 11;
+      this._lblPort.TabIndex = 2;
       this._lblPort.Text = ":";
       this._tip.SetToolTip(this._lblPort, "Enter the port used by the MythTV Services API.  Default is 6544.");
       // 
@@ -135,7 +135,7 @@
             0});
       this._numPort.Name = "_numPort";
       this._numPort.Size = new System.Drawing.Size(50, 20);
-      this._numPort.TabIndex = 12;
+      this._numPort.TabIndex = 3;
       this._numPort.ValueChanged += new System.EventHandler(this._numPort_ValueChanged);
       // 
       // MythServerConfig

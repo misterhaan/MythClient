@@ -9,7 +9,7 @@ namespace au.Applications.MythClient {
     }
 
     private void AboutMythClient_Load(object sender, EventArgs e) {
-      _picIcon.Image = Properties.Resources.MythTV;
+      _picIcon.Image = Properties.Resources.MythTV32;
       _lblVersion.Text += Application.ProductVersion;
     }
 

@@ -111,6 +111,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="img\about.png" />
     <Content Include="mythtv.ico" />
   </ItemGroup>
   <ItemGroup>

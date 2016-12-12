@@ -61,6 +61,16 @@ namespace au.Applications.MythClient.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap About18 {
+            get {
+                object obj = ResourceManager.GetObject("About18", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         internal static string ActionDelete {
@@ -117,9 +127,9 @@ namespace au.Applications.MythClient.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Back {
+        internal static System.Drawing.Bitmap Back24 {
             get {
-                object obj = ResourceManager.GetObject("Back", resourceCulture);
+                object obj = ResourceManager.GetObject("Back24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -127,9 +137,9 @@ namespace au.Applications.MythClient.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap BackDisabled {
+        internal static System.Drawing.Bitmap BackDisabled24 {
             get {
-                object obj = ResourceManager.GetObject("BackDisabled", resourceCulture);
+                object obj = ResourceManager.GetObject("BackDisabled24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -146,9 +156,9 @@ namespace au.Applications.MythClient.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Delete {
+        internal static System.Drawing.Bitmap Delete18 {
             get {
-                object obj = ResourceManager.GetObject("Delete", resourceCulture);
+                object obj = ResourceManager.GetObject("Delete18", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -174,9 +184,9 @@ namespace au.Applications.MythClient.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Export {
+        internal static System.Drawing.Bitmap Export18 {
             get {
-                object obj = ResourceManager.GetObject("Export", resourceCulture);
+                object obj = ResourceManager.GetObject("Export18", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -400,9 +410,9 @@ namespace au.Applications.MythClient.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Menu {
+        internal static System.Drawing.Bitmap Menu24 {
             get {
-                object obj = ResourceManager.GetObject("Menu", resourceCulture);
+                object obj = ResourceManager.GetObject("Menu24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -410,9 +420,9 @@ namespace au.Applications.MythClient.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap MythTV {
+        internal static System.Drawing.Bitmap MythTV32 {
             get {
-                object obj = ResourceManager.GetObject("MythTV", resourceCulture);
+                object obj = ResourceManager.GetObject("MythTV32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -438,9 +448,9 @@ namespace au.Applications.MythClient.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Play {
+        internal static System.Drawing.Bitmap Play18 {
             get {
-                object obj = ResourceManager.GetObject("Play", resourceCulture);
+                object obj = ResourceManager.GetObject("Play18", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -448,9 +458,9 @@ namespace au.Applications.MythClient.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap PlayWith {
+        internal static System.Drawing.Bitmap PlayWith18 {
             get {
-                object obj = ResourceManager.GetObject("PlayWith", resourceCulture);
+                object obj = ResourceManager.GetObject("PlayWith18", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -494,9 +504,9 @@ namespace au.Applications.MythClient.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Reload {
+        internal static System.Drawing.Bitmap Reload24 {
             get {
-                object obj = ResourceManager.GetObject("Reload", resourceCulture);
+                object obj = ResourceManager.GetObject("Reload24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -504,9 +514,9 @@ namespace au.Applications.MythClient.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Settings {
+        internal static System.Drawing.Bitmap Settings18 {
             get {
-                object obj = ResourceManager.GetObject("Settings", resourceCulture);
+                object obj = ResourceManager.GetObject("Settings18", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
