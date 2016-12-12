@@ -632,6 +632,16 @@ namespace au.Applications.MythClient {
         case Keys.F5:
           RefreshRecordings();
           break;
+        // select first item
+        case Keys.Home:
+          if(_pnlMain.Controls.Count > 0)
+            Select(_pnlMain.Controls[0]);
+          break;
+       // select last item
+        case Keys.End:
+          if(_pnlMain.Controls.Count > 0)
+            Select(_pnlMain.Controls[_pnlMain.Controls.Count - 1]);
+          break;
         // select next item to the left, or wrap up to the previous line's rightmost item
         case Keys.Left:
           if(_selected != null) {
@@ -694,6 +704,16 @@ namespace au.Applications.MythClient {
         case Keys.Back:
           if(_pbBack.Enabled)
             Back();
+          break;
+        // show the appropriate context menu
+        case Keys.Apps:
+          if(_selected != null)
+            if(_selected.Tag is Show)
+              _cmnuShow.Show(_selected, _selected.Width / 2, _selected.Height / 2);
+            else if(_selected.Tag is Season)
+              _cmnuSeason.Show(_selected, _selected.Width / 2, _selected.Height / 2);
+            else if(_selected.Tag is Episode)
+              _cmnuEpisode.Show(_selected, _selected.Width / 2, _selected.Height / 2);
           break;
       }
     }
