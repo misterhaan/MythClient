@@ -5,6 +5,10 @@ Download the latest installer from [track7.org](http://www.track7.org/analogu/ne
 
 ## Revision History
 
+### 1.0.1
+* Switch to Visual Studio 2017.
+* Handle no cover art for a show.
+
 ### 1.0.0
 * Switch to API instead of parsing MythWeb.
 * New show-based user interface.
