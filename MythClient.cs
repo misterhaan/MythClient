@@ -116,7 +116,7 @@ namespace au.Applications.MythClient {
       foreach(Show s in _recordings.Shows) {
         PictureBox pb = new PictureBox();
         pb.Tag = s;
-        pb.Image = s.Cover;
+        pb.Image = s.Cover ?? Properties.Resources.Static1080p;
         pb.Width = 212;
         pb.Height = 301;
         pb.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -204,7 +204,7 @@ namespace au.Applications.MythClient {
       foreach(Episode e in season.Episodes) {
         CaptionedPictureBox cpb = new CaptionedPictureBox();
         cpb.Tag = e;
-        cpb.Image = e.Thumb != null ? e.Thumb : Properties.Resources.Static1080p;
+        cpb.Image = e.Thumb ?? Properties.Resources.Static1080p;
         cpb.Text = e.Name ?? e.FirstAired.ToString("M/d/yyyy");
         cpb.Width = 212;
         cpb.Height = 125 + cpb.CaptionHeight;

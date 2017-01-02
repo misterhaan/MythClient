@@ -105,7 +105,8 @@ namespace au.Applications.MythClient.Data {
     public Image Cover {
       get {
         if(_coverImage == null)
-          _coverImage = Seasons.Where(s => s.HasCover).First().Cover;
+          if(Seasons.Count(s => s.HasCover) > 0)
+            _coverImage = Seasons.Where(s => s.HasCover).First().Cover;
         return _coverImage;
       }
     }
