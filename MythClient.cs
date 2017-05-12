@@ -279,9 +279,11 @@ namespace au.Applications.MythClient {
 				_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoNumSeasons, s.Seasons.Count)));
 			_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoRecordedRange, s.OldestEpisode.Recorded, s.NewestEpisode.Recorded)));
 			_pnlInfo.Controls.Add(MakeInfoLabel(s.Duration.ToStringUnit()));
-			_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Play18, Properties.Resources.ActionPlayOldest, Properties.Resources.TipPlayOldestShow, btnShowPlay_Click));
 			_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Export18, Properties.Resources.ActionExport, Properties.Resources.TipExportShow, btnShowExport_Click));
-			_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete18, Properties.Resources.ActionDeleteOldest, Properties.Resources.TipDeleteOldestShow, btnShowDelete_Click));
+			AppendNextUp(_pnlInfo.Controls, s.OldestEpisode, false);
+			_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Play18, Properties.Resources.ActionPlay, Properties.Resources.TipPlayOldestShow, btnShowPlay_Click));
+			_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.PlayWith18, Properties.Resources.ActionPlayWith, Properties.Resources.TipPlayOldestShowWith, btnShowPlayWith_Click));
+			_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete18, Properties.Resources.ActionDelete, Properties.Resources.TipDeleteOldestShow, btnShowDelete_Click));
 		}
 
 		/// <summary>
@@ -292,15 +294,15 @@ namespace au.Applications.MythClient {
 			_pnlInfo.Controls.Clear();
 			_pnlInfo.Tag = s;
 			// assume we'll only show season info if it's a valid season (this is not true because sometimes season info is missing)
-			_pnlInfo.Controls.AddRange(new Control[] {
-				MakeInfoTitleLabel(string.Format(Properties.Resources.InfoSeasonTitle, s.Show.Title, s.Number)),
-				MakeInfoLabel(string.Format(Properties.Resources.InfoNumEpisodes, s.Episodes.Count)),
-				MakeInfoLabel(string.Format(Properties.Resources.InfoRecordedRange, s.OldestEpisode.Recorded, s.NewestEpisode.Recorded)),
-				MakeInfoLabel(s.Duration.ToStringUnit()),
-				MakeInfoAction(Properties.Resources.Play18, Properties.Resources.ActionPlayOldest, Properties.Resources.TipPlayOldestSeason, btnSeasonPlay_Click),
-				MakeInfoAction(Properties.Resources.Export18, Properties.Resources.ActionExport, Properties.Resources.TipExportSeason, btnSeasonExport_Click),
-				MakeInfoAction(Properties.Resources.Delete18, Properties.Resources.ActionDeleteOldest, Properties.Resources.TipDeleteOldestSeason, btnSeasonDelete_Click)
-			});
+			_pnlInfo.Controls.Add(MakeInfoTitleLabel(string.Format(Properties.Resources.InfoSeasonTitle, s.Show.Title, s.Number)));
+			_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoNumEpisodes, s.Episodes.Count)));
+			_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoRecordedRange, s.OldestEpisode.Recorded, s.NewestEpisode.Recorded)));
+			_pnlInfo.Controls.Add(MakeInfoLabel(s.Duration.ToStringUnit()));
+			_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Export18, Properties.Resources.ActionExport, Properties.Resources.TipExportSeason, btnSeasonExport_Click));
+			AppendNextUp(_pnlInfo.Controls, s.OldestEpisode, true);
+			_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Play18, Properties.Resources.ActionPlay, Properties.Resources.TipPlayOldestSeason, btnSeasonPlay_Click));
+			_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.PlayWith18, Properties.Resources.ActionPlayWith, Properties.Resources.TipPlayOldestSeasonWith, btnSeasonPlayWith_Click));
+			_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete18, Properties.Resources.ActionDelete, Properties.Resources.TipDeleteOldestSeason, btnSeasonDelete_Click));
 		}
 
 		/// <summary>
@@ -311,8 +313,8 @@ namespace au.Applications.MythClient {
 			_pnlInfo.Controls.Clear();
 			_pnlInfo.Tag = e;
 			string title = string.IsNullOrEmpty(e.Name)
-					? string.Format(Properties.Resources.InfoEpisodeTitleNameless, e.Season.Show.Title, e.FirstAired)
-					: string.Format(Properties.Resources.InfoEpisodeTitle, e.Season.Show.Title, e.Name);
+				? string.Format(Properties.Resources.InfoEpisodeTitleNameless, e.Season.Show.Title, e.FirstAired)
+				: string.Format(Properties.Resources.InfoEpisodeTitle, e.Season.Show.Title, e.Name);
 			_pnlInfo.Controls.Add(MakeInfoTitleLabel(title));
 			if(e.InProgress) {
 				Label lbl = MakeInfoLabel(string.Format(Properties.Resources.InfoEpisodeStillRecording, (e.DoneRecording - DateTime.Now).ToStringUnit()));
@@ -321,7 +323,7 @@ namespace au.Applications.MythClient {
 			}
 			if(e.Season.Number > 0)
 				_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoEpisodeSeasonEpisode, e.Season.Number, e.Number)));
-			if(e.FirstAired != e.Recorded)
+			if(e.FirstAired.ToShortDateString() != e.Recorded.ToShortDateString())
 				_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoEpisodeFirstAired, e.FirstAired)));
 			_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoEpisodeRecorded, e.Recorded)));
 			_pnlInfo.Controls.Add(MakeInfoLabel(e.Duration.ToStringUnit()));
@@ -329,6 +331,38 @@ namespace au.Applications.MythClient {
 			_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.PlayWith18, Properties.Resources.ActionPlayWith, string.Format(Properties.Resources.TipPlayWith, title), btnEpisodePlayWith_Click));
 			_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Export18, Properties.Resources.ActionExport, string.Format(Properties.Resources.TipExportEpisode, title), btnEpisodeExport_Click));
 			_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete18, Properties.Resources.ActionDelete, string.Format(Properties.Resources.TipDelete, title), btnEpisodeDelete_Click));
+		}
+
+		private void AppendNextUp(Control.ControlCollection controls, Episode e, bool inSeason) {
+			string title = string.IsNullOrEmpty(e.Name)
+				? e.FirstAired.ToShortDateString()
+				: e.Name;
+			controls.Add(MakeInfoSubtitleLabel(string.Format("Next up:  {0}", title)));
+			Image thumb = e.Thumb ?? Properties.Resources.Static1080p;
+			PictureBox pb = new PictureBox() {
+				Image = thumb,
+				Width = 200,
+				Height = 200 * thumb.Height / thumb.Width,
+				SizeMode = PictureBoxSizeMode.StretchImage
+			};
+			Control last = controls[controls.Count - 1];
+			pb.Top = last.Top + last.Height + 3;
+			pb.Left = (last.Width - pb.Width) / 2;
+			controls.Add(pb);
+			if(e.InProgress) {
+				Label lbl = MakeInfoLabel(string.Format(Properties.Resources.InfoEpisodeStillRecording, (e.DoneRecording - DateTime.Now).ToStringUnit()));
+				lbl.ForeColor = Color.Red;
+				_pnlInfo.Controls.Add(lbl);
+			}
+			if(e.Season.Number > 0)
+				if(inSeason)
+					_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoEpisodeNumber, e.Number)));
+				else
+					_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoEpisodeSeasonEpisode, e.Season.Number, e.Number)));
+			if(e.FirstAired.ToShortDateString() != e.Recorded.ToShortDateString())
+				_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoEpisodeFirstAired, e.FirstAired)));
+			_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoEpisodeRecorded, e.Recorded)));
+			_pnlInfo.Controls.Add(MakeInfoLabel(e.Duration.ToStringUnit()));
 		}
 
 		/// <summary>
@@ -342,6 +376,19 @@ namespace au.Applications.MythClient {
 			lbl.Font = new Font(_pnlInfo.Font.FontFamily, 14F);
 			lbl.BackColor = SystemColors.Highlight;
 			lbl.ForeColor = SystemColors.HighlightText;
+			return lbl;
+		}
+
+		/// <summary>
+		/// Create a new Label to act as a subtitle on the info panel.
+		/// </summary>
+		/// <param name="text">Text to display on the label</param>
+		/// <returns>Label ready to add to the info panel</returns>
+		private Label MakeInfoSubtitleLabel(string text) {
+			Label lbl = MakeInfoLabel(text);
+			lbl.Top += 9;
+			lbl.Font = new Font(_pnlInfo.Font.FontFamily, 11F);
+			lbl.ForeColor = SystemColors.Highlight;
 			return lbl;
 		}
 
@@ -821,6 +868,10 @@ namespace au.Applications.MythClient {
 			PlayEpisode(((Show)_cmnuShow.SourceControl.Tag).OldestEpisode);
 		}
 
+		private void _cmnuShowPlayWith_Click(object sender, EventArgs e) {
+			PlayEpisodeWith(((Show)_cmnuShow.SourceControl.Tag).OldestEpisode);
+		}
+
 		private void _cmnuShowExport_Click(object sender, EventArgs e) {
 			ExportShowEpisodes((Show)((Control)sender).Tag);
 		}
@@ -835,6 +886,10 @@ namespace au.Applications.MythClient {
 
 		private void _cmnuSeasonPlay_Click(object sender, EventArgs e) {
 			PlayEpisode(((Season)_cmnuSeason.SourceControl.Tag).OldestEpisode);
+		}
+
+		private void _cmnuSeasonPlayWith_Click(object sender, EventArgs e) {
+			PlayEpisodeWith(((Season)_cmnuSeason.SourceControl.Tag).OldestEpisode);
 		}
 
 		private void _cmnuSeasonExport_Click(object sender, EventArgs e) {
@@ -883,6 +938,10 @@ namespace au.Applications.MythClient {
 			PlayEpisode(((Show)_pnlInfo.Tag).OldestEpisode);
 		}
 
+		private void btnShowPlayWith_Click(object sender, EventArgs e) {
+			PlayEpisodeWith(((Show)_pnlInfo.Tag).OldestEpisode);
+		}
+
 		private void btnShowExport_Click(object sender, EventArgs e) {
 			ExportShowEpisodes((Show)_pnlInfo.Tag);
 		}
@@ -893,6 +952,10 @@ namespace au.Applications.MythClient {
 
 		private void btnSeasonPlay_Click(object sender, EventArgs e) {
 			PlayEpisode(((Season)_pnlInfo.Tag).OldestEpisode);
+		}
+
+		private void btnSeasonPlayWith_Click(object sender, EventArgs e) {
+			PlayEpisodeWith(((Season)_pnlInfo.Tag).OldestEpisode);
 		}
 
 		private void btnSeasonExport_Click(object sender, EventArgs e) {

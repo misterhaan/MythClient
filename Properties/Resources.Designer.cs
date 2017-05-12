@@ -80,15 +80,6 @@ namespace au.Applications.MythClient.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete oldest.
-        /// </summary>
-        internal static string ActionDeleteOldest {
-            get {
-                return ResourceManager.GetString("ActionDeleteOldest", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Download....
         /// </summary>
         internal static string ActionExport {
@@ -103,15 +94,6 @@ namespace au.Applications.MythClient.Properties {
         internal static string ActionPlay {
             get {
                 return ResourceManager.GetString("ActionPlay", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Play oldest.
-        /// </summary>
-        internal static string ActionPlayOldest {
-            get {
-                return ResourceManager.GetString("ActionPlayOldest", resourceCulture);
             }
         }
         
@@ -315,6 +297,15 @@ namespace au.Applications.MythClient.Properties {
         internal static string InfoEpisodeFirstAired {
             get {
                 return ResourceManager.GetString("InfoEpisodeFirstAired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Episode {0}.
+        /// </summary>
+        internal static string InfoEpisodeNumber {
+            get {
+                return ResourceManager.GetString("InfoEpisodeNumber", resourceCulture);
             }
         }
         
@@ -661,11 +652,29 @@ namespace au.Applications.MythClient.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose an alternate player to play the oldest recorded episode of this season.
+        /// </summary>
+        internal static string TipPlayOldestSeasonWith {
+            get {
+                return ResourceManager.GetString("TipPlayOldestSeasonWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Play the oldest recorded episode of this show.
         /// </summary>
         internal static string TipPlayOldestShow {
             get {
                 return ResourceManager.GetString("TipPlayOldestShow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose an alternate player to play the oldest recorded episode of this show.
+        /// </summary>
+        internal static string TipPlayOldestShowWith {
+            get {
+                return ResourceManager.GetString("TipPlayOldestShowWith", resourceCulture);
             }
         }
         

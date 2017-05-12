@@ -124,17 +124,11 @@
   <data name="ActionDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="ActionDeleteOldest" xml:space="preserve">
-    <value>Delete oldest</value>
-  </data>
   <data name="ActionExport" xml:space="preserve">
     <value>Download...</value>
   </data>
   <data name="ActionPlay" xml:space="preserve">
     <value>Play</value>
-  </data>
-  <data name="ActionPlayOldest" xml:space="preserve">
-    <value>Play oldest</value>
   </data>
   <data name="ActionPlayWith" xml:space="preserve">
     <value>Play with...</value>
@@ -205,6 +199,10 @@
   <data name="InfoEpisodeFirstAired" xml:space="preserve">
     <value>First Aired {0:M/d/yyyy}</value>
     <comment>0 - date aired</comment>
+  </data>
+  <data name="InfoEpisodeNumber" xml:space="preserve">
+    <value>Episode {0}</value>
+    <comment>0 - episode number</comment>
   </data>
   <data name="InfoEpisodeRecorded" xml:space="preserve">
     <value>Recorded {0:M/d/yyyy h:mm tt}</value>
@@ -342,8 +340,14 @@
   <data name="TipPlayOldestSeason" xml:space="preserve">
     <value>Play the oldest recorded episode of this season</value>
   </data>
+  <data name="TipPlayOldestSeasonWith" xml:space="preserve">
+    <value>Choose an alternate player to play the oldest recorded episode of this season</value>
+  </data>
   <data name="TipPlayOldestShow" xml:space="preserve">
     <value>Play the oldest recorded episode of this show</value>
+  </data>
+  <data name="TipPlayOldestShowWith" xml:space="preserve">
+    <value>Choose an alternate player to play the oldest recorded episode of this show</value>
   </data>
   <data name="TipPlayWith" xml:space="preserve">
     <value>Choose an alternate player to play {0}</value>
