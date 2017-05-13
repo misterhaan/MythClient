@@ -275,7 +275,7 @@ namespace au.Applications.MythClient {
 			_pnlInfo.Tag = s;
 			if(s.IsMovie) {
 				Episode e = s.NewestEpisode;
-				_pnlInfo.Controls.Add(MakeInfoTitleLabel(string.Format("{0} ({1:yyyy})", s.Title, e.FirstAired)));
+				_pnlInfo.Controls.Add(MakeInfoTitleLabel(string.Format(Properties.Resources.InfoMovieTitle, s.Title, e.FirstAired)));
 				_pnlInfo.Controls.Add(MakeInfoThumbnail(e.Thumb));
 				_pnlInfo.Controls.Add(MakeInfoLabel(e.Duration.ToStringUnit()));
 				_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoEpisodeRecorded, e.Recorded)));

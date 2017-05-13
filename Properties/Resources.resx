@@ -225,6 +225,11 @@
   <data name="InfoEpisodeTitleNameless" xml:space="preserve">
     <value>{0} - {1:M/d/yyyy}</value>
   </data>
+  <data name="InfoMovieTitle" xml:space="preserve">
+    <value>{0} ({1:yyyy})</value>
+    <comment>0 - movie title
+1 - release year (airdate)</comment>
+  </data>
   <data name="InfoNumEpisodes" xml:space="preserve">
     <value>{0} Episodes</value>
     <comment>0 - episode count</comment>

@@ -355,6 +355,15 @@ namespace au.Applications.MythClient.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} ({1:yyyy}).
+        /// </summary>
+        internal static string InfoMovieTitle {
+            get {
+                return ResourceManager.GetString("InfoMovieTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} Episodes.
         /// </summary>
         internal static string InfoNumEpisodes {
