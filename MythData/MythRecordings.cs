@@ -126,7 +126,8 @@ namespace au.Applications.MythClient.Data {
 								program.ElementValue("Airdate"),
 								program.ElementValue("StartTime"),
 								program.ElementValue("EndTime"),
-								program.ElementValue("Recording/Status")
+								program.ElementValue("Recording/Status"),
+								program.ElementValue("CatType")
 							);
 							season.Episodes.Add(episode);
 						}

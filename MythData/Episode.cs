@@ -76,6 +76,12 @@ namespace au.Applications.MythClient.Data {
 		private bool _inProgress = false;
 
 		/// <summary>
+		/// Whether the episode is a movie and not actually an episode from a series.
+		/// </summary>
+		public bool IsMovie { get { return _catType.Equals("movie", StringComparison.CurrentCultureIgnoreCase); } }
+		private string _catType = "";
+
+		/// <summary>
 		/// Creates a new Episode.
 		/// </summary>
 		/// <param name="season">Season this episode belongs to</param>
@@ -87,7 +93,8 @@ namespace au.Applications.MythClient.Data {
 		/// <param name="recorded">Date and time recorded</param>
 		/// <param name="endtime">Date and time the recording ended</param>
 		/// <param name="status">Status of the recording</param>
-		public Episode(Season season, string recordedId, string filename, string name, string number, string aired, string recorded, string endtime, string status) {
+		/// <param name="catType">Type of the recording (movie or series)</param>
+		public Episode(Season season, string recordedId, string filename, string name, string number, string aired, string recorded, string endtime, string status, string catType) {
 			_season = season;
 			_recordingId = recordedId;
 			_filename = filename;
@@ -100,6 +107,7 @@ namespace au.Applications.MythClient.Data {
 					_aired = _recorded;
 			}
 			_inProgress = status.Equals("Recording", StringComparison.CurrentCultureIgnoreCase);
+			_catType = catType;
 		}
 
 		/// <summary>

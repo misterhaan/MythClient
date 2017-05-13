@@ -273,17 +273,29 @@ namespace au.Applications.MythClient {
 		private void ShowShowInfo(Show s) {
 			_pnlInfo.Controls.Clear();
 			_pnlInfo.Tag = s;
-			_pnlInfo.Controls.Add(MakeInfoTitleLabel(s.Title));
-			_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoNumEpisodes, s.NumEpisodes)));
-			if(s.Seasons.Count > 1)
-				_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoNumSeasons, s.Seasons.Count)));
-			_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoRecordedRange, s.OldestEpisode.Recorded, s.NewestEpisode.Recorded)));
-			_pnlInfo.Controls.Add(MakeInfoLabel(s.Duration.ToStringUnit()));
-			_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Export18, Properties.Resources.ActionExport, Properties.Resources.TipExportShow, btnShowExport_Click));
-			AppendNextUp(_pnlInfo.Controls, s.OldestEpisode, false);
-			_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Play18, Properties.Resources.ActionPlay, Properties.Resources.TipPlayOldestShow, btnShowPlay_Click));
-			_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.PlayWith18, Properties.Resources.ActionPlayWith, Properties.Resources.TipPlayOldestShowWith, btnShowPlayWith_Click));
-			_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete18, Properties.Resources.ActionDelete, Properties.Resources.TipDeleteOldestShow, btnShowDelete_Click));
+			if(s.IsMovie) {
+				Episode e = s.NewestEpisode;
+				_pnlInfo.Controls.Add(MakeInfoTitleLabel(string.Format("{0} ({1:yyyy})", s.Title, e.FirstAired)));
+				_pnlInfo.Controls.Add(MakeInfoThumbnail(e.Thumb));
+				_pnlInfo.Controls.Add(MakeInfoLabel(e.Duration.ToStringUnit()));
+				_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoEpisodeRecorded, e.Recorded)));
+				_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Play18, Properties.Resources.ActionPlay, string.Format(Properties.Resources.TipPlay, s.Title), btnShowPlay_Click));
+				_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.PlayWith18, Properties.Resources.ActionPlayWith, string.Format(Properties.Resources.TipPlayWith, s.Title), btnShowPlayWith_Click));
+				_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Export18, Properties.Resources.ActionExport, string.Format(Properties.Resources.TipExportEpisode, s.Title), btnShowExport_Click));
+				_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete18, Properties.Resources.ActionDelete, string.Format(Properties.Resources.TipDelete, s.Title), btnShowDelete_Click));
+			} else {
+				_pnlInfo.Controls.Add(MakeInfoTitleLabel(s.Title));
+				_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoNumEpisodes, s.NumEpisodes)));
+				if(s.Seasons.Count > 1)
+					_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoNumSeasons, s.Seasons.Count)));
+				_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoRecordedRange, s.OldestEpisode.Recorded, s.NewestEpisode.Recorded)));
+				_pnlInfo.Controls.Add(MakeInfoLabel(s.Duration.ToStringUnit()));
+				_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Export18, Properties.Resources.ActionExport, Properties.Resources.TipExportShow, btnShowExport_Click));
+				AppendNextUp(_pnlInfo.Controls, s.OldestEpisode, false);
+				_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Play18, Properties.Resources.ActionPlay, Properties.Resources.TipPlayOldestShow, btnShowPlay_Click));
+				_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.PlayWith18, Properties.Resources.ActionPlayWith, Properties.Resources.TipPlayOldestShowWith, btnShowPlayWith_Click));
+				_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete18, Properties.Resources.ActionDelete, Properties.Resources.TipDeleteOldestShow, btnShowDelete_Click));
+			}
 		}
 
 		/// <summary>
@@ -338,17 +350,7 @@ namespace au.Applications.MythClient {
 				? e.FirstAired.ToShortDateString()
 				: e.Name;
 			controls.Add(MakeInfoSubtitleLabel(string.Format("Next up:  {0}", title)));
-			Image thumb = e.Thumb ?? Properties.Resources.Static1080p;
-			PictureBox pb = new PictureBox() {
-				Image = thumb,
-				Width = 200,
-				Height = 200 * thumb.Height / thumb.Width,
-				SizeMode = PictureBoxSizeMode.StretchImage
-			};
-			Control last = controls[controls.Count - 1];
-			pb.Top = last.Top + last.Height + 3;
-			pb.Left = (last.Width - pb.Width) / 2;
-			controls.Add(pb);
+			controls.Add(MakeInfoThumbnail(e.Thumb));
 			if(e.InProgress) {
 				Label lbl = MakeInfoLabel(string.Format(Properties.Resources.InfoEpisodeStillRecording, (e.DoneRecording - DateTime.Now).ToStringUnit()));
 				lbl.ForeColor = Color.Red;
@@ -410,6 +412,27 @@ namespace au.Applications.MythClient {
 				lbl.Top = last.Top + last.Height + 3;
 			}
 			return lbl;
+		}
+
+		/// <summary>
+		/// Create a new PictureBox with the specified thumbnail for adding to the info panel.
+		/// </summary>
+		/// <param name="thumb">Thumbnail image to display</param>
+		/// <returns>PictureBox ready to add to the info panel</returns>
+		private PictureBox MakeInfoThumbnail(Image thumb) {
+			Image t = thumb ?? Properties.Resources.Static1080p;
+			PictureBox pb = new PictureBox() {
+				Image = thumb,
+				Width = 200,
+				Height = 200 * thumb.Height / thumb.Width,
+				SizeMode = PictureBoxSizeMode.StretchImage
+			};
+			if(_pnlInfo.Controls.Count > 0) {
+				Control last = _pnlInfo.Controls[_pnlInfo.Controls.Count - 1];
+				pb.Top = last.Top + last.Height + 3;
+			}
+			pb.Left = (_pnlInfo.Width - pb.Width) / 2;
+			return pb;
 		}
 
 		/// <summary>
@@ -741,12 +764,15 @@ namespace au.Applications.MythClient {
 				// double-click the selected item.  unfortunately there's no way to just call the doubleclick event so i have to figure out what type of thing is selected.
 				case Keys.Enter:
 					if(_selected != null)
-						if(_selected.Tag is Episode)
-							PlayEpisode((Episode)_selected.Tag);
-						else if(_selected.Tag is Season)
-							ListEpisodes((Season)_selected.Tag);
-						else if(_selected.Tag is Show)
-							ListSeasons((Show)_selected.Tag);
+						if(_selected.Tag is Episode ep)
+							PlayEpisode(ep);
+						else if(_selected.Tag is Season se)
+							ListEpisodes(se);
+						else if(_selected.Tag is Show sh)
+							if(sh.IsMovie)
+								PlayEpisode(sh.OldestEpisode);
+							else
+								ListSeasons(sh);
 					break;
 				// delete the selected episode or the oldest episode for the show or season
 				case Keys.Delete:
@@ -849,7 +875,11 @@ namespace au.Applications.MythClient {
 		}
 
 		private void pbShow_DoubleClick(object sender, EventArgs e) {
-			ListSeasons((Show)((PictureBox)sender).Tag);
+			Show s = (Show)((PictureBox)sender).Tag;
+			if(s.IsMovie)
+				PlayEpisode(s.OldestEpisode);
+			else
+				ListSeasons(s);
 		}
 
 		private void pbSeason_DoubleClick(object sender, EventArgs e) {

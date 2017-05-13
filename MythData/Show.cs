@@ -49,6 +49,15 @@ namespace au.Applications.MythClient.Data {
 		}
 
 		/// <summary>
+		/// Whether this show is a movie rather than a series.
+		/// </summary>
+		public bool IsMovie {
+			get {
+				return NumEpisodes == 1 && NewestEpisode.IsMovie;
+			}
+		}
+
+		/// <summary>
 		/// Number of episodes currently recorded of this show.
 		/// </summary>
 		public int NumEpisodes {
