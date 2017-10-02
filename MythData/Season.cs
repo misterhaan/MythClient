@@ -62,7 +62,12 @@ namespace au.Applications.MythClient.Data {
 					HttpWebRequest req = (HttpWebRequest)WebRequest.Create(_coverUrl);
 					using(HttpWebResponse res = (HttpWebResponse)req.GetResponse())
 					using(Stream s = res.GetResponseStream()) {
-						_coverImage = Image.FromStream(s);
+						try {
+							_coverImage = Image.FromStream(s);
+						} catch(Exception e) {
+							Console.WriteLine("Exception getting season cover for {0} season {1}", Show.Title, Number);
+							Console.WriteLine(e);
+						}
 					}
 				}
 				return _coverImage;

@@ -124,6 +124,9 @@
   <data name="ActionDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ActionDeleteAll" xml:space="preserve">
+    <value>Delete all</value>
+  </data>
   <data name="ActionExport" xml:space="preserve">
     <value>Download...</value>
   </data>
@@ -148,6 +151,10 @@
   </data>
   <data name="Delete18" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DeleteAllOption" xml:space="preserve">
+    <value>Delete Show{0}All recorded episodes of this show will be deleted.</value>
+    <comment>0 - separator between title and description</comment>
   </data>
   <data name="DeleteOption" xml:space="preserve">
     <value>Delete{0}MythTV will not record this episode again.</value>
@@ -251,6 +258,9 @@
   <data name="InstrDelete" xml:space="preserve">
     <value>Record this episode again?</value>
   </data>
+  <data name="InstrDeleteAllShow" xml:space="preserve">
+    <value>Delete all recordings of this show?</value>
+  </data>
   <data name="InstrExport" xml:space="preserve">
     <value>Choose a file naming option.</value>
   </data>
@@ -262,6 +272,9 @@
   </data>
   <data name="NoteDelete" xml:space="preserve">
     <value>If this recording was in some way unsatisfactory, MythTV can record it again the next time it comes on.</value>
+  </data>
+  <data name="NoteDeleteAllShow" xml:space="preserve">
+    <value>Recording schedules will not be affected.  If MythTV is still set to record this show, additional episodes will still get recorded.</value>
   </data>
   <data name="NoteExport" xml:space="preserve">
     <value>Video file format and extension will be left unchanged.</value>
@@ -322,6 +335,9 @@
     <value>Delete {0} from MythTV</value>
     <comment>0 - episode title and name</comment>
   </data>
+  <data name="TipDeleteAllShow" xml:space="preserve">
+    <value>Delete all episodes of this show</value>
+  </data>
   <data name="TipDeleteOldestSeason" xml:space="preserve">
     <value>Delete the oldest recorded episode of this season</value>
   </data>
@@ -363,6 +379,9 @@
   </data>
   <data name="TitleDelete" xml:space="preserve">
     <value>Delete Recording</value>
+  </data>
+  <data name="TitleDeleteAllShow" xml:space="preserve">
+    <value>Delete Show</value>
   </data>
   <data name="TitleExportOne" xml:space="preserve">
     <value>Download Recording</value>

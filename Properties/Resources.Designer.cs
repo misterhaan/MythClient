@@ -19,7 +19,7 @@ namespace au.Applications.MythClient.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -76,6 +76,15 @@ namespace au.Applications.MythClient.Properties {
         internal static string ActionDelete {
             get {
                 return ResourceManager.GetString("ActionDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete all.
+        /// </summary>
+        internal static string ActionDeleteAll {
+            get {
+                return ResourceManager.GetString("ActionDeleteAll", resourceCulture);
             }
         }
         
@@ -152,6 +161,15 @@ namespace au.Applications.MythClient.Properties {
             get {
                 object obj = ResourceManager.GetObject("Delete18", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Show{0}All recorded episodes of this show will be deleted..
+        /// </summary>
+        internal static string DeleteAllOption {
+            get {
+                return ResourceManager.GetString("DeleteAllOption", resourceCulture);
             }
         }
         
@@ -409,6 +427,15 @@ namespace au.Applications.MythClient.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete all recordings of this show?.
+        /// </summary>
+        internal static string InstrDeleteAllShow {
+            get {
+                return ResourceManager.GetString("InstrDeleteAllShow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose a file naming option..
         /// </summary>
         internal static string InstrExport {
@@ -443,6 +470,15 @@ namespace au.Applications.MythClient.Properties {
         internal static string NoteDelete {
             get {
                 return ResourceManager.GetString("NoteDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recording schedules will not be affected.  If MythTV is still set to record this show, additional episodes will still get recorded..
+        /// </summary>
+        internal static string NoteDeleteAllShow {
+            get {
+                return ResourceManager.GetString("NoteDeleteAllShow", resourceCulture);
             }
         }
         
@@ -598,6 +634,15 @@ namespace au.Applications.MythClient.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete all episodes of this show.
+        /// </summary>
+        internal static string TipDeleteAllShow {
+            get {
+                return ResourceManager.GetString("TipDeleteAllShow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete the oldest recorded episode of this season.
         /// </summary>
         internal static string TipDeleteOldestSeason {
@@ -712,6 +757,15 @@ namespace au.Applications.MythClient.Properties {
         internal static string TitleDelete {
             get {
                 return ResourceManager.GetString("TitleDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Show.
+        /// </summary>
+        internal static string TitleDeleteAllShow {
+            get {
+                return ResourceManager.GetString("TitleDeleteAllShow", resourceCulture);
             }
         }
         

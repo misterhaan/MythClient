@@ -291,6 +291,7 @@ namespace au.Applications.MythClient {
 				_pnlInfo.Controls.Add(MakeInfoLabel(string.Format(Properties.Resources.InfoRecordedRange, s.OldestEpisode.Recorded, s.NewestEpisode.Recorded)));
 				_pnlInfo.Controls.Add(MakeInfoLabel(s.Duration.ToStringUnit()));
 				_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Export18, Properties.Resources.ActionExport, Properties.Resources.TipExportShow, btnShowExport_Click));
+				_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Delete18, Properties.Resources.ActionDeleteAll, Properties.Resources.TipDeleteAllShow, btnShowDeleteAll_Click));
 				AppendNextUp(_pnlInfo.Controls, s.OldestEpisode, false);
 				_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.Play18, Properties.Resources.ActionPlay, Properties.Resources.TipPlayOldestShow, btnShowPlay_Click));
 				_pnlInfo.Controls.Add(MakeInfoAction(Properties.Resources.PlayWith18, Properties.Resources.ActionPlayWith, Properties.Resources.TipPlayOldestShowWith, btnShowPlayWith_Click));
@@ -658,20 +659,32 @@ namespace au.Applications.MythClient {
 		/// </summary>
 		/// <param name="e">Episode to delete</param>
 		private void DeleteEpisode(Episode e) {
-			TaskDialog td = new TaskDialog() {
-				WindowTitle = Properties.Resources.TitleDelete,
-				MainInstruction = Properties.Resources.InstrDelete,
-				Content = Properties.Resources.NoteDelete,
-				CommonButtons = TaskDialogCommonButtons.Cancel,
-				Buttons = new TaskDialogButton[] {
-					new TaskDialogButton(80, string.Format(Properties.Resources.DeleteOption, "\n")),
-					new TaskDialogButton(81, string.Format(Properties.Resources.DeleteRerecordOption, "\n"))
-				},
-				DefaultButton = 80,
-				PositionRelativeToWindow = true,
-				UseCommandLinks = true
-			};
-			int btnid = td.Show(this);
+			DeleteEpisode(e, true);
+		}
+
+		/// <summary>
+		/// Delete the specified Episode.
+		/// </summary>
+		/// <param name="e">Episode to delete</param>
+		/// <param name="prompt">Whether to prompt for rerecord</param>
+		private void DeleteEpisode(Episode e, bool prompt) {
+			int btnid = 80;
+			if(prompt) {
+				TaskDialog td = new TaskDialog() {
+					WindowTitle = Properties.Resources.TitleDelete,
+					MainInstruction = Properties.Resources.InstrDelete,
+					Content = Properties.Resources.NoteDelete,
+					CommonButtons = TaskDialogCommonButtons.Cancel,
+					Buttons = new TaskDialogButton[] {
+						new TaskDialogButton(80, string.Format(Properties.Resources.DeleteOption, "\n")),
+						new TaskDialogButton(81, string.Format(Properties.Resources.DeleteRerecordOption, "\n"))
+					},
+					DefaultButton = 80,
+					PositionRelativeToWindow = true,
+					UseCommandLinks = true
+				};
+				btnid = td.Show(this);
+			}
 			if(btnid >= 80)
 				if(e.Delete(btnid == 81))
 					if(_selected != null)
@@ -689,6 +702,31 @@ namespace au.Applications.MythClient {
 								ListShows();
 						else
 							ShowInfo(_selected.Tag);
+		}
+
+		/// <summary>
+		/// Deletes all episodes of the specified show.
+		/// </summary>
+		/// <param name="show">Show to delete</param>
+		private void DeleteEpisodes(Show show) {
+			TaskDialog td = new TaskDialog() {
+				WindowTitle = Properties.Resources.TitleDeleteAllShow,
+				MainInstruction = Properties.Resources.InstrDeleteAllShow,
+				Content = Properties.Resources.NoteDeleteAllShow,
+				CommonButtons = TaskDialogCommonButtons.Cancel,
+				Buttons = new TaskDialogButton[] {
+					new TaskDialogButton(80, string.Format(Properties.Resources.DeleteAllOption, "\n")),
+				},
+				DefaultButton = 80,
+				PositionRelativeToWindow = true,
+				UseCommandLinks = true
+			};
+			if(td.Show(this) == 80) {
+				for(int s = show.Seasons.Count - 1; s >= 0; s--)
+					for(int e = show.Seasons[s].Episodes.Count - 1; e >= 0; e--)
+						show.Seasons[s].Episodes[e].Delete(false);
+				ListShows();
+			}
 		}
 
 		#region Form Event Handlers
@@ -978,6 +1016,10 @@ namespace au.Applications.MythClient {
 
 		private void btnShowDelete_Click(object sender, EventArgs e) {
 			DeleteEpisode(((Show)_pnlInfo.Tag).OldestEpisode);
+		}
+
+		private void btnShowDeleteAll_Click(object sender, EventArgs e) {
+			DeleteEpisodes((Show)_pnlInfo.Tag);
 		}
 
 		private void btnSeasonPlay_Click(object sender, EventArgs e) {
