@@ -5,6 +5,12 @@ Download the latest installer from [track7.org](http://www.track7.org/code/vs/my
 
 ## Revision History
 
+### 1.2.1
+* Handle deleting last episode
+
+### 1.2.0
+* Add delete all to shows and seasons
+
 ### 1.1.0
 * Include "Next up" episode in season and show information
 * Add play with at season and show levels

@@ -700,8 +700,36 @@ namespace au.Applications.MythClient {
 								ListSeasons(e.Season.Show);
 							else
 								ListShows();
-						else
-							ShowInfo(_selected.Tag);
+						else if(_selected.Tag is Season)
+							if(((Season)_selected.Tag).Episodes.Count > 0)
+								ShowInfo(_selected.Tag);
+							else {
+								int pos = _pnlMain.Controls.IndexOf(_selected);
+								if(_pnlMain.Controls.Count > 2) {
+									_pnlMain.Controls.Remove(_selected);
+									if(pos < _pnlMain.Controls.Count)
+										Select(_pnlMain.Controls[pos]);
+									else
+										Select(_pnlMain.Controls[pos - 1]);
+								} else if(_pnlMain.Controls.Count == 2) {
+									ListEpisodes((Season)_pnlMain.Controls[1 - pos].Tag);
+								} else
+									ListShows();
+							}
+						else if(_selected.Tag is Show)
+							if(((Show)_selected.Tag).NumEpisodes > 0)
+								ShowInfo(_selected.Tag);
+							else {
+								int pos = _pnlMain.Controls.IndexOf(_selected);
+								_pnlMain.Controls.Remove(_selected);
+								if(_pnlMain.Controls.Count > 0)
+									if(pos < _pnlMain.Controls.Count)
+										Select(_pnlMain.Controls[pos]);
+									else
+										Select(_pnlMain.Controls[pos - 1]);
+								else
+									ListShows();
+							}
 		}
 
 		/// <summary>
