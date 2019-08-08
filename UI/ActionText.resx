@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ChooseExportFolderDescription" xml:space="preserve">
+    <value>Choose a directory for downloaded recordings.</value>
+  </data>
+  <data name="DeleteAllCaption" xml:space="preserve">
+    <value>Delete all</value>
+  </data>
+  <data name="DeleteAllInstructions" xml:space="preserve">
+    <value>Record these again?</value>
+  </data>
+  <data name="DeleteAllMenu" xml:space="preserve">
+    <value>Dele&amp;te all episodes...</value>
+    <comment>Menu caption uses &amp; before accelerator key</comment>
+  </data>
+  <data name="DeleteAllNote" xml:space="preserve">
+    <value>If these recordings were in some way unsatisfactory, MythTV can record them again the next time they come on.</value>
+  </data>
+  <data name="DeleteAllOption" xml:space="preserve">
+    <value>Delete
+MythTV will not record these again.</value>
+  </data>
+  <data name="DeleteAllRerecordOption" xml:space="preserve">
+    <value>Delete + Rerecord
+MythTV will record these if they come on again.</value>
+  </data>
+  <data name="DeleteAllTitle" xml:space="preserve">
+    <value>Delete Recording</value>
+  </data>
+  <data name="DeleteCaption" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeleteEpisodeTooltip" xml:space="preserve">
+    <value>Delete {0} from MythTV.</value>
+    <comment>0 - full episode title</comment>
+  </data>
+  <data name="DeleteInstructions" xml:space="preserve">
+    <value>Record this again?</value>
+  </data>
+  <data name="DeleteMenu" xml:space="preserve">
+    <value>&amp;Delete</value>
+    <comment>Menu caption uses &amp; before accelerator key</comment>
+  </data>
+  <data name="DeleteNextMenu" xml:space="preserve">
+    <value>&amp;Delete next episode</value>
+    <comment>Menu caption uses &amp; before accelerator key</comment>
+  </data>
+  <data name="DeleteNote" xml:space="preserve">
+    <value>If this recording was in some way unsatisfactory, MythTV can record it again the next time it comes on.</value>
+  </data>
+  <data name="DeleteOption" xml:space="preserve">
+    <value>Delete
+MythTV will not record this again.</value>
+  </data>
+  <data name="DeleteRerecordOption" xml:space="preserve">
+    <value>Delete + Rerecord
+MythTV will record this if it comes on again.</value>
+  </data>
+  <data name="DeleteSeasonOldestTooltip" xml:space="preserve">
+    <value>Delete the oldest recorded episode of this season.</value>
+  </data>
+  <data name="DeleteShowOldestTooltip" xml:space="preserve">
+    <value>Delete the oldest recorded episode of this show.</value>
+  </data>
+  <data name="DeleteShowTooltip" xml:space="preserve">
+    <value>Delete all episodes of this show.</value>
+  </data>
+  <data name="DeleteTitle" xml:space="preserve">
+    <value>Delete Recording</value>
+  </data>
+  <data name="ExportAllMenu" xml:space="preserve">
+    <value>Dow&amp;nload all episodes...</value>
+    <comment>Menu caption uses &amp; before accelerator key</comment>
+  </data>
+  <data name="ExportAllTitle" xml:space="preserve">
+    <value>Download Recordings</value>
+  </data>
+  <data name="ExportCaption" xml:space="preserve">
+    <value>Download...</value>
+  </data>
+  <data name="ExportEpisodeTooltip" xml:space="preserve">
+    <value>Export {0} with a readable filename.</value>
+    <comment>0 - full episode title</comment>
+  </data>
+  <data name="ExportFiletype" xml:space="preserve">
+    <value>TV Recording</value>
+  </data>
+  <data name="ExportFormatDate" xml:space="preserve">
+    <value>{0} {2:yyyy'-'MM'-'dd}</value>
+    <comment>0 - show title
+2 - first aired date or recorded date</comment>
+  </data>
+  <data name="ExportFormatDateEpisode" xml:space="preserve">
+    <value>{0} - {2:yyyy'-'MM'-'dd} - {1}</value>
+    <comment>0 - show title
+1 - episode subtitle
+2 - first aired date or recorded date</comment>
+  </data>
+  <data name="ExportFormatEpisode" xml:space="preserve">
+    <value>{0} - {1}</value>
+    <comment>0 - show title
+1 - episode subtitle</comment>
+  </data>
+  <data name="ExportFormatSeasonEpisode" xml:space="preserve">
+    <value>{0} - s{3:00}e{4:00} - {1}</value>
+    <comment>0 - show title
+1 - episode subtitle
+3 - season number
+4 - episode number</comment>
+  </data>
+  <data name="ExportFormatTitle" xml:space="preserve">
+    <value>{0}</value>
+    <comment>0 - show title</comment>
+  </data>
+  <data name="ExportFormatYear" xml:space="preserve">
+    <value>{0} ({2:yyyy})</value>
+    <comment>0 - show title
+2 - first aired date or recorded date</comment>
+  </data>
+  <data name="ExportInstructions" xml:space="preserve">
+    <value>Choose a file naming option.</value>
+  </data>
+  <data name="ExportMenu" xml:space="preserve">
+    <value>Dow&amp;nload...</value>
+    <comment>Menu caption uses &amp; before accelerator key</comment>
+  </data>
+  <data name="ExportNote" xml:space="preserve">
+    <value>Video file format and extension will be left unchanged.</value>
+  </data>
+  <data name="ExportOptionDate" xml:space="preserve">
+    <value>Airdate</value>
+  </data>
+  <data name="ExportOptionDateEpisode" xml:space="preserve">
+    <value>Airdate</value>
+  </data>
+  <data name="ExportOptionEpisode" xml:space="preserve">
+    <value>Title - Subtitle</value>
+  </data>
+  <data name="ExportOptionSeasonEpisode" xml:space="preserve">
+    <value>Season / Episode</value>
+  </data>
+  <data name="ExportOptionTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="ExportOptionYear" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="ExportSeasonTooltip" xml:space="preserve">
+    <value>Download all episodes from this season with readable filenames.</value>
+  </data>
+  <data name="ExportShowTooltip" xml:space="preserve">
+    <value>Download all episodes from this show with readable filenames.</value>
+  </data>
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Dowload Recording</value>
+  </data>
+  <data name="PlayCaption" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="PlayEpisodeTooltip" xml:space="preserve">
+    <value>Play {0} with the default player.</value>
+    <comment>0 - full episode title</comment>
+  </data>
+  <data name="PlayMenu" xml:space="preserve">
+    <value>&amp;Play</value>
+    <comment>Menu caption uses &amp; before accelerator key</comment>
+  </data>
+  <data name="PlayNextMenu" xml:space="preserve">
+    <value>&amp;Play next episode</value>
+    <comment>Menu caption uses &amp; before accelerator key</comment>
+  </data>
+  <data name="PlayNextWithMenu" xml:space="preserve">
+    <value>Play next episode &amp;with...</value>
+    <comment>Menu caption uses &amp; before accelerator key</comment>
+  </data>
+  <data name="PlaySeasonTooltip" xml:space="preserve">
+    <value>Play the oldest recorded episode of this season.</value>
+  </data>
+  <data name="PlayShowTooltip" xml:space="preserve">
+    <value>Play the oldest recorded episode of this show.</value>
+  </data>
+  <data name="PlayWithCaption" xml:space="preserve">
+    <value>Play with...</value>
+  </data>
+  <data name="PlayWithEpisodeTooltip" xml:space="preserve">
+    <value>Choose an alternative player to play {0}.</value>
+    <comment>0 - full episode title</comment>
+  </data>
+  <data name="PlayWithMenu" xml:space="preserve">
+    <value>Play &amp;with...</value>
+    <comment>Menu caption uses &amp; before accelerator key</comment>
+  </data>
+  <data name="PlayWithSeasonTooltip" xml:space="preserve">
+    <value>Choose an alternative player to play the oldest recorded episode of this season.</value>
+  </data>
+  <data name="PlayWithShowTooltip" xml:space="preserve">
+    <value>Choose an alternative player to play the oldest recorded episode of this show.</value>
+  </data>
+</root>

@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>au.UI.DirectoryBox</name>
+    </assembly>
+    <members>
+        <member name="T:au.UI.DirectoryBox.DirectoryBox">
+            <summary>
+            Directory name input control
+            </summary>
+        </member>
+        <member name="M:au.UI.DirectoryBox.DirectoryBox.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="E:au.UI.DirectoryBox.DirectoryBox.DirectoryChanged">
+            <summary>
+            Event raised when the directory selected in the control changes
+            </summary>
+        </member>
+        <member name="P:au.UI.DirectoryBox.DirectoryBox.AutoComplete">
+            <summary>
+            Whether the textbox should autocomplete with file system directories
+            </summary>
+        </member>
+        <member name="P:au.UI.DirectoryBox.DirectoryBox.Directory">
+            <summary>
+            The directory selected in the control
+            </summary>
+        </member>
+        <member name="P:au.UI.DirectoryBox.DirectoryBox.Text">
+            <summary>
+            The directory selected in the control
+            </summary>
+        </member>
+        <member name="P:au.UI.DirectoryBox.DirectoryBox.BasePath">
+            <summary>
+            Full path to the starting directory when opening the folder browser dialog with no directory filled in
+            </summary>
+        </member>
+        <member name="P:au.UI.DirectoryBox.DirectoryBox.Description">
+            <summary>
+            Text to display above the browse dialog
+            </summary>
+        </member>
+        <member name="P:au.UI.DirectoryBox.DirectoryBox.AllowCreation">
+            <summary>
+            Whether directories can be created from this control
+            </summary>
+        </member>
+        <member name="M:au.UI.DirectoryBox.DirectoryBox.SetDirectory(System.String)">
+            <summary>
+            Attempt to set the directory selected in the control to the specified path.
+            </summary>
+            <param name="path">Directory path to select in the control</param>
+        </member>
+        <member name="M:au.UI.DirectoryBox.DirectoryBox.TrySetDirectory(System.String,System.Exception@)">
+            <summary>
+            Attempt to set the directory selected in the control to the specified path.
+            </summary>
+            <param name="path">Directory path to select in the control</param>
+            <param name="exception">Exception thrown when trying to set the directory (null if return value is true)</param>
+            <returns>True if successful</returns>
+        </member>
+        <member name="M:au.UI.DirectoryBox.DirectoryBox.GetDirectoryFromDialog">
+            <summary>
+            Show the browse dialog to select a new directory.
+            </summary>
+        </member>
+        <member name="M:au.UI.DirectoryBox.DirectoryBox.IsMouseOver(System.Windows.Forms.Control)">
+            <summary>
+            Check if the mouse is over the specified control
+            </summary>
+            <param name="control">Control to check for mouse hover</param>
+            <returns>True if the mouse is over the control</returns>
+        </member>
+        <member name="M:au.UI.DirectoryBox.DirectoryBox.UnfadeBrowseButton">
+            <summary>
+            Switch the browse button to its hover / active state
+            </summary>
+        </member>
+        <member name="M:au.UI.DirectoryBox.DirectoryBox.MaybeFadeBrowseButton">
+            <summary>
+            Switch the browse button to its unhovered / inactive state, as long as it's neither hovered nor active
+            </summary>
+        </member>
+        <member name="F:au.UI.DirectoryBox.DirectoryBox.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:au.UI.DirectoryBox.DirectoryBox.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:au.UI.DirectoryBox.DirectoryBox.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:au.UI.DirectoryBox.MaterialIcons">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:au.UI.DirectoryBox.MaterialIcons.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:au.UI.DirectoryBox.MaterialIcons.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:au.UI.DirectoryBox.MaterialIcons.FolderBrowse16">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:au.UI.DirectoryBox.MaterialIcons.FolderBrowseFade16">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="T:au.UI.DirectoryBox.Messages">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:au.UI.DirectoryBox.Messages.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:au.UI.DirectoryBox.Messages.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:au.UI.DirectoryBox.Messages.DirectoryInvalid">
+            <summary>
+              Looks up a localized string similar to {0} is not a valid directory.  Keeping previous value..
+            </summary>
+        </member>
+        <member name="P:au.UI.DirectoryBox.Messages.DirectoryInvalidWithException">
+             <summary>
+               Looks up a localized string similar to {0} is not a valid directory.  Keeping previous value.
+            
+            {1}.
+             </summary>
+        </member>
+        <member name="P:au.UI.DirectoryBox.Messages.Title">
+            <summary>
+              Looks up a localized string similar to Directory Entry.
+            </summary>
+        </member>
+    </members>
+</doc>

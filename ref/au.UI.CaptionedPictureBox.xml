@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>au.UI.CaptionedPictureBox</name>
+    </assembly>
+    <members>
+        <member name="T:au.UI.CaptionedPictureBox.CaptionedPictureBox">
+            <summary>
+            Captioned PictureBox control
+            </summary>
+        </member>
+        <member name="M:au.UI.CaptionedPictureBox.CaptionedPictureBox.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="P:au.UI.CaptionedPictureBox.CaptionedPictureBox.ErrorImage">
+            <summary>
+            Image to display when the load of another image fails
+            </summary>
+        </member>
+        <member name="P:au.UI.CaptionedPictureBox.CaptionedPictureBox.InitialImage">
+            <summary>
+            The image displayed in the PictureBox when the main image is loading
+            </summary>
+        </member>
+        <member name="P:au.UI.CaptionedPictureBox.CaptionedPictureBox.WaitOnLoad">
+            <summary>
+            Controls whether processing will stop until the image is loaded
+            </summary>
+        </member>
+        <member name="P:au.UI.CaptionedPictureBox.CaptionedPictureBox.ImageLocation">
+            <summary>
+            Disk or Web location to load image from
+            </summary>
+        </member>
+        <member name="P:au.UI.CaptionedPictureBox.CaptionedPictureBox.Image">
+            <summary>
+            The image displayed in the PictureBox
+            </summary>
+        </member>
+        <member name="P:au.UI.CaptionedPictureBox.CaptionedPictureBox.SizeMode">
+            <summary>
+            Controls how the PictureBox will handle image placement and control sizing
+            </summary>
+        </member>
+        <member name="P:au.UI.CaptionedPictureBox.CaptionedPictureBox.Text">
+            <summary>
+            The text associated with the control
+            </summary>
+        </member>
+        <member name="P:au.UI.CaptionedPictureBox.CaptionedPictureBox.CaptionHeight">
+            <summary>
+            The height of the caption in pixels
+            </summary>
+        </member>
+        <member name="P:au.UI.CaptionedPictureBox.CaptionedPictureBox.Gap">
+            <summary>
+            The height of the gap between the picture and the caption in pixels
+            </summary>
+        </member>
+        <member name="M:au.UI.CaptionedPictureBox.CaptionedPictureBox.LoadAsync(System.String)">
+            <summary>
+            Loads the image at the specified location, asynchronously.
+            </summary>
+            <param name="url">The path for the image to display in the PictureBox</param>
+        </member>
+        <member name="F:au.UI.CaptionedPictureBox.CaptionedPictureBox.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:au.UI.CaptionedPictureBox.CaptionedPictureBox.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:au.UI.CaptionedPictureBox.CaptionedPictureBox.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:au.UI.CaptionedPictureBox.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:au.UI.CaptionedPictureBox.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:au.UI.CaptionedPictureBox.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+    </members>
+</doc>

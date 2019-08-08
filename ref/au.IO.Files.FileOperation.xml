@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>au.IO.Files.FileOperation</name>
+    </assembly>
+    <members>
+        <member name="T:au.IO.Files.FileOperation.ComDisposer`1">
+            <summary>
+            IDisposable wrapper for COM objects.
+            </summary>
+            <typeparam name="T">Type of COM object.</typeparam>
+        </member>
+        <member name="M:au.IO.Files.FileOperation.ComDisposer`1.#ctor(`0)">
+            <summary>
+            Initialize a COM disposer for the specified object.
+            </summary>
+            <param name="obj">COM object that needs to be released.</param>
+        </member>
+        <member name="P:au.IO.Files.FileOperation.ComDisposer`1.Value">
+            <summary>
+            The wrapped COM object.
+            </summary>
+        </member>
+        <member name="M:au.IO.Files.FileOperation.ComDisposer`1.Dispose">
+            <summary>
+            Release the COM object if it hasn't already been released.
+            </summary>
+        </member>
+        <member name="T:au.IO.Files.FileOperation.CopyFilesOperation">
+            <summary>
+            Queued file copy based on IFileOperation.  Requires Windows Vista or newer.
+            </summary>
+        </member>
+        <member name="M:au.IO.Files.FileOperation.CopyFilesOperation.#ctor">
+            <summary>
+            Create a new FileOperation object that will perform all queued operations when disposed.
+            </summary>
+        </member>
+        <member name="M:au.IO.Files.FileOperation.CopyFilesOperation.#ctor(System.Windows.Forms.IWin32Window)">
+            <summary>
+            Create a new FileOperation object that will perform all queued operations when disposed.
+            </summary>
+            <param name="owner">Owner of the file operations.</param>
+        </member>
+        <member name="M:au.IO.Files.FileOperation.CopyFilesOperation.Queue(System.IO.FileInfo,System.IO.FileInfo)">
+            <summary>
+            Add a file copy operation to the queue.
+            </summary>
+            <param name="source">File to copy from (must exist).</param>
+            <param name="dest">File to copy to (will be created or overwritten).</param>
+        </member>
+        <member name="M:au.IO.Files.FileOperation.CopyFilesOperation.Queue(System.IO.FileInfo,System.String,System.String)">
+            <summary>
+            Add a file copy operation to the queue.
+            </summary>
+            <param name="source">File to copy from (must exist).</param>
+            <param name="destPath">Full path without filename to copy to (must exist).</param>
+            <param name="destFilename">Filename without path to copy to (will be created or overwritten).</param>
+        </member>
+        <member name="M:au.IO.Files.FileOperation.CopyFilesOperation.Queue(System.String,System.String,System.String)">
+            <summary>
+            Add a file copy operation to the queue.
+            </summary>
+            <param name="source">Full path and filename to copy from (must exist).</param>
+            <param name="destPath">Full path without filename to copy to (must exist).</param>
+            <param name="destFilename">Filename without path to copy to (will be created or overwritten).</param>
+        </member>
+        <member name="M:au.IO.Files.FileOperation.CopyFilesOperation.Dispose">
+            <summary>
+            Start the file copy operation and release all resources.
+            </summary>
+        </member>
+    </members>
+</doc>
