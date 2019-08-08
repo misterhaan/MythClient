@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>au.Settings.Types</name>
+    </assembly>
+    <members>
+        <member name="T:au.Settings.Types.IFormGeometrySettings">
+            <summary>
+            Settings for how a form is displayed.
+            </summary>
+        </member>
+        <member name="P:au.Settings.Types.IFormGeometrySettings.WindowState">
+            <summary>
+            State of the form.
+            </summary>
+        </member>
+        <member name="P:au.Settings.Types.IFormGeometrySettings.Location">
+            <summary>
+            Location of the form when not maximized or minimized.
+            </summary>
+        </member>
+        <member name="P:au.Settings.Types.IFormGeometrySettings.Size">
+            <summary>
+            Size of the form when not maximized or minimized.
+            </summary>
+        </member>
+    </members>
+</doc>

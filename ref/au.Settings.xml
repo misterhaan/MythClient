@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>au.Settings</name>
+    </assembly>
+    <members>
+        <member name="T:au.Settings.FormGeometrySettings">
+            <summary>
+            Settings for how a form is displayed.
+            </summary>
+        </member>
+        <member name="P:au.Settings.FormGeometrySettings.WindowState">
+            <summary>
+            State of the form.
+            </summary>
+        </member>
+        <member name="P:au.Settings.FormGeometrySettings.Location">
+            <summary>
+            Location of the form when not maximized or minimized.
+            </summary>
+        </member>
+        <member name="P:au.Settings.FormGeometrySettings.Size">
+            <summary>
+            Size of the form when not maximized or minimized.
+            </summary>
+        </member>
+        <member name="T:au.Settings.SettingsFileManager`1">
+            <summary>
+            Save and load settings from a file.
+            </summary>
+            <typeparam name="TSettings">Settings type.</typeparam>
+        </member>
+        <member name="F:au.Settings.SettingsFileManager`1._file">
+            <summary>
+            File to save and load from.
+            </summary>
+        </member>
+        <member name="M:au.Settings.SettingsFileManager`1.#ctor(System.IO.FileInfo)">
+            <summary>
+            FileInfo constructor.
+            </summary>
+            <param name="file">Settings file.</param>
+        </member>
+        <member name="M:au.Settings.SettingsFileManager`1.#ctor(System.String)">
+            <summary>
+            File path string constructor.
+            </summary>
+            <param name="filePath">Absolute path to settings file.</param>
+        </member>
+        <member name="P:au.Settings.SettingsFileManager`1.Settings">
+            <summary>
+            Settings object to manage.
+            </summary>
+        </member>
+        <member name="M:au.Settings.SettingsFileManager`1.Save">
+            <summary>
+            Save settings to file.
+            </summary>
+        </member>
+        <member name="M:au.Settings.SettingsFileManager`1.Load">
+            <summary>
+            Load settings from file, or create default settings if the file doesn't exist yet.
+            </summary>
+            <returns>Settings.</returns>
+        </member>
+    </members>
+</doc>
