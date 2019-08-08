@@ -5,6 +5,14 @@ Download the latest installer from [track7.org](http://www.track7.org/code/vs/my
 
 ## Revision History
 
+### 2.0.0
+* Add Ctrl+Enter shortcut to play next instead of opening the show / season
+* Fix vertical scroll stopping before the bottom
+* Configuration file changed (previous configuration ignored)
+* Major refactor into multiple assemblies
+* Update to .NET 4.5
+* Add unit tests
+
 ### 1.2.1
 * Handle deleting last episode
 

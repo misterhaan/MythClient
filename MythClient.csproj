@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -10,10 +11,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>au.Applications.MythClient</RootNamespace>
     <AssemblyName>MythClient</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>mythtv.ico</ApplicationIcon>
@@ -23,7 +23,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>C:\Applications\MythClient\</OutputPath>
+    <OutputPath>build\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,12 +36,13 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisRuleDirectories>;C:\Applications\Visual Studio 10\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>build\</OutputPath>
+    <OutputPath>build\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisLogFile>build\MythClient.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
@@ -52,79 +53,52 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisRuleDirectories>;C:\Applications\Visual Studio 10\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
+    <!-- default AllowedReferenceRelatedFileExtensions is .pdb; .xml and I've removed xml -->
+    <AllowedReferenceRelatedFileExtensions>.pdb</AllowedReferenceRelatedFileExtensions>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="au.util.comctl, Version=4.1.0.0, Culture=neutral, PublicKeyToken=19e5e8259cf75c6c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\au.util.comctl\v4.0_4.1.0.0__19e5e8259cf75c6c\au.util.comctl.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="au.util.io, Version=4.1.0.0, Culture=neutral, PublicKeyToken=57531b787f745070, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\au.util.io\v4.0_4.1.0.0__57531b787f745070\au.util.io.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <Reference Include="au.Settings, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutMythClient.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AboutMythClient.Designer.cs">
-      <DependentUpon>AboutMythClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DisplaySettings.cs" />
-    <Compile Include="MythClient.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MythClient.Designer.cs">
-      <DependentUpon>MythClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MythServerConfig.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MythServerConfig.Designer.cs">
-      <DependentUpon>MythServerConfig.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MythSettings.cs" />
+    <Compile Include="MythClient.cs" />
+    <Compile Include="Properties\AssemblyInfo.Common.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="AboutMythClient.resx">
-      <DependentUpon>AboutMythClient.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MythClient.resx">
-      <DependentUpon>MythClient.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MythServerConfig.resx">
-      <DependentUpon>MythServerConfig.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="mythtv.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="FileOperation\FileOperation.csproj">
-      <Project>{57f6ef31-f4e2-4c8d-adfe-6798b06a5711}</Project>
-      <Name>FileOperation</Name>
+    <ProjectReference Include="IO.Web.API.MythTV\au.IO.Web.API.MythTV.csproj">
+      <Project>{F973404B-DC7C-41C5-885E-B309AB2ECFCA}</Project>
+      <Name>au.IO.Web.API.MythTV</Name>
     </ProjectReference>
-    <ProjectReference Include="MythData\MythData.csproj">
-      <Project>{95ab460c-d83e-4c36-a9f7-74410131c029}</Project>
-      <Name>MythData</Name>
+    <ProjectReference Include="IO.Web.API.MythTV\Types\au.IO.Web.API.MythTV.Types.csproj">
+      <Project>{C69CF3E6-F727-4C02-A168-F5EB98FDD82C}</Project>
+      <Name>au.IO.Web.API.MythTV.Types</Name>
     </ProjectReference>
-    <ProjectReference Include="TaskDialog\TaskDialog.csproj">
-      <Project>{5BF15AF5-DEB8-46A8-99C7-21993617D0C8}</Project>
-      <Name>TaskDialog</Name>
+    <ProjectReference Include="Recordings\MythClient.Recordings.csproj">
+      <Project>{8c416d6c-0b03-4400-b84d-c585e4f2265f}</Project>
+      <Name>MythClient.Recordings</Name>
+    </ProjectReference>
+    <ProjectReference Include="Recordings\Types\MythClient.Recordings.Types.csproj">
+      <Project>{37F3D175-92A1-45B3-BD9B-2AE6B3510FF1}</Project>
+      <Name>MythClient.Recordings.Types</Name>
+    </ProjectReference>
+    <ProjectReference Include="Settings\MythClient.Settings.csproj">
+      <Project>{D292E9A9-350F-4FDE-A0CA-848F664700F6}</Project>
+      <Name>MythClient.Settings</Name>
+    </ProjectReference>
+    <ProjectReference Include="Settings\Types\MythClient.Settings.Types.csproj">
+      <Project>{99922E64-A72C-465B-9536-ADF4A446E332}</Project>
+      <Name>MythClient.Settings.Types</Name>
+    </ProjectReference>
+    <ProjectReference Include="UI\MythClient.UI.csproj">
+      <Project>{12A2C663-BD30-4E44-91F0-7F885F829699}</Project>
+      <Name>MythClient.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -132,11 +106,4 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

@@ -6,13 +6,13 @@
 	<?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
 	<?endif ?>
 
-	<Product Name="MythTV Recorded Programs" Id="*" UpgradeCode="76C57DB0-30C4-4603-ADE6-9C98C04D2372" Language="1033" Codepage="1252" Version="1.2.1" Manufacturer="the analog underground">
+	<Product Name="MythTV Recorded Programs" Id="*" UpgradeCode="76C57DB0-30C4-4603-ADE6-9C98C04D2372" Language="1033" Codepage="1252" Version="2.0.0" Manufacturer="the analog underground">
 		<Package Id="*" Keywords="tv, mythtv, recorded, watch, program, episode" Description="Translates the MythWeb Recorded Programs page into a Windows form listing that directly launches the raw recording files." Comments="the analog underground only releases free software" Manufacturer="the analog underground" InstallerVersion="200" Languages="1033" Compressed="yes" SummaryCodepage="1252" />
 
 		<MajorUpgrade Schedule="afterInstallInitialize" DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." />
 		<Upgrade Id="76C57DB0-30C4-4603-ADE6-9C98C04D2372">
-			<UpgradeVersion Minimum="0.0.0" IncludeMinimum="yes" Maximum="1.2.1" IncludeMaximum="no" Property="OLDERVERSIONBEINGUPGRADED"/>
-			<UpgradeVersion Minimum="1.2.1" OnlyDetect="yes" Property="NEWERVERSIONDETECTED"/>
+			<UpgradeVersion Minimum="0.0.0" IncludeMinimum="yes" Maximum="2.0.0" IncludeMaximum="no" Property="OLDERVERSIONBEINGUPGRADED"/>
+			<UpgradeVersion Minimum="2.0.0" OnlyDetect="yes" Property="NEWERVERSIONDETECTED"/>
 		</Upgrade>
 		<Condition Message="A later version of [ProductName] is already installed. Setup will now exit">
 			NOT NEWERVERSIONDETECTED OR Installed
@@ -32,22 +32,47 @@
 
 		<DirectoryRef Id="INSTALLDIR">
 			<Component Id="mythclientcomponent" Guid="0E63AD56-BF54-4C81-BFDE-BA0207846101">
-				<File Id="MythClient.exe" Name="MythClient.exe" DiskId="1" Source="..\build\MythClient.exe" />
+				<File Id="MythClient.exe" Name="MythClient.exe" DiskId="1" Source="..\build\Release\MythClient.exe" />
 			</Component>
-			<Component Id="mythdatacomponent" Guid="95ab460c-d83e-4c36-a9f7-74410131c029">
-				<File Id="MythData.dll" Name="MythData.dll" DiskId="1" Source="..\build\MythData.dll" />
+
+			<Component Id="recordingscomponent" Guid="36395F7F-6E34-4C2E-ACE4-C7700BA07AD9">
+				<File Id="au.Applications.MythClient.Recordings.dll" Name="au.Applications.MythClient.Recordings.dll" DiskId="1" Source="..\build\Release\au.Applications.MythClient.Recordings.dll" />
 			</Component>
-			<Component Id="fileoperationcomponent" Guid="57f6ef31-f4e2-4c8d-adfe-6798b06a5711">
-				<File Id="FileOperation.dll" Name="FileOperation.dll" DiskId="1" Source="..\build\FileOperation.dll" />
+			<Component Id="recordingstypescomponent" Guid="B00F48CA-51AE-49BC-A1F1-D72918D20E8D">
+				<File Id="au.Applications.MythClient.Recordings.Types.dll" Name="au.Applications.MythClient.Recordings.Types.dll" DiskId="1" Source="..\build\Release\au.Applications.MythClient.Recordings.Types.dll" />
 			</Component>
-			<Component Id="taskdialogcomponent" Guid="CD71AEBF-A802-4F9E-B1A9-A1FA0735246D">
-				<File Id="TaskDialog.dll" Name="TaskDialog.dll" DiskId="1" Source="..\build\TaskDialog.dll" />
+			<Component Id="appsettingscomponent" Guid="70132B0B-12A4-4AD5-8B98-EC4330CD843A">
+				<File Id="au.Applications.MythClient.Settings.dll" Name="au.Applications.MythClient.Settings.dll" DiskId="1" Source="..\build\Release\au.Applications.MythClient.Settings.dll" />
 			</Component>
-			<Component Id="comctlcomponent" Guid="6643EF55-78DE-458A-96BC-6B7F63FAC1C9">
-				<File Id="au.util.comctl.dll" Name="au.util.comctl.dll" DiskId="1" Source="..\build\au.util.comctl.dll" Assembly=".net" KeyPath="yes" />
+			<Component Id="appsettingstypescomponent" Guid="D85803C1-F43F-41BE-831A-F81E6B380C6E">
+				<File Id="au.Applications.MythClient.Settings.Types.dll" Name="au.Applications.MythClient.Settings.Types.dll" DiskId="1" Source="..\build\Release\au.Applications.MythClient.Settings.Types.dll" />
 			</Component>
-			<Component Id="auiocomponent" Guid="47A670B5-F960-4FAF-A894-B3B3BFFE22B9">
-				<File Id="au.util.io.dll" Name="au.util.io.dll" DiskId="1" Source="..\build\au.util.io.dll" Assembly=".net" KeyPath="yes" />
+			<Component Id="uicomponent" Guid="569F7ED6-3117-44A2-AD50-ADB7A1363C39">
+				<File Id="au.Applications.MythClient.UI.dll" Name="au.Applications.MythClient.UI.dll" DiskId="1" Source="..\build\Release\au.Applications.MythClient.UI.dll" />
+			</Component>
+			<Component Id="fileoperationcomponent" Guid="09D62B56-0615-453B-9112-99274F13287F">
+				<File Id="au.IO.Files.FileOperation.dll" Name="au.IO.Files.FileOperation.dll" DiskId="1" Source="..\build\Release\au.IO.Files.FileOperation.dll" />
+			</Component>
+			<Component Id="apicomponent" Guid="BB6AFD20-9D40-460A-B407-0877ED8CBC11">
+				<File Id="au.IO.Web.API.MythTV.dll" Name="au.IO.Web.API.MythTV.dll" DiskId="1" Source="..\build\Release\au.IO.Web.API.MythTV.dll" />
+			</Component>
+			<Component Id="apitypescomponent" Guid="DCF53FAA-AB81-4D19-8455-7541F5C17F06">
+				<File Id="au.IO.Web.API.MythTV.Types.dll" Name="au.IO.Web.API.MythTV.Types.dll" DiskId="1" Source="..\build\Release\au.IO.Web.API.MythTV.Types.dll" />
+			</Component>
+			<Component Id="settingscomponent" Guid="AD6295EF-5B91-4287-9F7E-27DA1E5CC9AE">
+				<File Id="au.Settings.dll" Name="au.Settings.dll" DiskId="1" Source="..\build\Release\au.Settings.dll" />
+			</Component>
+			<Component Id="settingstypescomponent" Guid="D4989F03-FF23-4C05-A745-7313BB54FC5B">
+				<File Id="au.Settings.Types.dll" Name="au.Settings.Types.dll" DiskId="1" Source="..\build\Release\au.Settings.Types.dll" />
+			</Component>
+			<Component Id="captionedpictureboxcomponent" Guid="951804A8-8080-437A-9539-32DD8173545F">
+				<File Id="au.UI.CaptionedPictureBox.dll" Name="au.UI.CaptionedPictureBox.dll" DiskId="1" Source="..\build\Release\au.UI.CaptionedPictureBox.dll" />
+			</Component>
+			<Component Id="directoryboxcomponent" Guid="A3B3BC7C-D565-4AD7-BEE2-BD60072C1AF4">
+				<File Id="au.UI.DirectoryBox.dll" Name="au.UI.DirectoryBox.dll" DiskId="1" Source="..\build\Release\au.UI.DirectoryBox.dll" />
+			</Component>
+			<Component Id="taskdialogcomponent" Guid="DEBB5526-95BE-4021-9EBC-6B650B75740F">
+				<File Id="au.UI.TaskDialog.dll" Name="au.UI.TaskDialog.dll" DiskId="1" Source="..\build\Release\au.UI.TaskDialog.dll" />
 			</Component>
 		</DirectoryRef>
 
@@ -69,11 +94,19 @@
 		<Feature Id="Binaries" Level="1" Title="MythTV Recorded Programs" Description="Binary files needed to run MythTV Recorded Programs" ConfigurableDirectory="INSTALLDIR">
 			<Feature Id="mythclientfeat" Title="MythClient" Description="The actual application along with libraries (required to run the application)" Level="1">
 				<ComponentRef Id="mythclientcomponent" />
-				<ComponentRef Id="mythdatacomponent" />
+				<ComponentRef Id="recordingscomponent" />
+				<ComponentRef Id="recordingstypescomponent" />
+				<ComponentRef Id="appsettingscomponent" />
+				<ComponentRef Id="appsettingstypescomponent" />
+				<ComponentRef Id="uicomponent" />
 				<ComponentRef Id="fileoperationcomponent" />
+				<ComponentRef Id="apicomponent" />
+				<ComponentRef Id="apitypescomponent" />
+				<ComponentRef Id="settingscomponent" />
+				<ComponentRef Id="settingstypescomponent" />
+				<ComponentRef Id="captionedpictureboxcomponent" />
+				<ComponentRef Id="directoryboxcomponent" />
 				<ComponentRef Id="taskdialogcomponent" />
-				<ComponentRef Id="comctlcomponent" />
-				<ComponentRef Id="auiocomponent" />
 			</Feature>
 			<Feature Id="mythclientshortcuts" Level="1" Title="Shortcuts" Description="Shortcuts for launching MythTV Recorded Programs">
 				<Feature Id="startmenushortcutfeat" Level="1" Title="Start Menu" Description="Create a shortcut to MythTV Recorded Programs in the Start Menu">
