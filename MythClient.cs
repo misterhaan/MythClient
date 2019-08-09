@@ -42,7 +42,7 @@ namespace au.Applications.MythClient {
 		private static bool PromptForRequiredSettings(IMythSettings settings) {
 			if(!settings.HasRequiredSettings)
 				using(SettingsWindow window = new SettingsWindow(settings.Server))
-					window.Show();
+					window.ShowDialog();
 			return settings.HasRequiredSettings;
 		}
 	}
