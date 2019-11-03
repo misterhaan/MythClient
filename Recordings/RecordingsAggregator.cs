@@ -49,7 +49,7 @@ namespace au.Applications.MythClient.Recordings {
 		/// Add a recording to the aggregator.
 		/// </summary>
 		/// <param name="program">Recording to add</param>
-		internal void Add(Program program) {
+		internal virtual void Add(Program program) {
 			if(program.Recording.RecGroup.Equals("Deleted", StringComparison.InvariantCultureIgnoreCase))
 				return;
 
@@ -62,7 +62,7 @@ namespace au.Applications.MythClient.Recordings {
 		/// Finalize aggregated recordings into show / season / episode structure.
 		/// </summary>
 		/// <returns>Collection of shows, which contain seasons, which contain episodes</returns>
-		internal IReadOnlyList<IShow> Finalize() {
+		internal virtual IReadOnlyList<IShow> Finalize() {
 			foreach(string title in _showsByTitle.Keys) {
 				foreach(int number in _seasonsByShowTitleAndSeasonNumber[title].Keys) {
 					List<IEpisode> episodes = _episodesByShowTitleAndEpisodeNumber[title][number];
