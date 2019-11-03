@@ -5,6 +5,9 @@ Download the latest installer from [track7.org](http://www.track7.org/code/vs/my
 
 ## Revision History
 
+### 2.0.2
+* Fix deletion still showing deleted item
+
 ### 2.0.1
 * Fix startup without required settings
 
