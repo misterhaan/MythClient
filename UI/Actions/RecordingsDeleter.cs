@@ -47,6 +47,7 @@ namespace au.Applications.MythClient.UI.Actions {
 				case DialogResult.No:
 					await _recordings.DeleteAsync(episode, rerecord == DialogResult.Yes);
 					await _recordings.LoadAsync();
+					_navigator.UpdateStateObjects();
 					_navigator.Render();
 					break;
 			}
@@ -67,6 +68,7 @@ namespace au.Applications.MythClient.UI.Actions {
 							deletions.Add(_recordings.DeleteAsync(episode, rerecord == DialogResult.Yes));
 					await Task.WhenAll(deletions);
 					await _recordings.LoadAsync();
+					_navigator.UpdateStateObjects();
 					_navigator.Render();
 					break;
 			}

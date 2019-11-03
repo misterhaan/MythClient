@@ -40,5 +40,19 @@ namespace au.Applications.MythClient.Recordings.Types {
 		/// Total duration of all recorded episodes in this season
 		/// </summary>
 		TimeSpan Duration { get; }
+
+		/// <summary>
+		/// Compare to another season object and determine equivalence.
+		/// </summary>
+		/// <param name="other">Other season to compare</param>
+		/// <returns>True if the seasons are equivalent</returns>
+		bool Matches(ISeason other);
+
+		/// <summary>
+		/// Attempt to find the specified episode, or the next episode if the actual episode no longer exists.
+		/// </summary>
+		/// <param name="sample">Sample episode to find</param>
+		/// <returns>Best match for the sample episode, or null if sample was null or there are no episodes</returns>
+		IEpisode FindEpisode(IEpisode sample);
 	}
 }

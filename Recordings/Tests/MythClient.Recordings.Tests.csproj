@@ -59,6 +59,7 @@
     <Compile Include="EpisodeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecordingsAggregatorTests.cs" />
+    <Compile Include="RecordingsTests.cs" />
     <Compile Include="SeasonTests.cs" />
     <Compile Include="ShowComparerTests.cs" />
     <Compile Include="ShowTests.cs" />

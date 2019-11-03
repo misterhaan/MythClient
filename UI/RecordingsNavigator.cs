@@ -194,6 +194,29 @@ namespace au.Applications.MythClient.UI {
 		}
 
 		/// <summary>
+		/// After loading the recordings list, the state objects need to be matched
+		/// up with what's in the new recordings list.
+		/// </summary>
+		internal void UpdateStateObjects() {
+			IShow oldShow = _show;
+			_show = _recordings.FindShow(_show);
+			if(oldShow?.Matches(_show) ?? false && _depth != BrowsingDepth.Recordings) {
+				ISeason oldSeason = _season;
+				_season = _show.FindSeason(_season);
+				if(oldSeason?.Matches(_season) ?? false && _depth != BrowsingDepth.Show)
+					_episode = _season.FindEpisode(_episode);
+				else {
+					_depth = BrowsingDepth.Show;
+					_episode = null;
+				}
+			} else {
+				_depth = BrowsingDepth.Recordings;
+				_season = null;
+				_episode = null;
+			}
+		}
+
+		/// <summary>
 		/// Render the contents and info panels to reflect the current navigation state.
 		/// </summary>
 		internal void Render() {
@@ -214,9 +237,7 @@ namespace au.Applications.MythClient.UI {
 		/// Render the contents and info panels to reflect the current navigation state when at the recordings depth.
 		/// </summary>
 		private void RenderRecordings() {
-			if(_show != null && !_recordings.Shows.Contains(_show))  // recordings have been refreshed so we need to find the show again by title
-				_show = _recordings.Shows.SingleOrDefault(show => show.Title.Equals(_show.Title, StringComparison.CurrentCultureIgnoreCase));
-			_show = _show ?? _recordings.Shows.First();
+			_show = _show ?? _recordings.Shows.FirstOrDefault();
 			_contents.Render(_recordings.Shows, _show);
 			_info.Render(_show);
 		}
@@ -225,8 +246,6 @@ namespace au.Applications.MythClient.UI {
 		/// Render the contents and info panels to reflect the current navigation state when at the show depth.
 		/// </summary>
 		private void RenderShow() {
-			if(_season != null && !_show.Seasons.Contains(_season))
-				_season = _show.Seasons.SingleOrDefault(season => season.Number == _season.Number);
 			_season = _season ?? _show.Seasons.First();
 			_contents.Render(_show.Seasons, _season);
 			_info.Render(_season);
@@ -236,8 +255,6 @@ namespace au.Applications.MythClient.UI {
 		/// Render the contents and info panels to reflect the current navigation state when at the season depth.
 		/// </summary>
 		private void RenderSeason() {
-			if(_episode != null && !_season.Episodes.Contains(_episode))
-				_episode = _season.Episodes.SingleOrDefault(episode => episode.SubTitle.Equals(_episode.SubTitle));
 			_episode = _episode ?? _season.Episodes.First();
 			_contents.Render(_season.Episodes, _episode);
 			_info.Render(_episode);

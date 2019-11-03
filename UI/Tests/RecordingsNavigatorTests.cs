@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using au.Applications.MythClient.Recordings.Types;
@@ -94,6 +95,62 @@ namespace au.Applications.MythClient.UI.Tests {
 		}
 		#endregion BackDescription
 
+		#region UpdateStateObjects
+		[TestMethod]
+		public void UpdateStateObjects_RecordingsDepth_DoesNotCallFindSeason() {
+			TestingRecordingsNavigator navigator = GetNavigator();
+			IShow foundShow = navigator.Recordings.Shows[1];
+			navigator.Show = A.Fake<IShow>();
+			A.CallTo(() => navigator.Show.Title).Returns(foundShow.Title);
+			A.CallTo(() => navigator.Recordings.FindShow(A<IShow>.Ignored)).Returns(foundShow);
+
+			navigator.UpdateStateObjects();
+
+			Assert.AreEqual(foundShow, navigator.Show, $"{nameof(navigator.UpdateStateObjects)}() should change selected show to one that's in recordings.");
+			A.CallTo(() => foundShow.FindSeason(A<ISeason>.Ignored)).MustNotHaveHappened();
+		}
+
+		[TestMethod]
+		public void UpdateStateObjects_ShowDepth_NoMatchingShow_RecordingsDepth() {
+			TestingRecordingsNavigator navigator = GetNavigatorAtShowDepth();
+			navigator.Show = A.Fake<IShow>();
+			A.CallTo(() => navigator.Show.Matches(A<IShow>.Ignored)).Returns(false);
+
+			navigator.UpdateStateObjects();
+
+			Assert.AreEqual(BrowsingDepth.Recordings, navigator.Depth, $"{nameof(navigator.UpdateStateObjects)}() should change set depth to recordings if the previously-selected show doesn't exist.");
+		}
+
+		[TestMethod]
+		public void UpdateStateObjects_ShowDepth_DoesNotCallFindEpisode() {
+			TestingRecordingsNavigator navigator = GetNavigatorAtShowDepth();
+			A.CallTo(() => navigator.Recordings.FindShow(A<IShow>.Ignored)).Returns(navigator.Show);
+			A.CallTo(() => navigator.Show.Matches(A<IShow>.Ignored)).Returns(true);
+			ISeason foundSeason = navigator.Show.Seasons.First();
+			navigator.Season = A.Fake<ISeason>();
+			A.CallTo(() => navigator.Season.Matches(foundSeason)).Returns(true);
+			A.CallTo(() => navigator.Show.FindSeason(A<ISeason>.Ignored)).Returns(foundSeason);
+
+			navigator.UpdateStateObjects();
+
+			A.CallTo(() => navigator.Season.FindEpisode(A<IEpisode>.That.IsNotNull())).MustNotHaveHappened();
+			A.CallTo(() => navigator.Season.FindEpisode(null)).MustHaveHappenedOnceExactly();
+		}
+
+		[TestMethod]
+		public void UpdateStateObjects_SeasonDepth_NoMatchingSeason_ShowDepth() {
+			TestingRecordingsNavigator navigator = GetNavigatorAtSeasonDepth();
+			A.CallTo(() => navigator.Recordings.FindShow(A<IShow>.Ignored)).Returns(navigator.Show);
+			A.CallTo(() => navigator.Show.Matches(A<IShow>.Ignored)).Returns(true);
+			A.CallTo(() => navigator.Show.FindSeason(A<ISeason>.Ignored)).Returns(A.Fake<ISeason>());
+			A.CallTo(() => navigator.Season.Matches(A<ISeason>.Ignored)).Returns(false);
+
+			navigator.UpdateStateObjects();
+
+			Assert.AreEqual(BrowsingDepth.Show, navigator.Depth, $"{nameof(navigator.UpdateStateObjects)}() should change set depth to show if the previously-selected season doesn't exist.");
+		}
+		#endregion UpdateStateObjects
+
 		#region Render
 		[TestMethod]
 		public void Render_RecordingsDepth_RendersShows() {
@@ -103,18 +160,6 @@ namespace au.Applications.MythClient.UI.Tests {
 
 			A.CallTo(() => navigator.Contents.Render(A<IReadOnlyCollection<IShow>>.Ignored, A<IShow>.Ignored)).MustHaveHappenedOnceExactly();
 			A.CallTo(() => navigator.Info.Render(A<IShow>.Ignored)).MustHaveHappenedOnceExactly();
-		}
-
-		[TestMethod]
-		public void Render_RecordingsDepthOldShow_SelectsMatchingTitle() {
-			TestingRecordingsNavigator navigator = GetNavigator();
-			IShow oldShow = A.Fake<IShow>();
-			A.CallTo(() => oldShow.Title).Returns(navigator.Recordings.Shows[1].Title);
-			navigator.Show = oldShow;
-
-			navigator.Render();
-
-			Assert.AreEqual(navigator.Recordings.Shows[1], navigator.Show, $"{nameof(navigator.Render)}() should select the show with the same title if the show wasn't in the recordings list.");
 		}
 
 		[TestMethod]
@@ -128,18 +173,6 @@ namespace au.Applications.MythClient.UI.Tests {
 		}
 
 		[TestMethod]
-		public void Render_ShowDepthOldSeason_SelectsMatchingNumber() {
-			TestingRecordingsNavigator navigator = GetNavigatorAtShowDepth(_showIndexMultiSeason);
-			ISeason oldSeason = A.Fake<ISeason>();
-			A.CallTo(() => oldSeason.Number).Returns(navigator.Show.Seasons[1].Number);
-			navigator.Season = oldSeason;
-
-			navigator.Render();
-
-			Assert.AreEqual(navigator.Show.Seasons[1], navigator.Season, $"{nameof(navigator.Render)}() should select the season with the same number if the season wasn't in the recordings list.");
-		}
-
-		[TestMethod]
 		public void Render_SeasonDepth_RendersEpisodes() {
 			TestingRecordingsNavigator navigator = GetNavigatorAtSeasonDepth();
 
@@ -147,18 +180,6 @@ namespace au.Applications.MythClient.UI.Tests {
 
 			A.CallTo(() => navigator.Contents.Render(A<IReadOnlyCollection<IEpisode>>.Ignored, A<IEpisode>.Ignored)).MustHaveHappenedOnceExactly();
 			A.CallTo(() => navigator.Info.Render(A<IEpisode>.Ignored)).MustHaveHappenedOnceExactly();
-		}
-
-		[TestMethod]
-		public void Render_SeasonDepthOldEpisode_SelectsMatchingSubtitle() {
-			TestingRecordingsNavigator navigator = GetNavigatorAtSeasonDepth(1);
-			IEpisode oldEpisode = A.Fake<IEpisode>();
-			A.CallTo(() => oldEpisode.SubTitle).Returns(navigator.Season.Episodes[1].SubTitle);
-			navigator.Episode = oldEpisode;
-
-			navigator.Render();
-
-			Assert.AreEqual(navigator.Season.Episodes[1], navigator.Episode, $"{nameof(navigator.Render)}() should select the episode with the same name if the episode wasn't in the recordings list.");
 		}
 		#endregion Render
 
@@ -237,16 +258,15 @@ namespace au.Applications.MythClient.UI.Tests {
 			public IInfoRenderer Info => _info;
 
 			public IRecordingsDeleter Deleter => _deleter;
-			public IRecordingsExporter Exporter => _exporter;
 
 			#region Fake Recordings
 			private static IRecordings GetRecordings() {
 				IRecordings recordings = A.Fake<IRecordings>();
 				A.CallTo(() => recordings.Shows).Returns(new IShow[]{
-				GetMovie(),
-				GetMultiEpisodeShow(),
-				GetMultiSeasonShow()
-			});
+					GetMovie(),
+					GetMultiEpisodeShow(),
+					GetMultiSeasonShow()
+				});
 				return recordings;
 			}
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using au.Applications.MythClient.Recordings.Types;
 using FakeItEasy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -111,7 +112,114 @@ namespace au.Applications.MythClient.Recordings.Tests {
 			Assert.AreEqual(coverSeason.CoverArtUrl, show.CoverArtUrl, $"{nameof(show.CoverArtUrl)} should return the {nameof(Season.CoverArtUrl)} of the first {nameof(Season)} that has one.");
 		}
 
+		[TestMethod]
+		public void Matches_NullOther_ReturnsFalse() {
+			Show show = GetShow();
+
+			bool matches = show.Matches(null);
+
+			Assert.IsFalse(matches, $"{nameof(show.Matches)}() should return false against null.");
+		}
+
+		[TestMethod]
+		public void Matches_Self_ReturnsTrue() {
+			Show show = GetShow();
+
+			bool matches = show.Matches(show);
+
+			Assert.IsTrue(matches, $"{nameof(show.Matches)}() should return true against itself.");
+		}
+
+		[TestMethod]
+		public void Matches_SameTitle_ReturnsTrue() {
+			Show show = GetShow();
+			IShow other = A.Fake<IShow>();
+			A.CallTo(() => other.Title).Returns(show.Title);
+
+			bool matches = show.Matches(other);
+
+			Assert.IsTrue(matches, $"{nameof(show.Matches)}() should return true against a show with the same title.");
+		}
+
+		[TestMethod]
+		public void Matches_SameTitleDifferencCasing_ReturnsTrue() {
+			Show show = GetShow();
+			IShow other = A.Fake<IShow>();
+			A.CallTo(() => other.Title).Returns(show.Title.ToUpper());
+
+			bool matches = show.Matches(other);
+
+			Assert.IsTrue(matches, $"{nameof(show.Matches)}() should return true against a show with the same title with different capitalization.");
+		}
+
+		[TestMethod]
+		public void Matches_DifferentTitle_ReturnsFalse() {
+			Show show = GetShow();
+			IShow other = A.Fake<IShow>();
+			A.CallTo(() => other.Title).Returns("Something Else");
+
+			bool matches = show.Matches(other);
+
+			Assert.IsFalse(matches, $"{nameof(show.Matches)}() should return false against a show with a different title.");
+		}
+
+		[TestMethod]
+		public void FindSeason_NullSearch_ReturnsNull() {
+			Show show = GetShowWithSeasons(3, 4, 5);
+
+			ISeason foundSeason = show.FindSeason(null);
+
+			Assert.IsNull(foundSeason, $"{nameof(show.FindSeason)}() should return null when looking for a null season.");
+		}
+
+		[TestMethod]
+		public void FindSeason_ContainsReference_ReturnsSame() {
+			Show show = GetShowWithSeasons(3, 4, 5);
+			ISeason searchSeason = show.Seasons[1];
+
+			ISeason foundSeason = show.FindSeason(searchSeason);
+
+			Assert.AreEqual(searchSeason, foundSeason, $"{nameof(show.FindSeason)}() should return the searched season when its reference is in the {nameof(show.Seasons)} property.");
+		}
+
+		[TestMethod]
+		public void FindSeason_ContainsNumber_ReturnsContained() {
+			Show show = GetShowWithSeasons(3, 4, 5);
+			ISeason searchSeason = GetSeasonWithNumber(show.Seasons[0].Number);
+
+			ISeason foundSeason = show.FindSeason(searchSeason);
+
+			Assert.AreNotEqual(searchSeason, foundSeason, $"{nameof(show.FindSeason)}() should not return a season that isn't referenced in the {nameof(show.Seasons)} property.");
+			Assert.AreEqual(show.Seasons[0], foundSeason, $"{nameof(show.FindSeason)}() should return a referenced season thats number matches the searched season.");
+		}
+
+		[TestMethod]
+		public void FindSeason_DoesNotContainNumber_ReturnsNext() {
+			Show show = GetShowWithSeasons(2, 4, 5);
+			ISeason searchSeason = GetSeasonWithNumber(3);
+
+			ISeason foundSeason = show.FindSeason(searchSeason);
+
+			Assert.AreEqual(show.Seasons[1], foundSeason, $"{nameof(show.FindSeason)}() should return the first referenced season that follows the searched season.");
+		}
+
+		[TestMethod]
+		public void FindSeason_DoesNotContainNumber_ReturnsLast() {
+			Show show = GetShowWithSeasons(3, 4, 5);
+			ISeason searchSeason = GetSeasonWithNumber(7);
+
+			ISeason foundSeason = show.FindSeason(searchSeason);
+
+			Assert.AreEqual(show.Seasons.Last(), foundSeason, $"{nameof(show.FindSeason)}() should return the last referenced season when the searched season would have been last.");
+		}
+
 		private static Show GetShow() => new Show("test", "testing", "series");
+
+		private static Show GetShowWithSeasons(params int[] numbers) {
+			Show show = GetShow();
+			show.Seasons = numbers.Select(number => GetSeasonWithNumber(number)).ToList();
+			return show;
+		}
 
 		private static ISeason GetSeasonWithEpisodeCount(int numEpisodes) {
 			ISeason season = GetSeason();
@@ -142,6 +250,9 @@ namespace au.Applications.MythClient.Recordings.Tests {
 			A.CallTo(() => season.CoverArtUrl).Returns(url);
 			return season;
 		}
+
+		private static ISeason GetSeasonWithNumber(int number)
+			=> new Season("showTitle", number);
 
 		private static ISeason GetSeason() => A.Fake<ISeason>();
 

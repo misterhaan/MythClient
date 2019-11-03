@@ -53,6 +53,22 @@ namespace au.Applications.MythClient.Recordings {
 		public string CoverArtUrl
 			=> Seasons.FirstOrDefault(SeasonHasCoverArtUrl)?.CoverArtUrl;
 
+		/// <inheritdoc />
+		public bool Matches(IShow other)
+			=> Title.Equals(other?.Title, StringComparison.CurrentCultureIgnoreCase);
+
+		/// <inheritdoc />
+		public ISeason FindSeason(ISeason example) {
+			if(example == null || Seasons.Contains(example))
+				return example;
+
+			foreach(ISeason season in Seasons)
+				if(season.Matches(example) || season.Number > example.Number)
+					return season;
+
+			return Seasons.LastOrDefault();
+		}
+
 		/// <summary>
 		/// Gets the count of episodes in a season.
 		/// </summary>

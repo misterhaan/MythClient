@@ -50,5 +50,19 @@ namespace au.Applications.MythClient.Recordings.Types {
 		/// Cover art for the oldest season of this show that has cover art
 		/// </summary>
 		string CoverArtUrl { get; }
+
+		/// <summary>
+		/// Compare to another show object and determine equivalence.
+		/// </summary>
+		/// <param name="other">Other show to compare</param>
+		/// <returns>True if the shows are equivalent</returns>
+		bool Matches(IShow other);
+
+		/// <summary>
+		/// Attempt to find the specified season, or the next season if the actual season no longer exists.
+		/// </summary>
+		/// <param name="sample">Sample season to find</param>
+		/// <returns>Best match for the sample season, or null if sample was null or there are no seasons</returns>
+		ISeason FindSeason(ISeason sample);
 	}
 }

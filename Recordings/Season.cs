@@ -40,6 +40,22 @@ namespace au.Applications.MythClient.Recordings {
 		public TimeSpan Duration
 			=> Episodes.Aggregate(TimeSpan.Zero, (sum, episode) => sum + episode.Duration);
 
+		/// <inheritdoc />
+		public bool Matches(ISeason other)
+			=> Number == other?.Number;
+
+		/// <inheritdoc />
+		public IEpisode FindEpisode(IEpisode example) {
+			if(example == null || Episodes.Contains(example))
+				return example;
+
+			foreach(IEpisode episode in Episodes)
+				if(episode.CompareTo(example) >= 0)
+					return episode;
+
+			return Episodes.LastOrDefault();
+		}
+
 		/// <summary>
 		/// Get the first-aired date of the specified episode.
 		/// </summary>

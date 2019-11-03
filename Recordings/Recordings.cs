@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using au.Applications.MythClient.Recordings.Types;
 using au.Applications.MythClient.Settings.Types;
@@ -22,7 +24,7 @@ namespace au.Applications.MythClient.Recordings {
 		/// <summary>
 		/// MythTV DVR API client
 		/// </summary>
-		private IDvrApi _dvrApi;
+		protected IDvrApi _dvrApi;
 
 		/// <summary>
 		/// Default constructor
@@ -34,12 +36,20 @@ namespace au.Applications.MythClient.Recordings {
 			_apiFactory = apiFactory;
 		}
 
+		/// <summary>
+		/// Function that creates the aggregator:  override for unit testing
+		/// </summary>
+		internal static Func<IMythSettings, IContentApi, RecordingsAggregator> _createAggregator = CreateAggregator;
+
+		private static RecordingsAggregator CreateAggregator(IMythSettings settings, IContentApi contentApi)
+			=> new RecordingsAggregator(settings, contentApi);
+
 		/// <inheritdoc />
 		public async Task LoadAsync() {
 			_dvrApi = _apiFactory.BuildDvrApi(false, _settings.Server.Name, _settings.Server.Port);
 			IContentApi contentApi = _apiFactory.BuildContentApi(false, _settings.Server.Name, _settings.Server.Port);
 
-			RecordingsAggregator aggregator = new RecordingsAggregator(_settings, contentApi);
+			RecordingsAggregator aggregator = _createAggregator(_settings, contentApi);
 			ProgramList programList = await _dvrApi.GetRecordedList();
 
 			foreach(Program program in programList.Programs)
@@ -49,7 +59,23 @@ namespace au.Applications.MythClient.Recordings {
 		}
 
 		/// <inheritdoc />
-		public IReadOnlyList<IShow> Shows { get; private set; } = new List<IShow>().AsReadOnly();
+		public IReadOnlyList<IShow> Shows { get; protected set; } = new List<IShow>().AsReadOnly();
+
+		/// <inheritdoc />
+		public IShow FindShow(IShow example) {
+			if(example == null || Shows.Contains(example))
+				return example;
+
+			ShowComparer comparer = _settings.RecordingSortOption == RecordingSortOption.OldestRecorded
+				? ShowComparer.OldestRecorded
+				: ShowComparer.Title;
+
+			foreach(IShow show in Shows)
+				if(show.Matches(example) || comparer.Compare(show, example) > 0)
+					return show;
+
+			return Shows.LastOrDefault();
+		}
 
 		/// <inheritdoc />
 		public async Task<bool> DeleteAsync(IEpisode episode, bool rerecord)

@@ -18,6 +18,13 @@ namespace au.Applications.MythClient.Recordings.Types {
 		IReadOnlyList<IShow> Shows { get; }
 
 		/// <summary>
+		/// Attempt to find the specified show, or the next show if the actual show no longer exists.
+		/// </summary>
+		/// <param name="sample">Sample show to find</param>
+		/// <returns>Best match for the sample show, or null if sample was null or there are no shows</returns>
+		IShow FindShow(IShow sample);
+
+		/// <summary>
 		/// Delete an Episode from MythTV.  Does not remove it from the recordings collection.
 		/// </summary>
 		/// <param name="episode">Episode to delete</param>
