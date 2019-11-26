@@ -126,7 +126,7 @@ namespace au.Applications.MythClient.Recordings.Tests {
 				Season = season,
 				SubTitle = subtitle,
 				Episode = episode,
-				Airdate = firstAired,
+				SerializedAirdate = firstAired.ToString(),
 				Recording = GetRecording()
 			};
 		}

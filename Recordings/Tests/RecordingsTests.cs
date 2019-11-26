@@ -178,7 +178,7 @@ namespace au.Applications.MythClient.Recordings.Tests {
 				Programs = new List<Program> {
 					new Program {
 						Title="CSI",
-						Airdate=new DateTime(2001,2,3),
+						SerializedAirdate=new DateTime(2001,2,3).ToString(),
 						Season=3,
 						Episode=7,
 						SubTitle="Duct Tape Murder"
