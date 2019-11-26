@@ -74,12 +74,18 @@
     <Compile Include="Actions\RecordingsDeleter.cs" />
     <Compile Include="Actions\RecordingsExporter.cs" />
     <Compile Include="BrowsingDepth.cs" />
+    <Compile Include="ExceptionMessages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ExceptionMessages.resx</DependentUpon>
+    </Compile>
     <Compile Include="Icons.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Icons.resx</DependentUpon>
     </Compile>
     <Compile Include="NavigationDirection.cs" />
+    <Compile Include="NeedsRecordingFilesBase.cs" />
     <Compile Include="Render\ContentsRendererBase.cs" />
     <Compile Include="Render\IInfoActionButtonTag.cs" />
     <Compile Include="Images.Designer.cs">
@@ -136,6 +142,10 @@
   <ItemGroup>
     <EmbeddedResource Include="AboutWindow.resx">
       <DependentUpon>AboutWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExceptionMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExceptionMessages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Icons.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -13,11 +13,11 @@ namespace au.Applications.MythClient.UI {
 	/// <summary>
 	/// Keeps track of the current navigation state in the recordings window.
 	/// </summary>
-	internal class RecordingsNavigator {
+	internal class RecordingsNavigator : NeedsRecordingFilesBase {
 		/// <summary>
-		/// Application settings
+		/// Window to own dialogs
 		/// </summary>
-		private readonly IMythSettings _settings;
+		private readonly IWin32Window _owner;
 
 		/// <summary>
 		/// Collection of recordings
@@ -106,8 +106,9 @@ namespace au.Applications.MythClient.UI {
 		/// <param name="recordings">Collection of recordings</param>
 		/// <param name="contents">Renders the contents pane</param>
 		/// <param name="info">Renders the info pane</param>
-		protected RecordingsNavigator(IWin32Window owner, IMythSettings settings, IRecordings recordings, IContentsRenderer contents, IInfoRenderer info) {
-			_settings = settings;
+		protected RecordingsNavigator(IWin32Window owner, IMythSettings settings, IRecordings recordings, IContentsRenderer contents, IInfoRenderer info)
+			: base(settings) {
+			_owner = owner;
 			_recordings = recordings;
 
 			_contents = contents;
@@ -570,15 +571,25 @@ namespace au.Applications.MythClient.UI {
 		/// Play an episode with the default application.
 		/// </summary>
 		/// <param name="episode">Episode to play</param>
-		private void Play(IEpisode episode)
-			=> Process.Start(Path.Combine(_settings.Server.RawFilesDirectory, episode.Filename));
+		private void Play(IEpisode episode) {
+			try {
+				Process.Start(GetRecordingFileName(episode));
+			} catch(FileNotFoundException e) {
+				MessageBox.Show(_owner, e.Message, ActionText.PlayCaption, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+			}
+		}
 
 		/// <summary>
 		/// Play an episode after choosing an application.
 		/// </summary>
 		/// <param name="episode">Episode to play</param>
-		private void PlayWith(IEpisode episode)
-			=> Process.Start("rundll32.exe", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "shell32.dll") + ",OpenAs_RunDLL " + Path.Combine(_settings.Server.RawFilesDirectory, episode.Filename));
+		private void PlayWith(IEpisode episode) {
+			try {
+				Process.Start("rundll32.exe", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "shell32.dll") + ",OpenAs_RunDLL " + GetRecordingFileName(episode));
+			} catch(FileNotFoundException e) {
+				MessageBox.Show(_owner, e.Message, ActionText.PlayCaption, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+			}
+		}
 
 		#region events
 		private void Contents_ControlAdded(object sender, ControlEventArgs e) {

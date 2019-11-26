@@ -11,7 +11,7 @@ namespace au.Applications.MythClient.UI.Actions {
 	/// <summary>
 	/// Handles export of recordings.
 	/// </summary>
-	internal class RecordingsExporter : IRecordingsExporter {
+	internal class RecordingsExporter : NeedsRecordingFilesBase, IRecordingsExporter {
 		// the actual values here aren't important, but they can't overlap with DialogResult.Cancel or each other
 		private const int _formatIdSeasonEpisode = 80;
 		private const int _formatIdDateEpisode = 81;
@@ -20,16 +20,10 @@ namespace au.Applications.MythClient.UI.Actions {
 		private const int _formatIdDate = 84;
 		private const int _formatIdTitle = 85;
 
-
 		/// <summary>
 		/// Window to own dialogs
 		/// </summary>
 		private readonly IWin32Window _owner;
-
-		/// <summary>
-		/// Application settings
-		/// </summary>
-		private readonly IMythSettings _settings;
 
 		/// <summary>
 		/// Dialog for choosing the directory to export multiple recordings
@@ -46,9 +40,9 @@ namespace au.Applications.MythClient.UI.Actions {
 		/// </summary>
 		/// <param name="owner">Window to own dialogs</param>
 		/// <param name="settings">Application settings</param>
-		internal RecordingsExporter(IWin32Window owner, IMythSettings settings) {
+		internal RecordingsExporter(IWin32Window owner, IMythSettings settings)
+			: base(settings) {
 			_owner = owner;
-			_settings = settings;
 			_chooseExportDirectory = CreateExportDirectoryDialog(settings.LastExportDirectory);
 			_chooseExportFile = CreateExportFileDialog(settings.LastExportDirectory);
 		}
@@ -82,10 +76,18 @@ namespace au.Applications.MythClient.UI.Actions {
 		/// <param name="show">Show to export</param>
 		public void Export(IShow show) {
 			if(AskExportDetails(show.OldestEpisode, out string filenameFormat, out string exportPath))
-				using(CopyFilesOperation copy = new CopyFilesOperation())
+				using(CopyFilesOperation copy = new CopyFilesOperation()) {
+					List<string> missingFiles = new List<string>();
 					foreach(ISeason season in show.Seasons)
 						foreach(IEpisode episode in season.Episodes)
-							QueueExport(copy, episode, filenameFormat, exportPath);
+							try {
+								QueueExport(copy, episode, filenameFormat, exportPath);
+							} catch(FileNotFoundException e) {
+								missingFiles.Add(e.FileName);
+							}
+					if(missingFiles.Any())
+						MessageBox.Show(_owner, string.Format(ExceptionMessages.ExportAllFilesNotFound, missingFiles.Count), ActionText.ExportAllTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				}
 		}
 
 		/// <summary>
@@ -94,9 +96,17 @@ namespace au.Applications.MythClient.UI.Actions {
 		/// <param name="season">Season to export</param>
 		public void Export(ISeason season) {
 			if(AskExportDetails(season.OldestEpisode, out string filenameFormat, out string exportPath))
-				using(CopyFilesOperation copy = new CopyFilesOperation())
+				using(CopyFilesOperation copy = new CopyFilesOperation()) {
+					List<string> missingFiles = new List<string>();
 					foreach(IEpisode episode in season.Episodes)
-						QueueExport(copy, episode, filenameFormat, exportPath);
+						try {
+							QueueExport(copy, episode, filenameFormat, exportPath);
+						} catch(FileNotFoundException e) {
+							missingFiles.Add(e.FileName);
+						}
+					if(missingFiles.Any())
+						MessageBox.Show(_owner, string.Format(ExceptionMessages.ExportAllFilesNotFound, missingFiles.Count), ActionText.ExportAllTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				}
 		}
 
 		/// <summary>
@@ -106,16 +116,20 @@ namespace au.Applications.MythClient.UI.Actions {
 		public void Export(IEpisode episode) {
 			string filenameFormat = AskExportFilenameFormat(episode, false);
 			if(!string.IsNullOrEmpty(filenameFormat)) {
-				FileInfo rawFile = GetEpisodeFullFilename(episode);
-				_chooseExportFile.DefaultExt = rawFile.Extension;
-				_chooseExportFile.Filter = ActionText.ExportFiletype + "|*" + rawFile.Extension;
-				_chooseExportFile.FileName = FormatEpisode(filenameFormat, episode);
-				switch(_chooseExportFile.ShowDialog(_owner)) {
-					case DialogResult.OK:
-					case DialogResult.Yes:
-						using(CopyFilesOperation copy = new CopyFilesOperation())
-							copy.Queue(rawFile, new FileInfo(_chooseExportFile.FileName));
-						break;
+				try {
+					FileInfo rawFile = GetRecordingFile(episode);
+					_chooseExportFile.DefaultExt = rawFile.Extension;
+					_chooseExportFile.Filter = ActionText.ExportFiletype + "|*" + rawFile.Extension;
+					_chooseExportFile.FileName = FormatEpisode(filenameFormat, episode);
+					switch(_chooseExportFile.ShowDialog(_owner)) {
+						case DialogResult.OK:
+						case DialogResult.Yes:
+							using(CopyFilesOperation copy = new CopyFilesOperation())
+								copy.Queue(rawFile, new FileInfo(_chooseExportFile.FileName));
+							break;
+					}
+				} catch(FileNotFoundException e) {
+					MessageBox.Show(_owner, e.Message, ActionText.ExportTitle, MessageBoxButtons.OK, MessageBoxIcon.Stop);
 				}
 			}
 		}
@@ -208,19 +222,10 @@ namespace au.Applications.MythClient.UI.Actions {
 		/// <param name="filenameFormat">Chosen export filename format</param>
 		/// <param name="exportPath">Chosen export path</param>
 		private void QueueExport(CopyFilesOperation copy, IEpisode episode, string filenameFormat, string exportPath) {
-			FileInfo rawFile = GetEpisodeFullFilename(episode);
+			FileInfo rawFile = GetRecordingFile(episode);
 			FileInfo exportFile = new FileInfo(Path.Combine(exportPath, FormatEpisode(filenameFormat, episode)) + rawFile.Extension);
 			copy.Queue(rawFile, exportFile);
 		}
-
-		/// <summary>
-		/// Find the full path to an episode's recording file.
-		/// </summary>
-		/// <param name="episode">Episode whose full filename is needed</param>
-		/// <returns>Full path to the episode's recording file</returns>
-		private FileInfo GetEpisodeFullFilename(IEpisode episode)
-			=> new FileInfo(Path.Combine(_settings.Server.RawFilesDirectory, episode.Filename));
-
 
 		/// <summary>
 		/// Apply a filename format to an episode.
