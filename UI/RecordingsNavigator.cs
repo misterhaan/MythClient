@@ -633,29 +633,30 @@ namespace au.Applications.MythClient.UI {
 			if(sender is Control control) {
 				int newIndex = control.Parent.Controls.IndexOf(control);
 				Debug.Assert(newIndex >= 0, "Clicked control was not found in parent.");
-				switch(Depth) {
-					case BrowsingDepth.Recordings:
-						if(_show != _recordings.Shows[newIndex]) {
-							_show = _recordings.Shows[newIndex];
-							_contents.UpdateSelected(control);
-							_info.Render(_show);
-						}
-						break;
-					case BrowsingDepth.Show:
-						if(_season != _show.Seasons[newIndex]) {
-							_season = _show.Seasons[newIndex];
-							_contents.UpdateSelected(control);
-							_info.Render(_season);
-						}
-						break;
-					case BrowsingDepth.Season:
-						if(_episode != _season.Episodes[newIndex]) {
-							_episode = _season.Episodes[newIndex];
-							_contents.UpdateSelected(control);
-							_info.Render(_episode);
-						}
-						break;
-				}
+				if(newIndex < control.Parent.Controls.Count - 1)
+					switch(Depth) {
+						case BrowsingDepth.Recordings:
+							if(_show != _recordings.Shows[newIndex]) {
+								_show = _recordings.Shows[newIndex];
+								_contents.UpdateSelected(control);
+								_info.Render(_show);
+							}
+							break;
+						case BrowsingDepth.Show:
+							if(_season != _show.Seasons[newIndex]) {
+								_season = _show.Seasons[newIndex];
+								_contents.UpdateSelected(control);
+								_info.Render(_season);
+							}
+							break;
+						case BrowsingDepth.Season:
+							if(_episode != _season.Episodes[newIndex]) {
+								_episode = _season.Episodes[newIndex];
+								_contents.UpdateSelected(control);
+								_info.Render(_episode);
+							}
+							break;
+					}
 			}
 		}
 
