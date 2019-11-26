@@ -1,16 +1,21 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace au.IO.Web.API.MythTV.Types {
-	public class RecordingInfo {
+	public class RecordingInfo : TimeBasedXmlBase {
 		public uint RecordedId { get; set; }
 
 		public RecStatusType Status { get; set; }
 
 		public int Priority { get; set; }
 
-		public DateTime? StartTs { get; set; }
+		[XmlIgnore]
+		public DateTime? StartTs
+			=> DeserializeDateTime(SerializedStartTs);
 
-		public DateTime? EndTs { get; set; }
+		[XmlIgnore]
+		public DateTime? EndTs
+		=> DeserializeDateTime(SerializedEndTs);
 
 		public long FileSize { get; set; }
 
@@ -18,7 +23,9 @@ namespace au.IO.Web.API.MythTV.Types {
 
 		public string HostName { get; set; }
 
-		public DateTime? LastModified { get; set; }
+		[XmlIgnore]
+		public DateTime? LastModified
+			=> DeserializeDateTime(SerializedLastModified);
 
 		public int RecordId { get; set; }
 
@@ -39,5 +46,14 @@ namespace au.IO.Web.API.MythTV.Types {
 		public string EncoderName { get; set; }
 
 		public string Profile { get; set; }
+
+		[XmlElement("StartTs")]
+		public string SerializedStartTs { get; set; }
+
+		[XmlElement("EndTs")]
+		public string SerializedEndTs { get; set; }
+
+		[XmlElement("LastModified")]
+		public string SerializedLastModified { get; set; }
 	}
 }

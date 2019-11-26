@@ -49,10 +49,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecordingInfo.cs" />
     <Compile Include="RecStatusType.cs" />
+    <Compile Include="TimeBasedXmlBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

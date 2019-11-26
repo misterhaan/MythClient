@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace au.IO.Web.API.MythTV.Types {
-	public class Program {
-		public DateTime? StartTime { get; set; }
+	public class Program : TimeBasedXmlBase {
+		[XmlIgnore]
+		public DateTime? StartTime
+			=> DeserializeDateTime(SerializedStartTime);
 
-		public DateTime? EndTime { get; set; }
+		[XmlIgnore]
+		public DateTime? EndTime
+			=> DeserializeDateTime(SerializedEndTime);
 
 		public string Title { get; set; }
 
@@ -28,11 +33,15 @@ namespace au.IO.Web.API.MythTV.Types {
 
 		public double Stars { get; set; }
 
-		public DateTime? LastModified { get; set; }
+		[XmlIgnore]
+		public DateTime? LastModified
+			=> DeserializeDateTime(SerializedLastModified);
 
 		public int ProgramFlags { get; set; }
 
-		public DateTime? Airdate { get; set; }
+		[XmlIgnore]
+		public DateTime? Airdate
+			=> DeserializeDateTime(SerializedAirdate);
 
 		public string Description { get; set; }
 
@@ -57,5 +66,17 @@ namespace au.IO.Web.API.MythTV.Types {
 		public ArtworkInfoList Artwork { get; set; } = new ArtworkInfoList();
 
 		public CastMemberList Cast { get; set; } = new CastMemberList();
+
+		[XmlElement("Airdate")]
+		public string SerializedAirdate { get; set; }
+
+		[XmlElement("StartTime")]
+		public string SerializedStartTime { get; set; }
+
+		[XmlElement("EndTime")]
+		public string SerializedEndTime { get; set; }
+
+		[XmlElement("LastModified")]
+		public string SerializedLastModified { get; set; }
 	}
 }
