@@ -37,7 +37,8 @@ namespace au.Applications.MythClient.UI.Render {
 			// add an extra control to fix the scrolling problem
 			Control.Controls.Add(new Control {
 				Width = Control.Width - Control.Padding.Left - Control.Padding.Right - 1,
-				Height = Control.Padding.Bottom + _margin + 1
+				Height = Control.Padding.Bottom + _margin + 1,
+				TabStop = false
 			});
 		}
 
