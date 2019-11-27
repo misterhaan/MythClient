@@ -5,6 +5,12 @@ Download the latest installer from [track7.org](http://www.track7.org/code/vs/my
 
 ## Revision History
 
+### 2.0.3
+* Fix crash loading recordings if at least one didn't have an optional date
+* Fix crash when clicking empty space below last show / season / episode
+* Error message instead of crash when trying to play or download recording files that don't exist
+* Fix contents scrolling to bottom and arrow keys not working
+
 ### 2.0.2
 * Fix deletion still showing deleted item
 
