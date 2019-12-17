@@ -95,34 +95,34 @@ namespace au.Applications.MythClient.UI.Tests {
 		}
 		#endregion BackDescription
 
-		#region UpdateStateObjects
+		#region RefreshAsync
 		[TestMethod]
-		public void UpdateStateObjects_RecordingsDepth_DoesNotCallFindSeason() {
+		public async Task RefreshAsync_RecordingsDepth_DoesNotCallFindSeason() {
 			TestingRecordingsNavigator navigator = GetNavigator();
 			IShow foundShow = navigator.Recordings.Shows[1];
 			navigator.Show = A.Fake<IShow>();
 			A.CallTo(() => navigator.Show.Title).Returns(foundShow.Title);
 			A.CallTo(() => navigator.Recordings.FindShow(A<IShow>.Ignored)).Returns(foundShow);
 
-			navigator.UpdateStateObjects();
+			await navigator.RefreshAsync();
 
-			Assert.AreEqual(foundShow, navigator.Show, $"{nameof(navigator.UpdateStateObjects)}() should change selected show to one that's in recordings.");
+			Assert.AreEqual(foundShow, navigator.Show, $"{nameof(navigator.RefreshAsync)}() should change selected show to one that's in recordings.");
 			A.CallTo(() => foundShow.FindSeason(A<ISeason>.Ignored)).MustNotHaveHappened();
 		}
 
 		[TestMethod]
-		public void UpdateStateObjects_ShowDepth_NoMatchingShow_RecordingsDepth() {
+		public async Task RefreshAsync_ShowDepth_NoMatchingShow_RecordingsDepth() {
 			TestingRecordingsNavigator navigator = GetNavigatorAtShowDepth();
 			navigator.Show = A.Fake<IShow>();
 			A.CallTo(() => navigator.Show.Matches(A<IShow>.Ignored)).Returns(false);
 
-			navigator.UpdateStateObjects();
+			await navigator.RefreshAsync();
 
-			Assert.AreEqual(BrowsingDepth.Recordings, navigator.Depth, $"{nameof(navigator.UpdateStateObjects)}() should change set depth to recordings if the previously-selected show doesn't exist.");
+			Assert.AreEqual(BrowsingDepth.Recordings, navigator.Depth, $"{nameof(navigator.RefreshAsync)}() should change set depth to recordings if the previously-selected show doesn't exist.");
 		}
 
 		[TestMethod]
-		public void UpdateStateObjects_ShowDepth_DoesNotCallFindEpisode() {
+		public async Task RefreshAsync_ShowDepth_DoesNotCallFindEpisode() {
 			TestingRecordingsNavigator navigator = GetNavigatorAtShowDepth();
 			A.CallTo(() => navigator.Recordings.FindShow(A<IShow>.Ignored)).Returns(navigator.Show);
 			A.CallTo(() => navigator.Show.Matches(A<IShow>.Ignored)).Returns(true);
@@ -131,25 +131,25 @@ namespace au.Applications.MythClient.UI.Tests {
 			A.CallTo(() => navigator.Season.Matches(foundSeason)).Returns(true);
 			A.CallTo(() => navigator.Show.FindSeason(A<ISeason>.Ignored)).Returns(foundSeason);
 
-			navigator.UpdateStateObjects();
+			await navigator.RefreshAsync();
 
 			A.CallTo(() => navigator.Season.FindEpisode(A<IEpisode>.That.IsNotNull())).MustNotHaveHappened();
 			A.CallTo(() => navigator.Season.FindEpisode(null)).MustHaveHappenedOnceExactly();
 		}
 
 		[TestMethod]
-		public void UpdateStateObjects_SeasonDepth_NoMatchingSeason_ShowDepth() {
+		public async Task RefreshAsync_SeasonDepth_NoMatchingSeason_ShowDepth() {
 			TestingRecordingsNavigator navigator = GetNavigatorAtSeasonDepth();
 			A.CallTo(() => navigator.Recordings.FindShow(A<IShow>.Ignored)).Returns(navigator.Show);
 			A.CallTo(() => navigator.Show.Matches(A<IShow>.Ignored)).Returns(true);
 			A.CallTo(() => navigator.Show.FindSeason(A<ISeason>.Ignored)).Returns(A.Fake<ISeason>());
 			A.CallTo(() => navigator.Season.Matches(A<ISeason>.Ignored)).Returns(false);
 
-			navigator.UpdateStateObjects();
+			await navigator.RefreshAsync();
 
-			Assert.AreEqual(BrowsingDepth.Show, navigator.Depth, $"{nameof(navigator.UpdateStateObjects)}() should change set depth to show if the previously-selected season doesn't exist.");
+			Assert.AreEqual(BrowsingDepth.Show, navigator.Depth, $"{nameof(navigator.RefreshAsync)}() should change set depth to show if the previously-selected season doesn't exist.");
 		}
-		#endregion UpdateStateObjects
+		#endregion RefreshAsync
 
 		#region Render
 		[TestMethod]
@@ -239,13 +239,8 @@ namespace au.Applications.MythClient.UI.Tests {
 					A.Fake<IMythSettings>(),
 					GetRecordings(),
 					A.Fake<IContentsRenderer>(),
-					A.Fake<IInfoRenderer>()) { }
-
-			protected override IRecordingsDeleter BuildRecordingsDeleter(IWin32Window owner, IRecordings recordings, RecordingsNavigator navigator)
-				=> A.Fake<IRecordingsDeleter>();
-
-			protected override IRecordingsExporter BuildRecordingsExporter(IWin32Window owner, IMythSettings settings)
-				=> A.Fake<IRecordingsExporter>();
+					A.Fake<IInfoRenderer>(),
+					GetActorFactory()) { }
 
 			public void SetDepth(BrowsingDepth depth) => Depth = depth;
 
@@ -258,6 +253,13 @@ namespace au.Applications.MythClient.UI.Tests {
 			public IInfoRenderer Info => _info;
 
 			public IRecordingsDeleter Deleter => _deleter;
+
+			private static IActorFactory GetActorFactory() {
+				IActorFactory actorFactory = A.Fake<IActorFactory>();
+				A.CallTo(() => actorFactory.BuildRecordingsDeleter(A<IWin32Window>.Ignored, A<IRecordings>.Ignored, A<RecordingsNavigator>.Ignored)).Returns(A.Fake<IRecordingsDeleter>());
+				A.CallTo(() => actorFactory.BuildRecordingsExporter(A<IWin32Window>.Ignored, A<IMythSettings>.Ignored)).Returns(A.Fake<IRecordingsExporter>());
+				return actorFactory;
+			}
 
 			#region Fake Recordings
 			private static IRecordings GetRecordings() {

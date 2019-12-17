@@ -93,7 +93,7 @@ namespace au.Applications.MythClient.UI {
 		/// <param name="contents">The contents pane</param>
 		/// <param name="info">The info pane</param>
 		internal RecordingsNavigator(IWin32Window owner, IMythSettings settings, IRecordings recordings, Panel contents, Panel info)
-			: this(owner, settings, recordings, new ContentsRenderer(contents), new InfoRenderer(info)) {
+			: this(owner, settings, recordings, new ContentsRenderer(contents), new InfoRenderer(info), new ActorFactory()) {
 			contents.ControlAdded += Contents_ControlAdded;
 			info.ControlAdded += Info_ControlAdded;
 		}
@@ -106,7 +106,8 @@ namespace au.Applications.MythClient.UI {
 		/// <param name="recordings">Collection of recordings</param>
 		/// <param name="contents">Renders the contents pane</param>
 		/// <param name="info">Renders the info pane</param>
-		protected RecordingsNavigator(IWin32Window owner, IMythSettings settings, IRecordings recordings, IContentsRenderer contents, IInfoRenderer info)
+		/// <param name="actorFactory">Creates objects that can act on recordings</param>
+		protected RecordingsNavigator(IWin32Window owner, IMythSettings settings, IRecordings recordings, IContentsRenderer contents, IInfoRenderer info, IActorFactory actorFactory)
 			: base(settings) {
 			_owner = owner;
 			_recordings = recordings;
@@ -114,33 +115,14 @@ namespace au.Applications.MythClient.UI {
 			_contents = contents;
 			_info = info;
 
-			_deleter = BuildRecordingsDeleter(owner, recordings, this);
-			_exporter = BuildRecordingsExporter(owner, settings);
+			_deleter = actorFactory.BuildRecordingsDeleter(owner, recordings, this);
+			_exporter = actorFactory.BuildRecordingsExporter(owner, settings);
 
 			_cmnuMovie = new Lazy<ContextMenuStrip>(BuildMovieContextMenu);
 			_cmnuShow = new Lazy<ContextMenuStrip>(BuildShowContextMenu);
 			_cmnuSeason = new Lazy<ContextMenuStrip>(BuildSeasonContextMenu);
 			_cmnuEpisode = new Lazy<ContextMenuStrip>(BuildEpisodeContextMenu);
 		}
-
-		/// <summary>
-		/// Create the recordings deleter object.
-		/// </summary>
-		/// <param name="owner">Owner window for dialogs</param>
-		/// <param name="recordings">Collection of recordings</param>
-		/// <param name="navigator"></param>
-		/// <returns>Recordings deleter object</returns>
-		protected virtual IRecordingsDeleter BuildRecordingsDeleter(IWin32Window owner, IRecordings recordings, RecordingsNavigator navigator)
-			=> new RecordingsDeleter(owner, recordings, navigator);
-
-		/// <summary>
-		/// Create the recordings exporter object.
-		/// </summary>
-		/// <param name="owner">Owner window for dialogs</param>
-		/// <param name="settings">Application settings</param>
-		/// <returns>Recordings exporter object</returns>
-		protected virtual IRecordingsExporter BuildRecordingsExporter(IWin32Window owner, IMythSettings settings)
-			=> new RecordingsExporter(owner, settings);
 
 		internal event EventHandler DepthChanged;
 
@@ -195,23 +177,32 @@ namespace au.Applications.MythClient.UI {
 		}
 
 		/// <summary>
+		/// Refresh recordings from the MythTV server and update the UI.
+		/// </summary>
+		internal async Task RefreshAsync() {
+			await _recordings.LoadAsync();
+			UpdateStateObjects();
+			Render();
+		}
+
+		/// <summary>
 		/// After loading the recordings list, the state objects need to be matched
 		/// up with what's in the new recordings list.
 		/// </summary>
-		internal void UpdateStateObjects() {
+		private void UpdateStateObjects() {
 			IShow oldShow = _show;
 			_show = _recordings.FindShow(_show);
-			if(oldShow?.Matches(_show) ?? false && _depth != BrowsingDepth.Recordings) {
+			if(oldShow?.Matches(_show) ?? false && Depth != BrowsingDepth.Recordings) {
 				ISeason oldSeason = _season;
 				_season = _show.FindSeason(_season);
-				if(oldSeason?.Matches(_season) ?? false && _depth != BrowsingDepth.Show)
+				if(oldSeason?.Matches(_season) ?? false && Depth != BrowsingDepth.Show)
 					_episode = _season.FindEpisode(_episode);
 				else {
-					_depth = BrowsingDepth.Show;
+					Depth = BrowsingDepth.Show;
 					_episode = null;
 				}
 			} else {
-				_depth = BrowsingDepth.Recordings;
+				Depth = BrowsingDepth.Recordings;
 				_season = null;
 				_episode = null;
 			}

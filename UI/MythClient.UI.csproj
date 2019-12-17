@@ -69,6 +69,8 @@
       <DependentUpon>AboutWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="ActionKey.cs" />
+    <Compile Include="Actions\ActorFactory.cs" />
+    <Compile Include="Actions\IActorFactory.cs" />
     <Compile Include="Actions\IRecordingsDeleter.cs" />
     <Compile Include="Actions\IRecordingsExporter.cs" />
     <Compile Include="Actions\RecordingsDeleter.cs" />

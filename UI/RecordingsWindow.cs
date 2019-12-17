@@ -57,8 +57,7 @@ namespace au.Applications.MythClient.UI {
 		/// </summary>
 		private async Task RefreshRecordingsAsync() {
 			_btnReload.Enabled = false;
-			await _recordings.LoadAsync();
-			_navigator.Render();
+			await _navigator.RefreshAsync();
 			_btnReload.Enabled = true;
 		}
 
