@@ -5,6 +5,10 @@ Download the latest installer from [track7.org](http://www.track7.org/code/vs/my
 
 ## Revision History
 
+### 2.0.4
+* Fix refresh not updating display on show or season view
+* Fix delete not updating title when it triggers going back
+
 ### 2.0.3
 * Fix crash loading recordings if at least one didn't have an optional date
 * Fix crash when clicking empty space below last show / season / episode

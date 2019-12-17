@@ -6,13 +6,13 @@
 	<?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
 	<?endif ?>
 
-	<Product Name="MythTV Recorded Programs" Id="*" UpgradeCode="76C57DB0-30C4-4603-ADE6-9C98C04D2372" Language="1033" Codepage="1252" Version="2.0.3" Manufacturer="the analog underground">
+	<Product Name="MythTV Recorded Programs" Id="*" UpgradeCode="76C57DB0-30C4-4603-ADE6-9C98C04D2372" Language="1033" Codepage="1252" Version="2.0.4" Manufacturer="the analog underground">
 		<Package Id="*" Keywords="tv, mythtv, recorded, watch, program, episode" Description="Translates the MythWeb Recorded Programs page into a Windows form listing that directly launches the raw recording files." Comments="the analog underground only releases free software" Manufacturer="the analog underground" InstallerVersion="200" Languages="1033" Compressed="yes" SummaryCodepage="1252" />
 
 		<MajorUpgrade Schedule="afterInstallInitialize" DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." />
 		<Upgrade Id="76C57DB0-30C4-4603-ADE6-9C98C04D2372">
-			<UpgradeVersion Minimum="0.0.0" IncludeMinimum="yes" Maximum="2.0.3" IncludeMaximum="no" Property="OLDERVERSIONBEINGUPGRADED"/>
-			<UpgradeVersion Minimum="2.0.3" OnlyDetect="yes" Property="NEWERVERSIONDETECTED"/>
+			<UpgradeVersion Minimum="0.0.0" IncludeMinimum="yes" Maximum="2.0.4" IncludeMaximum="no" Property="OLDERVERSIONBEINGUPGRADED"/>
+			<UpgradeVersion Minimum="2.0.4" OnlyDetect="yes" Property="NEWERVERSIONDETECTED"/>
 		</Upgrade>
 		<Condition Message="A later version of [ProductName] is already installed. Setup will now exit">
 			NOT NEWERVERSIONDETECTED OR Installed
