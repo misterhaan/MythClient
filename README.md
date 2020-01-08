@@ -5,6 +5,9 @@ Download the latest installer from [track7.org](http://www.track7.org/code/vs/my
 
 ## Revision History
 
+### 2.0.5
+* Fix unexpected jump into show when deleting an episode from the recordings view
+
 ### 2.0.4
 * Fix refresh not updating display on show or season view
 * Fix delete not updating title when it triggers going back
