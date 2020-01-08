@@ -192,10 +192,10 @@ namespace au.Applications.MythClient.UI {
 		private void UpdateStateObjects() {
 			IShow oldShow = _show;
 			_show = _recordings.FindShow(_show);
-			if(oldShow?.Matches(_show) ?? false && Depth != BrowsingDepth.Recordings) {
+			if(oldShow != null && oldShow.Matches(_show) && Depth != BrowsingDepth.Recordings) {
 				ISeason oldSeason = _season;
 				_season = _show.FindSeason(_season);
-				if(oldSeason?.Matches(_season) ?? false && Depth != BrowsingDepth.Show)
+				if(oldSeason != null && oldSeason.Matches(_season) && Depth != BrowsingDepth.Show)
 					_episode = _season.FindEpisode(_episode);
 				else {
 					Depth = BrowsingDepth.Show;
