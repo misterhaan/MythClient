@@ -36,6 +36,7 @@
 			this._pnlContents = new System.Windows.Forms.FlowLayoutPanel();
 			this._cmnuMain = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this._cmnuMainSettings = new System.Windows.Forms.ToolStripMenuItem();
+			this._cmnuMainCheckForUpdate = new System.Windows.Forms.ToolStripMenuItem();
 			this._cmnuMainAbout = new System.Windows.Forms.ToolStripMenuItem();
 			this._cmnuSort = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this._cmnuSortDate = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,9 +102,9 @@
 			// 
 			// _lblTitle
 			// 
-			this._lblTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this._lblTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this._lblTitle.AutoEllipsis = true;
 			this._lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this._lblTitle.Location = new System.Drawing.Point(75, 0);
@@ -181,32 +182,41 @@
 			// _cmnuMain
 			// 
 			this._cmnuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._cmnuMainSettings,
-            this._cmnuMainAbout});
+						this._cmnuMainSettings,
+						this._cmnuMainCheckForUpdate,
+						this._cmnuMainAbout});
 			this._cmnuMain.Name = "_cmnuMain";
-			this._cmnuMain.Size = new System.Drawing.Size(126, 48);
+			this._cmnuMain.Size = new System.Drawing.Size(181, 92);
 			// 
 			// _cmnuMainSettings
 			// 
 			this._cmnuMainSettings.Image = global::au.Applications.MythClient.UI.Icons.Material_Settings18;
 			this._cmnuMainSettings.Name = "_cmnuMainSettings";
-			this._cmnuMainSettings.Size = new System.Drawing.Size(125, 22);
+			this._cmnuMainSettings.Size = new System.Drawing.Size(175, 22);
 			this._cmnuMainSettings.Text = "&Settings...";
 			this._cmnuMainSettings.Click += new System.EventHandler(this._cmnuMainSettings_ClickAsync);
+			// 
+			// _cmnuMainCheckForUpdate
+			// 
+			this._cmnuMainCheckForUpdate.Image = global::au.Applications.MythClient.UI.Icons.Material_Update18;
+			this._cmnuMainCheckForUpdate.Name = "_cmnuMainCheckForUpdate";
+			this._cmnuMainCheckForUpdate.Size = new System.Drawing.Size(180, 22);
+			this._cmnuMainCheckForUpdate.Text = "Check for &Update...";
+			this._cmnuMainCheckForUpdate.Click += new System.EventHandler(this._cmnuMainCheckForUpdate_Click);
 			// 
 			// _cmnuMainAbout
 			// 
 			this._cmnuMainAbout.Image = global::au.Applications.MythClient.UI.Icons.Material_About18;
 			this._cmnuMainAbout.Name = "_cmnuMainAbout";
-			this._cmnuMainAbout.Size = new System.Drawing.Size(125, 22);
+			this._cmnuMainAbout.Size = new System.Drawing.Size(175, 22);
 			this._cmnuMainAbout.Text = "&About";
 			this._cmnuMainAbout.Click += new System.EventHandler(this._cmnuMainAbout_Click);
 			// 
 			// _cmnuSort
 			// 
 			this._cmnuSort.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._cmnuSortDate,
-            this._cmnuSortTitle});
+						this._cmnuSortDate,
+						this._cmnuSortTitle});
 			this._cmnuSort.Name = "_cmnuSort";
 			this._cmnuSort.Size = new System.Drawing.Size(143, 48);
 			// 
@@ -262,6 +272,7 @@
 		private System.Windows.Forms.FlowLayoutPanel _pnlContents;
 		private System.Windows.Forms.ContextMenuStrip _cmnuMain;
 		private System.Windows.Forms.ToolStripMenuItem _cmnuMainSettings;
+		private System.Windows.Forms.ToolStripMenuItem _cmnuMainCheckForUpdate;
 		private System.Windows.Forms.ToolStripMenuItem _cmnuMainAbout;
 		private System.Windows.Forms.ContextMenuStrip _cmnuSort;
 		private System.Windows.Forms.ToolStripMenuItem _cmnuSortDate;

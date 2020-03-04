@@ -213,6 +213,16 @@ namespace au.Applications.MythClient.UI {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Material_Update18 {
+            get {
+                object obj = ResourceManager.GetObject("Material.Update18", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap MythTV32 {
             get {
                 object obj = ResourceManager.GetObject("MythTV32", resourceCulture);

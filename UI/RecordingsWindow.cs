@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using au.Applications.MythClient.Recordings.Types;
 using au.Applications.MythClient.Settings.Types;
 using au.Applications.MythClient.UI.Render;
+using au.UI.LatestVersion;
 
 namespace au.Applications.MythClient.UI {
 	/// <summary>
@@ -23,6 +24,11 @@ namespace au.Applications.MythClient.UI {
 		private readonly IMythSettings _settings;
 
 		/// <summary>
+		/// Application updater
+		/// </summary>
+		private readonly VersionManager _versionManager;
+
+		/// <summary>
 		/// Collection of recordings
 		/// </summary>
 		private readonly IRecordings _recordings;
@@ -36,11 +42,13 @@ namespace au.Applications.MythClient.UI {
 		/// Default constructor
 		/// </summary>
 		/// <param name="settings">Application settings</param>
+		/// <param name="versionManager">Application updater</param>
 		/// <param name="recordings">Collection of recordings</param>
-		public RecordingsWindow(IMythSettings settings, IRecordings recordings) {
+		public RecordingsWindow(IMythSettings settings, VersionManager versionManager, IRecordings recordings) {
 			InitializeComponent();
 
 			_settings = settings;
+			_versionManager = versionManager;
 			_recordings = recordings;
 			_navigator = new RecordingsNavigator(this, _settings, _recordings, _pnlContents, _pnlInfo);
 			_navigator.DepthChanged += _navigator_DepthChanged;
@@ -151,7 +159,7 @@ namespace au.Applications.MythClient.UI {
 		}
 
 		private async void RecordingsWindow_ShownAsync(object sender, EventArgs e)
-			=> await RefreshRecordingsAsync();
+			=> await Task.WhenAll(RefreshRecordingsAsync(), _versionManager.PromptForUpdate(this));
 
 		private void RecordingsWindow_LocationChanged(object sender, EventArgs e) {
 			if(WindowState == FormWindowState.Normal)
@@ -265,6 +273,9 @@ namespace au.Applications.MythClient.UI {
 
 		private async void _cmnuMainSettings_ClickAsync(object sender, EventArgs e)
 			=> await ShowSettingsWindowAsync();
+
+		private async void _cmnuMainCheckForUpdate_Click(object sender, EventArgs e)
+			=> await _versionManager.PromptForUpdate(this, true);
 
 		private void _cmnuMainAbout_Click(object sender, EventArgs e)
 			=> ShowAboutWindow();

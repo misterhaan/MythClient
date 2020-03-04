@@ -43,6 +43,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ref\au.IO.Files.FileOperation.dll</HintPath>
     </Reference>
+    <Reference Include="au.IO.Web.API.GitHub, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ref\au.IO.Web.API.GitHub.dll</HintPath>
+    </Reference>
+    <Reference Include="au.IO.Web.API.GitHub.Types, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ref\au.IO.Web.API.GitHub.Types.dll</HintPath>
+    </Reference>
     <Reference Include="au.Settings.Types, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -51,6 +59,9 @@
     </Reference>
     <Reference Include="au.UI.DirectoryBox">
       <HintPath>..\ref\au.UI.DirectoryBox.dll</HintPath>
+    </Reference>
+    <Reference Include="au.UI.LatestVersion">
+      <HintPath>..\ref\au.UI.LatestVersion.dll</HintPath>
     </Reference>
     <Reference Include="au.UI.TaskDialog, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -242,6 +253,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="img\play-with.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="img\update.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -58,8 +58,18 @@
     <AllowedReferenceRelatedFileExtensions>.pdb</AllowedReferenceRelatedFileExtensions>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="au.IO.Web.API.GitHub, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ref\au.IO.Web.API.GitHub.dll</HintPath>
+    </Reference>
+    <Reference Include="au.IO.Web.API.GitHub.Types">
+      <HintPath>ref\au.IO.Web.API.GitHub.Types.dll</HintPath>
+    </Reference>
     <Reference Include="au.Settings, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="au.UI.LatestVersion">
+      <HintPath>ref\au.UI.LatestVersion.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -102,6 +112,11 @@
       <Project>{12A2C663-BD30-4E44-91F0-7F885F829699}</Project>
       <Name>MythClient.UI</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

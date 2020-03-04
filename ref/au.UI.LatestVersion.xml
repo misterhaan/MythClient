@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>au.UI.LatestVersion</name>
+    </assembly>
+    <members>
+        <member name="T:au.UI.LatestVersion.Dialog">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:au.UI.LatestVersion.Dialog.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:au.UI.LatestVersion.Dialog.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:au.UI.LatestVersion.Dialog.DownloadAndInstallUpdateOptionDescription">
+            <summary>
+              Looks up a localized string similar to Automatically download the update, install it, and remove the file when completed..
+            </summary>
+        </member>
+        <member name="P:au.UI.LatestVersion.Dialog.DownloadAndInstallUpdateOptionTitle">
+            <summary>
+              Looks up a localized string similar to Download and install.
+            </summary>
+        </member>
+        <member name="P:au.UI.LatestVersion.Dialog.DownloadInstallerTitle">
+            <summary>
+              Looks up a localized string similar to Download installer.
+            </summary>
+        </member>
+        <member name="P:au.UI.LatestVersion.Dialog.DownloadUpdateOnlyOptionDescription">
+            <summary>
+              Looks up a localized string similar to Just download the update.  It will need to be installed manually..
+            </summary>
+        </member>
+        <member name="P:au.UI.LatestVersion.Dialog.DownloadUpdateOnlyOptionTitle">
+            <summary>
+              Looks up a localized string similar to Download only.
+            </summary>
+        </member>
+        <member name="P:au.UI.LatestVersion.Dialog.IgnoreUpdateOptionDescription">
+            <summary>
+              Looks up a localized string similar to Don’t do anything about this update right now.  You will be reminded again next time..
+            </summary>
+        </member>
+        <member name="P:au.UI.LatestVersion.Dialog.IgnoreUpdateOptionTitle">
+            <summary>
+              Looks up a localized string similar to Remind me later.
+            </summary>
+        </member>
+        <member name="P:au.UI.LatestVersion.Dialog.UpdateAvailableDescription">
+            <summary>
+              Looks up a localized string similar to {0} is available.
+            </summary>
+        </member>
+        <member name="P:au.UI.LatestVersion.Dialog.UpdateAvailableTitle">
+            <summary>
+              Looks up a localized string similar to Update Available.
+            </summary>
+        </member>
+        <member name="T:au.UI.LatestVersion.KnownFolders">
+            <summary>
+            Access to known folder locations
+            </summary>
+        </member>
+        <member name="P:au.UI.LatestVersion.KnownFolders.Downloads">
+            <summary>
+            User's downloads folder
+            </summary>
+        </member>
+        <member name="P:au.UI.LatestVersion.KnownFolders.Temp">
+            <summary>
+            User's temp folder
+            </summary>
+        </member>
+        <member name="M:au.UI.LatestVersion.KnownFolders.GetDownloadsFolder">
+            <summary>
+            Looks up user's downloads folder.  Should only run once.
+            </summary>
+            <returns>User's downloads folder path</returns>
+        </member>
+        <member name="M:au.UI.LatestVersion.KnownFolders.GetFolderFromGuid(System.String)">
+            <summary>
+            Looks up a known folder path from a guid using Windows API.
+            </summary>
+            <param name="guid">GUID of known folder to look up</param>
+            <returns>Known folder path</returns>
+        </member>
+        <member name="T:au.UI.LatestVersion.VersionManager">
+            <summary>
+            Manages checking for and updating to the latest version of an application.
+            </summary>
+        </member>
+        <member name="T:au.UI.LatestVersion.VersionManager.UpdateDialogResponse">
+            <summary>
+            Responses from the update available dialog.
+            </summary>
+            <remarks>
+            Values not copied from DialogResult must be large enough int values to not overlap with anything in DialogResult
+            </remarks>
+        </member>
+        <member name="F:au.UI.LatestVersion.VersionManager.UpdateDialogResponse.Cancel">
+            <summary>
+            User canceled the dialog or chose to ignore the update for now
+            </summary>
+        </member>
+        <member name="F:au.UI.LatestVersion.VersionManager.UpdateDialogResponse.DownloadOnly">
+            <summary>
+            User chose to download the update but not automatically install
+            </summary>
+        </member>
+        <member name="F:au.UI.LatestVersion.VersionManager.UpdateDialogResponse.DownloadInstall">
+            <summary>
+            User chose to download the update and install it automatically
+            </summary>
+        </member>
+        <member name="F:au.UI.LatestVersion.VersionManager._updates">
+            <summary>
+            Update checker this VersionManager will use to check for updates
+            </summary>
+        </member>
+        <member name="M:au.UI.LatestVersion.VersionManager.#ctor(System.String,System.String)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="username">Username that owns the repository</param>
+            <param name="repoName">Repository that has releases of this application</param>
+        </member>
+        <member name="M:au.UI.LatestVersion.VersionManager.#ctor(au.IO.Web.API.GitHub.Types.IUpdateChecker)">
+            <summary>
+            Testing constructor
+            </summary>
+            <param name="updates">Task that will provide the result of an update check</param>
+        </member>
+        <member name="M:au.UI.LatestVersion.VersionManager.PromptForUpdate(System.Windows.Forms.IWin32Window)">
+            <summary>
+            Prompt to update if there's a newer version available.
+            </summary>
+            <param name="owner">Owner window for dialogs</param>
+        </member>
+        <member name="M:au.UI.LatestVersion.VersionManager.PromptForUpdate(System.Windows.Forms.IWin32Window,System.Boolean)">
+            <summary>
+            Prompt to update if there's a newer version available.
+            </summary>
+            <param name="owner">Owner window for dialogs</param>
+            <param name="showIfNoUpdate">True to show update check results even if there's no update available</param>
+        </member>
+        <member name="M:au.UI.LatestVersion.VersionManager.GetUpdateDialogButtons(System.Uri)">
+            <summary>
+            Get the dialog buttons that apply based on the update URL.
+            </summary>
+            <param name="updateUrl">URL to the latest version update</param>
+            <returns></returns>
+        </member>
+        <member name="M:au.UI.LatestVersion.VersionManager.PromptForSaveLocation(System.Windows.Forms.IWin32Window,System.Uri)">
+            <summary>
+            Prompt for a location and filename to download the update.
+            </summary>
+            <param name="owner">Owner window for dialogs</param>
+            <param name="url">URL to the latest version update</param>
+            <returns>Full path and filename where download should be saved.  Empty string if the user canceled.</returns>
+        </member>
+        <member name="M:au.UI.LatestVersion.VersionManager.DownloadUpdate(System.Uri,System.String)">
+            <summary>
+            Download a URL to a local file.
+            </summary>
+            <param name="url">URL to download from</param>
+            <param name="localFilename">Local filename to download to</param>
+        </member>
+        <member name="M:au.UI.LatestVersion.VersionManager.EventLevelToMessageBoxIcon(System.Diagnostics.Tracing.EventLevel)">
+            <summary>
+            Convert an event level enum value to the equivalent message box icon.
+            </summary>
+            <param name="level">Event level to convert</param>
+            <returns>Message box icon equilavent of level</returns>
+        </member>
+    </members>
+</doc>

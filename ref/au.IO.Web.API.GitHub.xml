@@ -1,0 +1,218 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>au.IO.Web.API.GitHub</name>
+    </assembly>
+    <members>
+        <member name="T:au.IO.Web.API.GitHub.ApiBase">
+            <summary>
+            GitHub API base class
+            </summary>
+        </member>
+        <member name="F:au.IO.Web.API.GitHub.ApiBase._urlBase">
+            <summary>
+            GitHub Web API base URL for this API
+            </summary>
+        </member>
+        <member name="M:au.IO.Web.API.GitHub.ApiBase.#ctor(System.String[])">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="path">URL path components common to all requests to this API.  Parameters are joined with a path separator.</param>
+        </member>
+        <member name="M:au.IO.Web.API.GitHub.ApiBase.GetRequestAsync``1(System.String)">
+            <summary>
+            Peform a basic GET request and deserialize the JSON result.
+            </summary>
+            <typeparam name="T">Deserialize JSON to this type</typeparam>
+            <param name="relativeUrl">Request URL relative to the base URL built in the constructor</param>
+            <returns>API response as the requested type</returns>
+        </member>
+        <member name="T:au.IO.Web.API.GitHub.ApiFactory">
+            <summary>
+            Factory for building clients for GitHub APIs.
+            </summary>
+        </member>
+        <member name="M:au.IO.Web.API.GitHub.ApiFactory.BuildReposApi(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:au.IO.Web.API.GitHub.Asset">
+            <summary>
+            Information about a file associated with a release.  Subset of properties
+            from the GitHub API.
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Asset.name">
+            <inheritdoc />
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Asset.size">
+            <inheritdoc />
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Asset.browser_download_url">
+            <inheritdoc />
+        </member>
+        <member name="T:au.IO.Web.API.GitHub.Messages">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Messages.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Messages.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Messages.NoUpdateAlreadyLatest">
+            <summary>
+              Looks up a localized string similar to No need to upgrade because the latest version is already installed..
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Messages.NoUpdateError">
+            <summary>
+              Looks up a localized string similar to Unexpected error looking up latest release..
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Messages.NoUpdateNoFiles">
+            <summary>
+              Looks up a localized string similar to Cannot update because the latest release does not include any files..
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Messages.NoUpdateNoReleases">
+            <summary>
+              Looks up a localized string similar to Cannot upgrade because there are no releases available for the application..
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Messages.NoUpdateTitle">
+            <summary>
+              Looks up a localized string similar to No Available Update.
+            </summary>
+        </member>
+        <member name="T:au.IO.Web.API.GitHub.Release">
+            <summary>
+            Information about a release.  Subset of properties from the GitHub API.
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Release.name">
+            <inheritdoc />
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Release.tag_name">
+            <inheritdoc />
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Release.published_at">
+            <inheritdoc />
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Release.body">
+            <inheritdoc />
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Release.au#IO#Web#API#GitHub#Types#IRelease#assets">
+            <inheritdoc />
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Release.assets">
+            <inheritdoc />
+        </member>
+        <member name="T:au.IO.Web.API.GitHub.ReposApi">
+            <summary>
+            A subset of commands from the GitHub repos API.
+            </summary>
+        </member>
+        <member name="M:au.IO.Web.API.GitHub.ReposApi.#ctor(System.String,System.String)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="username">Name of the user who owns the repository</param>
+            <param name="repoName">Name of the repository</param>
+        </member>
+        <member name="M:au.IO.Web.API.GitHub.ReposApi.LatestRelease">
+            <inheritdoc />
+        </member>
+        <member name="T:au.IO.Web.API.GitHub.UpdateChecker">
+            <summary>
+            Checks for an update to the running application.  Uses the GitHub API.
+            </summary>
+        </member>
+        <member name="M:au.IO.Web.API.GitHub.UpdateChecker.#ctor(System.String,System.String)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="username">GitHub username that owns the repository</param>
+            <param name="repoName">Name of the repository</param>
+        </member>
+        <member name="M:au.IO.Web.API.GitHub.UpdateChecker.#ctor(System.String,System.String,au.IO.Web.API.GitHub.Types.IApiFactory)">
+            <summary>
+            Testing constructor
+            </summary>
+            <param name="username">GitHub username that owns the repository</param>
+            <param name="repoName">Name of the repository</param>
+            <param name="apiFactory">Object that can create API clients</param>
+        </member>
+        <member name="M:au.IO.Web.API.GitHub.UpdateChecker.CheckAsync">
+            <inheritdoc />
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.UpdateChecker.ApplicationVersion">
+            <summary>
+            Get the version of the application.
+            </summary>
+        </member>
+        <member name="T:au.IO.Web.API.GitHub.UpdateCheckResult">
+            <summary>
+            Result object returned by UpdateChecker.
+            </summary>
+        </member>
+        <member name="M:au.IO.Web.API.GitHub.UpdateCheckResult.#ctor(System.String,System.String,System.Int64,System.String)">
+            <summary>
+            Update available constructor
+            </summary>
+            <param name="name">Name of the latest release</param>
+            <param name="description">Description of the latest release</param>
+            <param name="size">File size of the latest update</param>
+            <param name="url">Download URL for the lastest update</param>
+        </member>
+        <member name="M:au.IO.Web.API.GitHub.UpdateCheckResult.#ctor(System.String,System.String,System.Int64,System.Uri)">
+            <summary>
+            Update available constructor
+            </summary>
+            <param name="name">Name of the latest release</param>
+            <param name="description">Description of the latest release</param>
+            <param name="size">File size of the latest update</param>
+            <param name="url">Download URL for the lastest update</param>
+        </member>
+        <member name="M:au.IO.Web.API.GitHub.UpdateCheckResult.#ctor(System.Diagnostics.Tracing.EventLevel,System.String,System.String)">
+            <summary>
+            Update not available constructor
+            </summary>
+            <param name="level">Severity level of this result</param>
+            <param name="title">Title of why we can't upgrade</param>
+            <param name="details">Details of why we can't upgrade</param>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.UpdateCheckResult.Available">
+            <inheritdoc />
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.UpdateCheckResult.Level">
+            <inheritdoc />
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.UpdateCheckResult.Name">
+            <inheritdoc />
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.UpdateCheckResult.Description">
+            <inheritdoc />
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.UpdateCheckResult.Size">
+            <inheritdoc />
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.UpdateCheckResult.Url">
+            <inheritdoc />
+        </member>
+        <member name="M:au.IO.Web.API.GitHub.UpdateCheckResult.FromLatestRelease(au.IO.Web.API.GitHub.Types.IRelease)">
+            <summary>
+            Create a result from a release.  Use when there is a newer release to upgrade to.
+            </summary>
+            <param name="latest">Latest release</param>
+            <returns>Result with update available</returns>
+        </member>
+    </members>
+</doc>

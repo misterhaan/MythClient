@@ -4,6 +4,7 @@ using au.Applications.MythClient.Settings;
 using au.Applications.MythClient.Settings.Types;
 using au.Applications.MythClient.UI;
 using au.IO.Web.API.MythTV;
+using au.UI.LatestVersion;
 
 namespace au.Applications.MythClient {
 	/// <summary>
@@ -24,6 +25,7 @@ namespace au.Applications.MythClient {
 				Application.Run(
 					new RecordingsWindow(
 						settingsManager.Settings,
+						new VersionManager("misterhaan", "MythClient"),
 						new Recordings.Recordings(
 							settingsManager.Settings,
 							new ApiFactory()

@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>au.IO.Web.API.GitHub.Types</name>
+    </assembly>
+    <members>
+        <member name="T:au.IO.Web.API.GitHub.Types.IApiFactory">
+            <summary>
+            Factory for building clients for GitHub APIs.
+            </summary>
+        </member>
+        <member name="M:au.IO.Web.API.GitHub.Types.IApiFactory.BuildReposApi(System.String,System.String)">
+            <summary>
+            Build a Repos API client for the specified repository.
+            </summary>
+            <param name="username">GitHub username that owns the repository</param>
+            <param name="repoName">Name of the repository</param>
+            <returns>Repos API client</returns>
+        </member>
+        <member name="T:au.IO.Web.API.GitHub.Types.IAsset">
+            <summary>
+            Information about a file associated with a release.  Subset of propertie
+            from the GitHub API.
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Types.IAsset.name">
+            <summary>
+            Asset name
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Types.IAsset.size">
+            <summary>
+            Asset size
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Types.IAsset.browser_download_url">
+            <summary>
+            Asset download URL
+            </summary>
+        </member>
+        <member name="T:au.IO.Web.API.GitHub.Types.IRelease">
+            <summary>
+            Information about a release.  Subset of properties from the GitHub API.
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Types.IRelease.name">
+            <summary>
+            Release name
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Types.IRelease.tag_name">
+            <summary>
+            Name of the tag in the repo that corresponds to this release
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Types.IRelease.published_at">
+            <summary>
+            When the release was published
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Types.IRelease.body">
+            <summary>
+            Release description
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Types.IRelease.assets">
+            <summary>
+            Files included in the release
+            </summary>
+        </member>
+        <member name="T:au.IO.Web.API.GitHub.Types.IReposApi">
+            <summary>
+            A subset of commands from the GitHub repos API.
+            </summary>
+        </member>
+        <member name="M:au.IO.Web.API.GitHub.Types.IReposApi.LatestRelease">
+            <summary>
+            Get the latest release for the repository.
+            </summary>
+            <returns>Latest release for the repository</returns>
+        </member>
+        <member name="T:au.IO.Web.API.GitHub.Types.IUpdateChecker">
+            <summary>
+            Checks for an update to the running application.
+            </summary>
+        </member>
+        <member name="M:au.IO.Web.API.GitHub.Types.IUpdateChecker.CheckAsync">
+            <summary>
+            Check for an update in the specified repository.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:au.IO.Web.API.GitHub.Types.IUpdateCheckResult">
+            <summary>
+            Result of checking for an update.
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Types.IUpdateCheckResult.Available">
+            <summary>
+            Whether an update is available
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Types.IUpdateCheckResult.Level">
+            <summary>
+            Severity level of this result
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Types.IUpdateCheckResult.Name">
+            <summary>
+            Name of the latest release or title of why we can't upgrade
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Types.IUpdateCheckResult.Description">
+            <summary>
+            Description of the latest release or details of why we can't upgrade
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Types.IUpdateCheckResult.Size">
+            <summary>
+            File size of the latest update (zero if Available is false)
+            </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Types.IUpdateCheckResult.Url">
+            <summary>
+            Download URL for the lastest update (null if Available is false)
+            </summary>
+        </member>
+    </members>
+</doc>

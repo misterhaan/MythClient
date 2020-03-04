@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="windows-1252"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<?if $(var.Platform) = x64 ?>
 	<?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
@@ -7,7 +7,7 @@
 	<?endif ?>
 
 	<Product Name="MythTV Recorded Programs" Id="*" UpgradeCode="76C57DB0-30C4-4603-ADE6-9C98C04D2372" Language="1033" Codepage="1252" Version="2.0.5" Manufacturer="the analog underground">
-		<Package Id="*" Keywords="tv, mythtv, recorded, watch, program, episode" Description="Translates the MythWeb Recorded Programs page into a Windows form listing that directly launches the raw recording files." Comments="the analog underground only releases free software" Manufacturer="the analog underground" InstallerVersion="200" Languages="1033" Compressed="yes" SummaryCodepage="1252" />
+		<Package Id="*" Keywords="tv, mythtv, recorded, watch, program, episode" Description="MythClient makes it easier to play MythTV recordings on a Windows HTPC. It requires the MythTV server to provide both LAN access to the Services API and a file share so MythClient can find and launch the recording files directly over the network." Comments="the analog underground only releases free software" Manufacturer="the analog underground" InstallerVersion="200" Languages="1033" Compressed="yes" SummaryCodepage="1252" />
 
 		<MajorUpgrade Schedule="afterInstallInitialize" DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." />
 		<Upgrade Id="76C57DB0-30C4-4603-ADE6-9C98C04D2372">
@@ -53,6 +53,12 @@
 			<Component Id="fileoperationcomponent" Guid="09D62B56-0615-453B-9112-99274F13287F">
 				<File Id="au.IO.Files.FileOperation.dll" Name="au.IO.Files.FileOperation.dll" DiskId="1" Source="..\build\Release\au.IO.Files.FileOperation.dll" />
 			</Component>
+			<Component Id="githubapicomponent" Guid="7B63B62A-FD26-483A-B28D-D16C3A26E1A1">
+				<File Id="au.IO.Web.API.GitHub.dll" Name="au.IO.Web.API.GitHub.dll" DiskId="1" Source="..\build\Release\au.IO.Web.API.GitHub.dll" />
+			</Component>
+			<Component Id="githubapitypescomponent" Guid="5C1865E4-B37F-4579-A1F0-16385A9B4A60">
+				<File Id="au.IO.Web.API.GitHub.Types.dll" Name="au.IO.Web.API.GitHub.Types.dll" DiskId="1" Source="..\build\Release\au.IO.Web.API.GitHub.Types.dll" />
+			</Component>
 			<Component Id="apicomponent" Guid="BB6AFD20-9D40-460A-B407-0877ED8CBC11">
 				<File Id="au.IO.Web.API.MythTV.dll" Name="au.IO.Web.API.MythTV.dll" DiskId="1" Source="..\build\Release\au.IO.Web.API.MythTV.dll" />
 			</Component>
@@ -71,8 +77,14 @@
 			<Component Id="directoryboxcomponent" Guid="A3B3BC7C-D565-4AD7-BEE2-BD60072C1AF4">
 				<File Id="au.UI.DirectoryBox.dll" Name="au.UI.DirectoryBox.dll" DiskId="1" Source="..\build\Release\au.UI.DirectoryBox.dll" />
 			</Component>
+			<Component Id="latestversioncomponent" Guid="BDE9779F-BB6B-4987-9081-CEA9FFFE2D22">
+				<File Id="au.UI.LatestVersion.dll" Name="au.UI.LatestVersion.dll" DiskId="1" Source="..\build\Release\au.UI.LatestVersion.dll" />
+			</Component>
 			<Component Id="taskdialogcomponent" Guid="DEBB5526-95BE-4021-9EBC-6B650B75740F">
 				<File Id="au.UI.TaskDialog.dll" Name="au.UI.TaskDialog.dll" DiskId="1" Source="..\build\Release\au.UI.TaskDialog.dll" />
+			</Component>
+			<Component Id="newtonsoftcomponent" Guid="1E34C90B-21D4-425C-BDAF-D18978386134">
+				<File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" DiskId="1" Source="..\build\Release\Newtonsoft.Json.dll" />
 			</Component>
 		</DirectoryRef>
 
@@ -100,13 +112,17 @@
 				<ComponentRef Id="appsettingstypescomponent" />
 				<ComponentRef Id="uicomponent" />
 				<ComponentRef Id="fileoperationcomponent" />
+				<ComponentRef Id="githubapicomponent" />
+				<ComponentRef Id="githubapitypescomponent" />
 				<ComponentRef Id="apicomponent" />
 				<ComponentRef Id="apitypescomponent" />
 				<ComponentRef Id="settingscomponent" />
 				<ComponentRef Id="settingstypescomponent" />
 				<ComponentRef Id="captionedpictureboxcomponent" />
 				<ComponentRef Id="directoryboxcomponent" />
+				<ComponentRef Id="latestversioncomponent" />
 				<ComponentRef Id="taskdialogcomponent" />
+				<ComponentRef Id="newtonsoftcomponent" />
 			</Feature>
 			<Feature Id="mythclientshortcuts" Level="1" Title="Shortcuts" Description="Shortcuts for launching MythTV Recorded Programs">
 				<Feature Id="startmenushortcutfeat" Level="1" Title="Start Menu" Description="Create a shortcut to MythTV Recorded Programs in the Start Menu">
@@ -335,6 +351,7 @@
 				<Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Disabled="yes" Text="[ButtonText_Back]" />
 				<Control Id="Exit" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="[ButtonText_Finish]">
 					<Publish Event="EndDialog" Value="Return">1</Publish>
+					<Publish Event="DoAction" Value="LaunchApplication">RESTART = 1 and NOT Installed</Publish>
 				</Control>
 				<Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Disabled="yes" Text="[ButtonText_Cancel]" />
 			</Dialog>
@@ -715,6 +732,8 @@
 		<Property Id="BannerBitmap">bannerbmp</Property>
 		<Property Id="TypicalSetupIcon">typicalico</Property>
 		<Property Id="CustomSetupIcon">customico</Property>
+		
+		<CustomAction Id="LaunchApplication" Directory="INSTALLDIR" ExeCommand="[#MythClient.exe]" Return="asyncNoWait" Impersonate="yes" />
 
 		<Icon Id="mythtv.ico" SourceFile="../mythtv.ico" />
 		<Binary Id="dialogbmp" SourceFile="dialog.bmp" />
