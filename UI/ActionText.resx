@@ -133,14 +133,6 @@
   <data name="DeleteAllNote" xml:space="preserve">
     <value>If these recordings were in some way unsatisfactory, MythTV can record them again the next time they come on.</value>
   </data>
-  <data name="DeleteAllOption" xml:space="preserve">
-    <value>Delete
-MythTV will not record these again.</value>
-  </data>
-  <data name="DeleteAllRerecordOption" xml:space="preserve">
-    <value>Delete + Rerecord
-MythTV will record these if they come on again.</value>
-  </data>
   <data name="DeleteAllTitle" xml:space="preserve">
     <value>Delete Recording</value>
   </data>
@@ -165,13 +157,23 @@ MythTV will record these if they come on again.</value>
   <data name="DeleteNote" xml:space="preserve">
     <value>If this recording was in some way unsatisfactory, MythTV can record it again the next time it comes on.</value>
   </data>
-  <data name="DeleteOption" xml:space="preserve">
-    <value>Delete
-MythTV will not record this again.</value>
+  <data name="DeleteOptionDescription" xml:space="preserve">
+    <value>MythTV will not record this again.</value>
   </data>
-  <data name="DeleteRerecordOption" xml:space="preserve">
-    <value>Delete + Rerecord
-MythTV will record this if it comes on again.</value>
+  <data name="DeleteOptionDescriptionPlural" xml:space="preserve">
+    <value>MythTV will not record these again.</value>
+  </data>
+  <data name="DeleteOptionTitle" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeleteRerecordOptionDescription" xml:space="preserve">
+    <value>MythTV will record this if it comes on again.</value>
+  </data>
+  <data name="DeleteRerecordOptionDescriptionPlural" xml:space="preserve">
+    <value>MythTV will record these if they come on again.</value>
+  </data>
+  <data name="DeleteRerecordOptionTitle" xml:space="preserve">
+    <value>Delete + Rerecord</value>
   </data>
   <data name="DeleteSeasonOldestTooltip" xml:space="preserve">
     <value>Delete the oldest recorded episode of this season.</value>

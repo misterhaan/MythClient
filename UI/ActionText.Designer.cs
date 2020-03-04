@@ -106,26 +106,6 @@ namespace au.Applications.MythClient.UI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete
-        ///MythTV will not record these again..
-        /// </summary>
-        internal static string DeleteAllOption {
-            get {
-                return ResourceManager.GetString("DeleteAllOption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete + Rerecord
-        ///MythTV will record these if they come on again..
-        /// </summary>
-        internal static string DeleteAllRerecordOption {
-            get {
-                return ResourceManager.GetString("DeleteAllRerecordOption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Delete Recording.
         /// </summary>
         internal static string DeleteAllTitle {
@@ -189,22 +169,56 @@ namespace au.Applications.MythClient.UI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete
-        ///MythTV will not record this again..
+        ///   Looks up a localized string similar to MythTV will not record this again..
         /// </summary>
-        internal static string DeleteOption {
+        internal static string DeleteOptionDescription {
             get {
-                return ResourceManager.GetString("DeleteOption", resourceCulture);
+                return ResourceManager.GetString("DeleteOptionDescription", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete + Rerecord
-        ///MythTV will record this if it comes on again..
+        ///   Looks up a localized string similar to MythTV will not record these again..
         /// </summary>
-        internal static string DeleteRerecordOption {
+        internal static string DeleteOptionDescriptionPlural {
             get {
-                return ResourceManager.GetString("DeleteRerecordOption", resourceCulture);
+                return ResourceManager.GetString("DeleteOptionDescriptionPlural", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string DeleteOptionTitle {
+            get {
+                return ResourceManager.GetString("DeleteOptionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MythTV will record this if it comes on again..
+        /// </summary>
+        internal static string DeleteRerecordOptionDescription {
+            get {
+                return ResourceManager.GetString("DeleteRerecordOptionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MythTV will record these if they come on again..
+        /// </summary>
+        internal static string DeleteRerecordOptionDescriptionPlural {
+            get {
+                return ResourceManager.GetString("DeleteRerecordOptionDescriptionPlural", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete + Rerecord.
+        /// </summary>
+        internal static string DeleteRerecordOptionTitle {
+            get {
+                return ResourceManager.GetString("DeleteRerecordOptionTitle", resourceCulture);
             }
         }
         

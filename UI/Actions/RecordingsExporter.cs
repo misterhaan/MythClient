@@ -203,13 +203,13 @@ namespace au.Applications.MythClient.UI.Actions {
 		private IEnumerable<TaskDialogButton> GetFilenameFormatOptions(IEpisode exampleEpisode) {
 			if(!string.IsNullOrEmpty(exampleEpisode.SubTitle)) {
 				if(exampleEpisode.SeasonNumber > 0 && exampleEpisode.Number > 0)
-					yield return new TaskDialogButton(_formatIdSeasonEpisode, ActionText.ExportOptionSeasonEpisode + "\n" + FormatEpisode(ActionText.ExportFormatSeasonEpisode, exampleEpisode));
-				yield return new TaskDialogButton(_formatIdDateEpisode, ActionText.ExportOptionDateEpisode + "\n" + FormatEpisode(ActionText.ExportFormatDateEpisode, exampleEpisode));
-				yield return new TaskDialogButton(_formatIdEpisode, ActionText.ExportOptionEpisode + "\n" + FormatEpisode(ActionText.ExportFormatEpisode, exampleEpisode));
+					yield return new TaskDialogButton(_formatIdSeasonEpisode, ActionText.ExportOptionSeasonEpisode, FormatEpisode(ActionText.ExportFormatSeasonEpisode, exampleEpisode));
+				yield return new TaskDialogButton(_formatIdDateEpisode, ActionText.ExportOptionDateEpisode, FormatEpisode(ActionText.ExportFormatDateEpisode, exampleEpisode));
+				yield return new TaskDialogButton(_formatIdEpisode, ActionText.ExportOptionEpisode, FormatEpisode(ActionText.ExportFormatEpisode, exampleEpisode));
 			} else {
-				yield return new TaskDialogButton(_formatIdYear, ActionText.ExportOptionYear + "\n" + FormatEpisode(ActionText.ExportFormatYear, exampleEpisode));
-				yield return new TaskDialogButton(_formatIdDate, ActionText.ExportOptionDate + "\n" + FormatEpisode(ActionText.ExportFormatDate, exampleEpisode));
-				yield return new TaskDialogButton(_formatIdTitle, ActionText.ExportOptionTitle + "\n" + FormatEpisode(ActionText.ExportFormatTitle, exampleEpisode));
+				yield return new TaskDialogButton(_formatIdYear, ActionText.ExportOptionYear, FormatEpisode(ActionText.ExportFormatYear, exampleEpisode));
+				yield return new TaskDialogButton(_formatIdDate, ActionText.ExportOptionDate, FormatEpisode(ActionText.ExportFormatDate, exampleEpisode));
+				yield return new TaskDialogButton(_formatIdTitle, ActionText.ExportOptionTitle, FormatEpisode(ActionText.ExportFormatTitle, exampleEpisode));
 			}
 
 		}

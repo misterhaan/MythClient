@@ -88,8 +88,8 @@ namespace au.Applications.MythClient.UI.Actions {
 					: ActionText.DeleteNote,
 				CommonButtons = TaskDialogCommonButtons.Cancel,
 				Buttons = new TaskDialogButton[] {
-					new TaskDialogButton((int)DialogResult.No, plural ? ActionText.DeleteAllOption : ActionText.DeleteOption),
-					new TaskDialogButton((int)DialogResult.Yes, plural ? ActionText.DeleteAllRerecordOption : ActionText.DeleteRerecordOption)
+					new TaskDialogButton((int)DialogResult.No, ActionText.DeleteOptionTitle, plural ? ActionText.DeleteOptionDescriptionPlural : ActionText.DeleteOptionDescription),
+					new TaskDialogButton((int)DialogResult.Yes, ActionText.DeleteRerecordOptionTitle,plural ? ActionText.DeleteRerecordOptionDescriptionPlural : ActionText.DeleteRerecordOptionDescription)
 				},
 				DefaultButton = (int)DialogResult.No,
 				PositionRelativeToWindow = true,
