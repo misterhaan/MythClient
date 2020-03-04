@@ -43,7 +43,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ref\au.IO.Files.FileOperation.dll</HintPath>
     </Reference>
-    <Reference Include="au.Settings.Types, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="au.Settings.Types, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="au.UI.CaptionedPictureBox">
       <HintPath>..\ref\au.UI.CaptionedPictureBox.dll</HintPath>
     </Reference>

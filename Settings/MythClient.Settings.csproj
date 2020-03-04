@@ -42,11 +42,13 @@
     <Compile Include="SettingsManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="au.Settings">
+    <Reference Include="au.Settings, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\ref\au.Settings.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="au.Settings.Types">
+    <Reference Include="au.Settings.Types, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\ref\au.Settings.Types.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
