@@ -133,8 +133,7 @@ namespace au.Applications.MythClient.UI.Tests {
 
 			await navigator.RefreshAsync();
 
-			A.CallTo(() => navigator.Season.FindEpisode(A<IEpisode>.That.IsNotNull())).MustNotHaveHappened();
-			A.CallTo(() => navigator.Season.FindEpisode(null)).MustHaveHappenedOnceExactly();
+			A.CallTo(() => navigator.Season.FindEpisode(A<IEpisode>.Ignored)).MustNotHaveHappened();
 		}
 
 		[TestMethod]
