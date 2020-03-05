@@ -102,6 +102,7 @@
     <Compile Include="NavigationDirection.cs" />
     <Compile Include="NeedsRecordingFilesBase.cs" />
     <Compile Include="Render\ContentsRendererBase.cs" />
+    <Compile Include="Render\CoverArtContentsRendererBase.cs" />
     <Compile Include="Render\IInfoActionButtonTag.cs" />
     <Compile Include="Images.Designer.cs">
       <AutoGen>True</AutoGen>

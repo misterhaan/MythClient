@@ -6,10 +6,15 @@
 		/// <summary>
 		/// Constructor
 		/// </summary>
+		/// <param name="title">Title of this show</param>
 		/// <param name="isSeries">Whether this show comes as a series</param>
-		internal ShowItemTag(bool isSeries) {
+		internal ShowItemTag(string title, bool isSeries) {
+			Title = title;
 			IsSeries = isSeries;
 		}
+
+		/// <inheritdoc />
+		public string Title { get; }
 
 		/// <inheritdoc />
 		public bool IsSeries { get; }

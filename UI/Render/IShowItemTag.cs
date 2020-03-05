@@ -4,6 +4,11 @@
 	/// </summary>
 	internal interface IShowItemTag {
 		/// <summary>
+		/// Title of this show
+		/// </summary>
+		string Title { get; }
+
+		/// <summary>
 		/// Whether this show comes as a series
 		/// </summary>
 		bool IsSeries { get; }
