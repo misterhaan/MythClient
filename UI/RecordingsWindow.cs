@@ -65,7 +65,7 @@ namespace au.Applications.MythClient.UI {
 		/// </summary>
 		private async Task RefreshRecordingsAsync() {
 			_btnReload.Enabled = false;
-			await _navigator.RefreshAsync();
+			await _navigator.RefreshAsync().ConfigureAwait(true);
 			_btnReload.Enabled = true;
 		}
 
@@ -76,7 +76,7 @@ namespace au.Applications.MythClient.UI {
 		private async Task SortAsync(RecordingSortOption sortOption) {
 			if(_settings.RecordingSortOption != sortOption) {
 				_settings.RecordingSortOption = sortOption;
-				await RefreshRecordingsAsync();
+				await RefreshRecordingsAsync().ConfigureAwait(true);
 				_cmnuSortDate.Checked = sortOption == RecordingSortOption.OldestRecorded;
 				_cmnuSortTitle.Checked = sortOption == RecordingSortOption.Title;
 				_btnSort.Image = _sortIconMap[sortOption];
@@ -92,7 +92,7 @@ namespace au.Applications.MythClient.UI {
 					case DialogResult.OK:
 					case DialogResult.Yes:
 						// assume they changed something and grab the latest recordings
-						await RefreshRecordingsAsync();
+						await RefreshRecordingsAsync().ConfigureAwait(false);
 						break;
 				}
 		}
@@ -159,7 +159,7 @@ namespace au.Applications.MythClient.UI {
 		}
 
 		private async void RecordingsWindow_ShownAsync(object sender, EventArgs e)
-			=> await Task.WhenAll(RefreshRecordingsAsync(), _versionManager.PromptForUpdate(this));
+			=> await Task.WhenAll(RefreshRecordingsAsync(), _versionManager.PromptForUpdate(this)).ConfigureAwait(false);
 
 		private void RecordingsWindow_LocationChanged(object sender, EventArgs e) {
 			if(WindowState == FormWindowState.Normal)
@@ -173,7 +173,7 @@ namespace au.Applications.MythClient.UI {
 
 		private async void RecordingsWindow_KeyDown(object sender, KeyEventArgs e) {
 			switch(e.KeyCode) {
-				case Keys.F5: await RefreshRecordingsAsync(); break;
+				case Keys.F5: await RefreshRecordingsAsync().ConfigureAwait(false); break;
 
 				case Keys.Enter:
 					if(e.Modifiers.HasFlag(Keys.Control))
@@ -196,7 +196,7 @@ namespace au.Applications.MythClient.UI {
 				case Keys.Up: _navigator.Navigate(NavigationDirection.PreviousRow); break;
 				case Keys.Down: _navigator.Navigate(NavigationDirection.NextRow); break;
 
-				case Keys.Delete: await _navigator.DeleteAsync(); break;
+				case Keys.Delete: await _navigator.DeleteAsync().ConfigureAwait(false); break;
 				case Keys.Apps: _navigator.ShowContextMenu(); break;
 			}
 		}
@@ -238,7 +238,7 @@ namespace au.Applications.MythClient.UI {
 			=> HighlightToolbarButton(_btnReload);
 
 		private async void _btnReload_ClickAsync(object sender, EventArgs e)
-			=> await RefreshRecordingsAsync();
+			=> await RefreshRecordingsAsync().ConfigureAwait(false);
 
 		private void _btnReload_MouseLeave(object sender, EventArgs e)
 			=> UnhighlightToolbarButton(_btnReload);
@@ -255,10 +255,10 @@ namespace au.Applications.MythClient.UI {
 			=> _cmnuSort.Show(_btnSort, _btnSort.Width - _cmnuSort.Width, _btnSort.Height);
 
 		private async void _cmnuSortDate_ClickAsync(object sender, EventArgs e)
-			=> await SortAsync(RecordingSortOption.OldestRecorded);
+			=> await SortAsync(RecordingSortOption.OldestRecorded).ConfigureAwait(false);
 
 		private async void _cmnuSortTitle_ClickAsync(object sender, EventArgs e)
-			=> await SortAsync(RecordingSortOption.Title);
+			=> await SortAsync(RecordingSortOption.Title).ConfigureAwait(false);
 		#endregion sort menu
 
 		#region main menu
@@ -272,10 +272,10 @@ namespace au.Applications.MythClient.UI {
 			=> _cmnuMain.Show(_btnMenu, new Point(-_cmnuMain.Width + _btnMenu.Width, _btnMenu.Height));
 
 		private async void _cmnuMainSettings_ClickAsync(object sender, EventArgs e)
-			=> await ShowSettingsWindowAsync();
+			=> await ShowSettingsWindowAsync().ConfigureAwait(false);
 
 		private async void _cmnuMainCheckForUpdate_Click(object sender, EventArgs e)
-			=> await _versionManager.PromptForUpdate(this, true);
+			=> await _versionManager.PromptForUpdate(this, true).ConfigureAwait(false);
 
 		private void _cmnuMainAbout_Click(object sender, EventArgs e)
 			=> ShowAboutWindow();

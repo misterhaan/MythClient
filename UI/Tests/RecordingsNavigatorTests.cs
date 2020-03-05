@@ -104,7 +104,7 @@ namespace au.Applications.MythClient.UI.Tests {
 			A.CallTo(() => navigator.Show.Title).Returns(foundShow.Title);
 			A.CallTo(() => navigator.Recordings.FindShow(A<IShow>.Ignored)).Returns(foundShow);
 
-			await navigator.RefreshAsync();
+			await navigator.RefreshAsync().ConfigureAwait(false);
 
 			Assert.AreEqual(foundShow, navigator.Show, $"{nameof(navigator.RefreshAsync)}() should change selected show to one that's in recordings.");
 			A.CallTo(() => foundShow.FindSeason(A<ISeason>.Ignored)).MustNotHaveHappened();
@@ -116,7 +116,7 @@ namespace au.Applications.MythClient.UI.Tests {
 			navigator.Show = A.Fake<IShow>();
 			A.CallTo(() => navigator.Show.Matches(A<IShow>.Ignored)).Returns(false);
 
-			await navigator.RefreshAsync();
+			await navigator.RefreshAsync().ConfigureAwait(false);
 
 			Assert.AreEqual(BrowsingDepth.Recordings, navigator.Depth, $"{nameof(navigator.RefreshAsync)}() should change set depth to recordings if the previously-selected show doesn't exist.");
 		}
@@ -131,7 +131,7 @@ namespace au.Applications.MythClient.UI.Tests {
 			A.CallTo(() => navigator.Season.Matches(foundSeason)).Returns(true);
 			A.CallTo(() => navigator.Show.FindSeason(A<ISeason>.Ignored)).Returns(foundSeason);
 
-			await navigator.RefreshAsync();
+			await navigator.RefreshAsync().ConfigureAwait(false);
 
 			A.CallTo(() => navigator.Season.FindEpisode(A<IEpisode>.Ignored)).MustNotHaveHappened();
 		}
@@ -144,7 +144,7 @@ namespace au.Applications.MythClient.UI.Tests {
 			A.CallTo(() => navigator.Show.FindSeason(A<ISeason>.Ignored)).Returns(A.Fake<ISeason>());
 			A.CallTo(() => navigator.Season.Matches(A<ISeason>.Ignored)).Returns(false);
 
-			await navigator.RefreshAsync();
+			await navigator.RefreshAsync().ConfigureAwait(false);
 
 			Assert.AreEqual(BrowsingDepth.Show, navigator.Depth, $"{nameof(navigator.RefreshAsync)}() should change set depth to show if the previously-selected season doesn't exist.");
 		}
@@ -188,7 +188,7 @@ namespace au.Applications.MythClient.UI.Tests {
 			TestingRecordingsNavigator navigator = GetNavigator();
 			navigator.Show = navigator.Recordings.Shows[_showIndexMultiEpisode];
 
-			await navigator.DeleteAsync();
+			await navigator.DeleteAsync().ConfigureAwait(false);
 
 			A.CallTo(() => navigator.Deleter.DeleteAsync(navigator.Show.OldestEpisode)).MustHaveHappenedOnceExactly();
 		}
@@ -198,7 +198,7 @@ namespace au.Applications.MythClient.UI.Tests {
 			TestingRecordingsNavigator navigator = GetNavigatorAtShowDepth(_showIndexMultiSeason);
 			navigator.Season = navigator.Show.Seasons[1];
 
-			await navigator.DeleteAsync();
+			await navigator.DeleteAsync().ConfigureAwait(false);
 
 			A.CallTo(() => navigator.Deleter.DeleteAsync(navigator.Season.OldestEpisode)).MustHaveHappenedOnceExactly();
 		}
@@ -208,7 +208,7 @@ namespace au.Applications.MythClient.UI.Tests {
 			TestingRecordingsNavigator navigator = GetNavigatorAtSeasonDepth(_showIndexMultiEpisode);
 			navigator.Episode = navigator.Season.Episodes[1];
 
-			await navigator.DeleteAsync();
+			await navigator.DeleteAsync().ConfigureAwait(false);
 
 			A.CallTo(() => navigator.Deleter.DeleteAsync(navigator.Episode)).MustHaveHappenedOnceExactly();
 		}

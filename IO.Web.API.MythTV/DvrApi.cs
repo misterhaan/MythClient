@@ -23,7 +23,7 @@ namespace au.IO.Web.API.MythTV {
 
 		/// <inheritdoc />
 		public async Task<ProgramList> GetRecordedList()
-			=> await GetRequest<ProgramList>(BuildGetRecordedListUrl());
+			=> await GetRequest<ProgramList>(BuildGetRecordedListUrl()).ConfigureAwait(false);
 
 		/// <summary>
 		/// Build the full URL to the GetRecordedList endpoint.
@@ -34,7 +34,7 @@ namespace au.IO.Web.API.MythTV {
 
 		/// <inheritdoc />
 		public async Task<bool> DeleteRecording(uint recordedId, bool allowRerecord)
-			=> await PostRequestAsBool(BuildDeleteRecordingUrl(recordedId, allowRerecord));
+			=> await PostRequestAsBool(BuildDeleteRecordingUrl(recordedId, allowRerecord)).ConfigureAwait(false);
 
 		/// <summary>
 		/// Build the full URL to the DeleteRecording endpoint.

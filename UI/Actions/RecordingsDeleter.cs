@@ -45,8 +45,8 @@ namespace au.Applications.MythClient.UI.Actions {
 			switch(rerecord) {
 				case DialogResult.Yes:
 				case DialogResult.No:
-					await _recordings.DeleteAsync(episode, rerecord == DialogResult.Yes);
-					await _navigator.RefreshAsync();
+					await _recordings.DeleteAsync(episode, rerecord == DialogResult.Yes).ConfigureAwait(true);
+					await _navigator.RefreshAsync().ConfigureAwait(false);
 					break;
 			}
 		}
@@ -64,8 +64,8 @@ namespace au.Applications.MythClient.UI.Actions {
 					foreach(ISeason season in show.Seasons)
 						foreach(IEpisode episode in season.Episodes)
 							deletions.Add(_recordings.DeleteAsync(episode, rerecord == DialogResult.Yes));
-					await Task.WhenAll(deletions);
-					await _navigator.RefreshAsync();
+					await Task.WhenAll(deletions).ConfigureAwait(true);
+					await _navigator.RefreshAsync().ConfigureAwait(false);
 					break;
 			}
 		}

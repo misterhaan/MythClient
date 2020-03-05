@@ -50,7 +50,7 @@ namespace au.Applications.MythClient.Recordings {
 			IContentApi contentApi = _apiFactory.BuildContentApi(false, _settings.Server.Name, _settings.Server.Port);
 
 			RecordingsAggregator aggregator = _createAggregator(_settings, contentApi);
-			ProgramList programList = await _dvrApi.GetRecordedList();
+			ProgramList programList = await _dvrApi.GetRecordedList().ConfigureAwait(false);
 
 			foreach(Program program in programList.Programs)
 				aggregator.Add(program);
@@ -79,6 +79,6 @@ namespace au.Applications.MythClient.Recordings {
 
 		/// <inheritdoc />
 		public async Task<bool> DeleteAsync(IEpisode episode, bool rerecord)
-			=> await _dvrApi.DeleteRecording(episode.ID, rerecord);
+			=> await _dvrApi.DeleteRecording(episode.ID, rerecord).ConfigureAwait(false);
 	}
 }

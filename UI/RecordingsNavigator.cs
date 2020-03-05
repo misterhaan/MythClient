@@ -180,7 +180,7 @@ namespace au.Applications.MythClient.UI {
 		/// Refresh recordings from the MythTV server and update the UI.
 		/// </summary>
 		internal async Task RefreshAsync() {
-			await _recordings.LoadAsync();
+			await _recordings.LoadAsync().ConfigureAwait(true);
 			UpdateStateObjects();
 			Render();
 		}
@@ -498,13 +498,13 @@ namespace au.Applications.MythClient.UI {
 		internal async Task DeleteAsync() {
 			switch(Depth) {
 				case BrowsingDepth.Recordings:
-					await _deleter.DeleteAsync(_show.OldestEpisode);
+					await _deleter.DeleteAsync(_show.OldestEpisode).ConfigureAwait(false);
 					break;
 				case BrowsingDepth.Show:
-					await _deleter.DeleteAsync(_season.OldestEpisode);
+					await _deleter.DeleteAsync(_season.OldestEpisode).ConfigureAwait(false);
 					break;
 				case BrowsingDepth.Season:
-					await _deleter.DeleteAsync(_episode);
+					await _deleter.DeleteAsync(_episode).ConfigureAwait(false);
 					break;
 			}
 		}
@@ -757,13 +757,13 @@ namespace au.Applications.MythClient.UI {
 			=> PlayWith(_show.OldestEpisode);
 
 		private async void MenuShowDeleteNext_Click(object sender, EventArgs e)
-			=> await _deleter.DeleteAsync(_show.OldestEpisode);
+			=> await _deleter.DeleteAsync(_show.OldestEpisode).ConfigureAwait(false);
 
 		private void MenuShowExport_Click(object sender, EventArgs e)
 			=> _exporter.Export(_show);
 
 		private async void MenuShowDeleteAll_Click(object sender, EventArgs e)
-			=> await _deleter.DeleteAsync(_show);
+			=> await _deleter.DeleteAsync(_show).ConfigureAwait(false);
 
 		private ContextMenuStrip BuildSeasonContextMenu() {
 			ContextMenuStrip menu = new ContextMenuStrip();
@@ -784,7 +784,7 @@ namespace au.Applications.MythClient.UI {
 			=> PlayWith(_season.OldestEpisode);
 
 		private async void MenuSeasonDeleteNext_Click(object sender, EventArgs e)
-			=> await _deleter.DeleteAsync(_season.OldestEpisode);
+			=> await _deleter.DeleteAsync(_season.OldestEpisode).ConfigureAwait(false);
 
 		private void MenuSeasonExport_Click(object sender, EventArgs e)
 			=> _exporter.Export(_season);
@@ -810,7 +810,7 @@ namespace au.Applications.MythClient.UI {
 			=> _exporter.Export(_episode);
 
 		private async void MenuEpisodeDelete_Click(object sender, EventArgs e)
-			=> await _deleter.DeleteAsync(_episode);
+			=> await _deleter.DeleteAsync(_episode).ConfigureAwait(false);
 		#endregion events
 	}
 }

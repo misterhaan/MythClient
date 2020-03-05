@@ -23,7 +23,7 @@ namespace au.Applications.MythClient.Recordings.Tests {
 			A.CallTo(() => TestRecordings.ApiFactory.BuildDvrApi(A<bool>.Ignored, A<string>.Ignored, A<ushort>.Ignored)).Returns(dvrApi);
 			A.CallTo(() => TestRecordings.ApiFactory.BuildContentApi(A<bool>.Ignored, A<string>.Ignored, A<ushort>.Ignored)).Returns(contentApi);
 
-			await recordings.LoadAsync();
+			await recordings.LoadAsync().ConfigureAwait(false);
 
 			A.CallTo(() => Aggregator.Add(A<Program>.Ignored)).MustHaveHappened(programList.Programs.Count, Times.Exactly);
 			A.CallTo(() => Aggregator.Finalize()).MustHaveHappened(1, Times.Exactly);
@@ -104,7 +104,7 @@ namespace au.Applications.MythClient.Recordings.Tests {
 			IEpisode episode = A.Fake<IEpisode>();
 			A.CallTo(() => episode.ID).Returns((uint)42);
 
-			await recordings.DeleteAsync(episode, rerecord);
+			await recordings.DeleteAsync(episode, rerecord).ConfigureAwait(false);
 
 			A.CallTo(() => dvrApi.DeleteRecording(episode.ID, rerecord)).MustHaveHappenedOnceExactly();
 		}

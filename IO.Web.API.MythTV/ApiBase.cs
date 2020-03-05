@@ -37,7 +37,7 @@ namespace au.IO.Web.API.MythTV {
 		/// <exception cref="Exception">Thrown when result cannot be deserialized into the requested type</exception>
 		protected async Task<T> GetRequest<T>(Uri url) {
 			HttpWebRequest req = WebRequest.CreateHttp(url);
-			using(WebResponse response = await req.GetResponseAsync())
+			using(WebResponse response = await req.GetResponseAsync().ConfigureAwait(false))
 			using(Stream responseStream = response.GetResponseStream())
 				if(new XmlSerializer(typeof(T)).Deserialize(responseStream) is T result)
 					return result;
@@ -52,10 +52,10 @@ namespace au.IO.Web.API.MythTV {
 		protected async Task<bool> PostRequestAsBool(Uri url) {
 			HttpWebRequest req = WebRequest.CreateHttp(url);
 			req.Method = "POST";
-			using(WebResponse response = await req.GetResponseAsync())
+			using(WebResponse response = await req.GetResponseAsync().ConfigureAwait(false))
 			using(Stream responseStream = response.GetResponseStream())
 			using(StreamReader reader = new StreamReader(responseStream)) {
-				string responseText = await reader.ReadToEndAsync();
+				string responseText = await reader.ReadToEndAsync().ConfigureAwait(false);
 				MemoryStream translatedStream = new MemoryStream(Encoding.UTF8.GetBytes(responseText.Replace("bool>", "boolean>")));
 				bool? value = new XmlSerializer(typeof(bool)).Deserialize(translatedStream) as bool?;
 				return value.HasValue && value.Value;
@@ -69,7 +69,7 @@ namespace au.IO.Web.API.MythTV {
 		/// <returns>API result as an image</returns>
 		protected async Task<Image> GetRequestAsImage(Uri url) {
 			HttpWebRequest req = WebRequest.CreateHttp(url);
-			using(WebResponse response = await req.GetResponseAsync())
+			using(WebResponse response = await req.GetResponseAsync().ConfigureAwait(false))
 			using(Stream responseStream = response.GetResponseStream())
 				return Image.FromStream(responseStream);
 		}
