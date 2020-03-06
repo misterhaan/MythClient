@@ -72,10 +72,16 @@
               Looks up a localized string similar to No need to upgrade because the latest version is already installed..
             </summary>
         </member>
-        <member name="P:au.IO.Web.API.GitHub.Messages.NoUpdateError">
+        <member name="P:au.IO.Web.API.GitHub.Messages.NoUpdateCannotConnect">
             <summary>
-              Looks up a localized string similar to Unexpected error looking up latest release..
+              Looks up a localized string similar to Cannot update because the update server is inaccessible..
             </summary>
+        </member>
+        <member name="P:au.IO.Web.API.GitHub.Messages.NoUpdateError">
+             <summary>
+               Looks up a localized string similar to Unexpected error looking up latest release:
+            {0}.
+             </summary>
         </member>
         <member name="P:au.IO.Web.API.GitHub.Messages.NoUpdateNoFiles">
             <summary>
@@ -84,7 +90,7 @@
         </member>
         <member name="P:au.IO.Web.API.GitHub.Messages.NoUpdateNoReleases">
             <summary>
-              Looks up a localized string similar to Cannot upgrade because there are no releases available for the application..
+              Looks up a localized string similar to Cannot update because there are no releases available for the application..
             </summary>
         </member>
         <member name="P:au.IO.Web.API.GitHub.Messages.NoUpdateTitle">
