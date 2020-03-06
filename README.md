@@ -5,7 +5,7 @@ Download the latest installer from [track7.org](http://www.track7.org/code/vs/my
 
 ## Revision History
 
-### (next)
+### 2.1.0
 * Check for updates and support update and restart
 * Show title when cover art isn't available
 * Remove vertical gap in delete options
