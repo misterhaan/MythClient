@@ -173,7 +173,7 @@ namespace au.Applications.MythClient.Recordings {
 					_settings.Server.Name,
 					_settings.Server.Port,
 					absoluteUrl.Split('?').First(),
-					absoluteUrl.Substring(absoluteUrl.IndexOf('?'))
+					absoluteUrl[absoluteUrl.IndexOf('?')..]
 				).Uri.ToString();
 	}
 }

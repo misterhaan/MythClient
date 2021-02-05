@@ -1,94 +1,50 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6E01F6DB-532E-4F79-BC0E-35B95E19830A}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>au.Applications.MythClient.UI.Tests</RootNamespace>
-    <AssemblyName>au.Applications.MythClient.UI.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
-    <IsCodedUITest>False</IsCodedUITest>
-    <TestProjectType>UnitTest</TestProjectType>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\build\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\build\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <!-- default AllowedReferenceRelatedFileExtensions is .pdb; .xml and I've removed xml -->
-    <AllowedReferenceRelatedFileExtensions>.pdb</AllowedReferenceRelatedFileExtensions>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="au.UI.CaptionedPictureBox, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ref\au.UI.CaptionedPictureBox.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\..\Properties\AssemblyInfo.Common.cs">
-      <Link>Properties\AssemblyInfo.Common.cs</Link>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RecordingsNavigatorTests.cs" />
-    <Compile Include="Render\ContentsRendererTests.cs" />
-    <Compile Include="Render\EpisodeInfoRendererTests.cs" />
-    <Compile Include="Render\MovieInfoRendererTests.cs" />
-    <Compile Include="Render\RecordingsContentsRendererTests.cs" />
-    <Compile Include="Render\RendererTestsBase.cs" />
-    <Compile Include="Render\SeasonContentsRendererTests.cs" />
-    <Compile Include="Render\SeasonInfoRendererTests.cs" />
-    <Compile Include="Render\ShowContentsRendererTests.cs" />
-    <Compile Include="Render\ShowInfoRendererTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Recordings\Types\MythClient.Recordings.Types.csproj">
-      <Project>{37F3D175-92A1-45B3-BD9B-2AE6B3510FF1}</Project>
-      <Name>MythClient.Recordings.Types</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Settings\Types\MythClient.Settings.Types.csproj">
-      <Project>{99922E64-A72C-465B-9536-ADF4A446E332}</Project>
-      <Name>MythClient.Settings.Types</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MythClient.UI.csproj">
-      <Project>{12a2c663-bd30-4e44-91f0-7f885f829699}</Project>
-      <Name>MythClient.UI</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="FakeItEasy">
-      <Version>6.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="MSTest.TestAdapter">
-      <Version>2.1.0</Version>
-    </PackageReference>
-    <PackageReference Include="MSTest.TestFramework">
-      <Version>2.1.0</Version>
-    </PackageReference>
-  </ItemGroup>
-  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0-windows</TargetFramework>
+		<UseWindowsForms>true</UseWindowsForms>
+
+		<IsPackable>false</IsPackable>
+
+		<AssemblyName>au.Applications.MythClient.UI.Tests</AssemblyName>
+
+		<RootNamespace>au.Applications.MythClient.UI.Tests</RootNamespace>
+
+		<Description>Tests for user interface for the MythClient application</Description>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FakeItEasy" Version="6.2.1" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
+		<PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
+		<PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
+		<PackageReference Include="coverlet.collector" Version="3.0.2">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Recordings\Types\MythClient.Recordings.Types.csproj" />
+	  <ProjectReference Include="..\..\Settings\Types\MythClient.Settings.Types.csproj" />
+	  <ProjectReference Include="..\MythClient.UI.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="au.UI.CaptionedPictureBox">
+	    <HintPath>..\..\ref\au.UI.CaptionedPictureBox.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+		<OutputPath>..\..\build\Debug\</OutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<OutputPath>..\..\build\Release\</OutputPath>
+	</PropertyGroup>
+
+	<Import Project="..\..\PackageInfo.Common.proj" />
 </Project>

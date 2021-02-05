@@ -63,8 +63,8 @@
 			// 
 			// lblTitle
 			// 
-			lblTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			lblTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			lblTitle.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			lblTitle.Location = new System.Drawing.Point(54, 6);
 			lblTitle.Name = "lblTitle";
@@ -75,8 +75,8 @@
 			// 
 			// picIcon
 			// 
-			picIcon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+			picIcon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)));
 			picIcon.Image = global::au.Applications.MythClient.UI.Icons.MythTV32;
 			picIcon.Location = new System.Drawing.Point(0, 0);
 			picIcon.Name = "picIcon";
@@ -88,9 +88,9 @@
 			// 
 			// txtDescription
 			// 
-			txtDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			txtDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			txtDescription.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			txtDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			txtDescription.Location = new System.Drawing.Point(15, 63);
@@ -104,8 +104,8 @@
 			// 
 			// _txtCopyright
 			// 
-			this._txtCopyright.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this._txtCopyright.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this._txtCopyright.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this._txtCopyright.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this._txtCopyright.Location = new System.Drawing.Point(15, 161);
@@ -116,7 +116,7 @@
 			this._txtCopyright.TabIndex = 7;
 			this._txtCopyright.TabStop = false;
 			this._txtCopyright.Text = ".\r\nThis program may be distributed freely to anyone.\r\nSource code and updates are" +
-    " available at:";
+		" available at:";
 			// 
 			// _btnOK
 			// 
@@ -131,8 +131,8 @@
 			// 
 			// _lnkURL
 			// 
-			this._lnkURL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this._lnkURL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this._lnkURL.AutoSize = true;
 			this._lnkURL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this._lnkURL.Location = new System.Drawing.Point(12, 209);

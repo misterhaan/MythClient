@@ -38,7 +38,7 @@ namespace au.Applications.MythClient.UI {
 		/// </summary>
 		private void LaunchMythServerApi() {
 			ushort port = (ushort)_numPort.Value;
-			if(port > 0)
+			if(port == 0)
 				port = ServerSettings.DefaultPort;
 			UriBuilder mythServerApiUrl = new UriBuilder(Uri.UriSchemeHttp, _txtServerName.Text.Trim(), port);
 			Process.Start(mythServerApiUrl.Uri.ToString());

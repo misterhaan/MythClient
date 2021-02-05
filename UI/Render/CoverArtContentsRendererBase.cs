@@ -45,14 +45,13 @@ namespace au.Applications.MythClient.UI.Render {
 				string title = GetTitleFromPictureBox(pb);
 				if(!string.IsNullOrEmpty(title)) {
 					e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-					using(GraphicsPath path = new GraphicsPath())
-					using(StringFormat format = new StringFormat { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Center, Trimming = StringTrimming.EllipsisCharacter })
-					using(Brush background = new SolidBrush(Color.FromArgb(96, Color.Black)))
-					using(Pen outline = new Pen(background, _outlineSize)) {
-						path.AddString(title, pb.Font.FontFamily, (int)FontStyle.Regular, e.Graphics.DpiY * 16 / 72, _textArea, format);
-						e.Graphics.DrawPath(outline, path);
-						e.Graphics.FillPath(Brushes.White, path);
-					}
+					using GraphicsPath path = new GraphicsPath();
+					using StringFormat format = new StringFormat { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Center, Trimming = StringTrimming.EllipsisCharacter };
+					using Brush background = new SolidBrush(Color.FromArgb(96, Color.Black));
+					using Pen outline = new Pen(background, _outlineSize);
+					path.AddString(title, pb.Font.FontFamily, (int)FontStyle.Regular, e.Graphics.DpiY * 16 / 72, _textArea, format);
+					e.Graphics.DrawPath(outline, path);
+					e.Graphics.FillPath(Brushes.White, path);
 				}
 			}
 		}

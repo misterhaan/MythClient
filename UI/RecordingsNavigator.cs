@@ -144,18 +144,14 @@ namespace au.Applications.MythClient.UI {
 		/// </summary>
 		internal string LocationName {
 			get {
-				switch(Depth) {
-					case BrowsingDepth.Recordings:
-						return Titles.Recordings;
-					case BrowsingDepth.Show:
-						return _show.Title;
-					case BrowsingDepth.Season:
-						return _season.Number == 0 && _show.Seasons.Count == 1
-							? _show.Title
-							: string.Format(Titles.Season, _show.Title, _season.Number);
-					default:
-						throw new InvalidOperationException($"{nameof(LocationName)} not available at unknown depth: {Depth}!");
-				}
+				return Depth switch {
+					BrowsingDepth.Recordings => Titles.Recordings,
+					BrowsingDepth.Show => _show.Title,
+					BrowsingDepth.Season => _season.Number == 0 && _show.Seasons.Count == 1
+						? _show.Title
+						: string.Format(Titles.Season, _show.Title, _season.Number),
+					_ => throw new InvalidOperationException($"{nameof(LocationName)} not available at unknown depth: {Depth}!"),
+				};
 			}
 		}
 
@@ -164,15 +160,14 @@ namespace au.Applications.MythClient.UI {
 		/// </summary>
 		internal string BackDescription {
 			get {
-				switch(Depth) {
-					case BrowsingDepth.Recordings: return "";
-					case BrowsingDepth.Show: return string.Format(Titles.BackTo, Titles.Recordings);
-					case BrowsingDepth.Season:
-						return _show.Seasons.Count == 1
-							? string.Format(Titles.BackTo, Titles.Recordings)
-							: string.Format(Titles.BackTo, _show.Title);
-					default: throw new InvalidOperationException($"{nameof(BackDescription)} not available at unknown depth: {Depth}!");
-				}
+				return Depth switch {
+					BrowsingDepth.Recordings => "",
+					BrowsingDepth.Show => string.Format(Titles.BackTo, Titles.Recordings),
+					BrowsingDepth.Season => _show.Seasons.Count == 1
+						? string.Format(Titles.BackTo, Titles.Recordings)
+						: string.Format(Titles.BackTo, _show.Title),
+					_ => throw new InvalidOperationException($"{nameof(BackDescription)} not available at unknown depth: {Depth}!"),
+				};
 			}
 		}
 
@@ -229,7 +224,7 @@ namespace au.Applications.MythClient.UI {
 		/// Render the contents and info panels to reflect the current navigation state when at the recordings depth.
 		/// </summary>
 		private void RenderRecordings() {
-			_show = _show ?? _recordings.Shows.FirstOrDefault();
+			_show ??= _recordings.Shows?[0];
 			_contents.Render(_recordings.Shows, _show);
 			_info.Render(_show);
 		}
@@ -238,7 +233,7 @@ namespace au.Applications.MythClient.UI {
 		/// Render the contents and info panels to reflect the current navigation state when at the show depth.
 		/// </summary>
 		private void RenderShow() {
-			_season = _season ?? _show.Seasons.First();
+			_season ??= _show.Seasons[0];
 			_contents.Render(_show.Seasons, _season);
 			_info.Render(_season);
 		}
@@ -247,7 +242,7 @@ namespace au.Applications.MythClient.UI {
 		/// Render the contents and info panels to reflect the current navigation state when at the season depth.
 		/// </summary>
 		private void RenderSeason() {
-			_episode = _episode ?? _season.Episodes.First();
+			_episode ??= _season.Episodes[0];
 			_contents.Render(_season.Episodes, _episode);
 			_info.Render(_episode);
 		}
@@ -307,22 +302,22 @@ namespace au.Applications.MythClient.UI {
 		private void NavigateFirst() {
 			switch(Depth) {
 				case BrowsingDepth.Recordings:
-					if(_show != _recordings.Shows.First()) {
-						_show = _recordings.Shows.First();
+					if(_show != _recordings.Shows[0]) {
+						_show = _recordings.Shows[0];
 						_contents.UpdateSelected(0);
 						_info.Render(_show);
 					}
 					break;
 				case BrowsingDepth.Show:
-					if(_season != _show.Seasons.First()) {
-						_season = _show.Seasons.First();
+					if(_season != _show.Seasons[0]) {
+						_season = _show.Seasons[0];
 						_contents.UpdateSelected(0);
 						_info.Render(_season);
 					}
 					break;
 				case BrowsingDepth.Season:
-					if(_episode != _season.Episodes.First()) {
-						_episode = _season.Episodes.First();
+					if(_episode != _season.Episodes[0]) {
+						_episode = _season.Episodes[0];
 						_contents.UpdateSelected(0);
 						_info.Render(_episode);
 					}
@@ -336,22 +331,22 @@ namespace au.Applications.MythClient.UI {
 		private void NavigateLast() {
 			switch(Depth) {
 				case BrowsingDepth.Recordings:
-					if(_show != _recordings.Shows.Last()) {
-						_show = _recordings.Shows.Last();
+					if(_show != _recordings.Shows[_recordings.Shows.Count - 1]) {
+						_show = _recordings.Shows[_recordings.Shows.Count - 1];
 						_contents.UpdateSelected(_recordings.Shows.Count - 1);
 						_info.Render(_show);
 					}
 					break;
 				case BrowsingDepth.Show:
-					if(_season != _show.Seasons.Last()) {
-						_season = _show.Seasons.Last();
+					if(_season != _show.Seasons[_show.Seasons.Count - 1]) {
+						_season = _show.Seasons[_show.Seasons.Count - 1];
 						_contents.UpdateSelected(_show.Seasons.Count - 1);
 						_info.Render(_season);
 					}
 					break;
 				case BrowsingDepth.Season:
-					if(_episode != _season.Episodes.Last()) {
-						_episode = _season.Episodes.Last();
+					if(_episode != _season.Episodes[_season.Episodes.Count - 1]) {
+						_episode = _season.Episodes[_season.Episodes.Count - 1];
 						_contents.UpdateSelected(_season.Episodes.Count - 1);
 						_info.Render(_episode);
 					}
@@ -608,27 +603,27 @@ namespace au.Applications.MythClient.UI {
 		}
 
 		private EventHandler GetButtonClickAction(ActionKey key) {
-			switch(key) {
-				case ActionKey.ExportShow: return MenuShowExport_Click;
-				case ActionKey.DeleteShow: return MenuShowDeleteAll_Click;
-				case ActionKey.PlayShowOldest: return MenuShowPlayNext_Click;
-				case ActionKey.PlayShowOldestWith: return MenuShowPlayNextWith_Click;
-				case ActionKey.DeleteShowOldest: return MenuShowDeleteNext_Click;
+			return key switch {
+				ActionKey.ExportShow => MenuShowExport_Click,
+				ActionKey.DeleteShow => MenuShowDeleteAll_Click,
+				ActionKey.PlayShowOldest => MenuShowPlayNext_Click,
+				ActionKey.PlayShowOldestWith => MenuShowPlayNextWith_Click,
+				ActionKey.DeleteShowOldest => MenuShowDeleteNext_Click,
 
-				case ActionKey.ExportSeason: return MenuSeasonExport_Click;
-				case ActionKey.PlaySeasonOldest: return MenuSeasonPlayNext_Click;
-				case ActionKey.PlaySeasonOldestWith: return MenuSeasonPlayNextWith_Click;
-				case ActionKey.DeleteSeasonOldest: return MenuSeasonDeleteNext_Click;
+				ActionKey.ExportSeason => MenuSeasonExport_Click,
+				ActionKey.PlaySeasonOldest => MenuSeasonPlayNext_Click,
+				ActionKey.PlaySeasonOldestWith => MenuSeasonPlayNextWith_Click,
+				ActionKey.DeleteSeasonOldest => MenuSeasonDeleteNext_Click,
 
-				case ActionKey.PlayEpisode: return MenuEpisodePlay_Click;
-				case ActionKey.PlayEpisodeWith: return MenuEpisodePlayWith_Click;
-				case ActionKey.ExportEpisode: return MenuEpisodeExport_Click;
-				case ActionKey.DeleteEpisode: return MenuEpisodeDelete_Click;
+				ActionKey.PlayEpisode => MenuEpisodePlay_Click,
+				ActionKey.PlayEpisodeWith => MenuEpisodePlayWith_Click,
+				ActionKey.ExportEpisode => MenuEpisodeExport_Click,
+				ActionKey.DeleteEpisode => MenuEpisodeDelete_Click,
 
-				case ActionKey.ExportMovie: return MenuMovieExport_Click;
+				ActionKey.ExportMovie => MenuMovieExport_Click,
 
-				default: throw new ArgumentException($"No action defined for {nameof(ActionKey)}.{key}", nameof(key));
-			}
+				_ => throw new ArgumentException($"No action defined for {nameof(ActionKey)}.{key}", nameof(key)),
+			};
 		}
 
 		private void ContentsItem_Click(object sender, EventArgs e) {
@@ -671,12 +666,12 @@ namespace au.Applications.MythClient.UI {
 						if(_show.Seasons.Count > 1)
 							OpenShow();
 						else {
-							ISeason season = _show.Seasons.First();
+							ISeason season = _show.Seasons[0];
 							if(season.Episodes.Count > 1) {
 								_season = season;
 								OpenSeason();
 							} else
-								Play(season.Episodes.First());
+								Play(season.Episodes[0]);
 						}
 						break;
 					case BrowsingDepth.Show:
@@ -684,7 +679,7 @@ namespace au.Applications.MythClient.UI {
 						if(_season.Episodes.Count > 1)
 							OpenSeason();
 						else
-							Play(_season.Episodes.First());
+							Play(_season.Episodes[0]);
 						break;
 					case BrowsingDepth.Season:
 						_episode = _season.Episodes[index];

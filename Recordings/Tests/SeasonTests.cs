@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using au.Applications.MythClient.Recordings.Types;
 using au.IO.Web.API.MythTV.Types;
 using FakeItEasy;
@@ -153,7 +152,7 @@ namespace au.Applications.MythClient.Recordings.Tests {
 
 			IEpisode foundEpisode = season.FindEpisode(searchEpisode);
 
-			Assert.AreEqual(season.Episodes.Last(), foundEpisode, $"{nameof(season.FindEpisode)}() should return the last referenced episode when the searched episode would have been last.");
+			Assert.AreEqual(season.Episodes[season.Episodes.Count - 1], foundEpisode, $"{nameof(season.FindEpisode)}() should return the last referenced episode when the searched episode would have been last.");
 		}
 
 		private static Season GetSeason() => new Season("test", 7);

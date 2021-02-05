@@ -54,8 +54,8 @@
 			// 
 			// _txtServerName
 			// 
-			this._txtServerName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this._txtServerName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this._txtServerName.Location = new System.Drawing.Point(12, 31);
 			this._txtServerName.Name = "_txtServerName";
 			this._txtServerName.Size = new System.Drawing.Size(393, 20);
@@ -89,10 +89,10 @@
 			this._numPort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this._numPort.Location = new System.Drawing.Point(421, 31);
 			this._numPort.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
+						65535,
+						0,
+						0,
+						0});
 			this._numPort.Name = "_numPort";
 			this._numPort.Size = new System.Drawing.Size(50, 20);
 			this._numPort.TabIndex = 4;
@@ -113,11 +113,11 @@
 			// 
 			// _dirRecordings
 			// 
-			this._dirRecordings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this._dirRecordings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this._dirRecordings.BasePath = null;
 			this._dirRecordings.Description = "Select the directory where MythTV places its recordings files and thumbnail image" +
-    "s.";
+		"s.";
 			this._dirRecordings.Location = new System.Drawing.Point(12, 79);
 			this._dirRecordings.Name = "_dirRecordings";
 			this._dirRecordings.Size = new System.Drawing.Size(493, 20);

@@ -1,267 +1,124 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{12A2C663-BD30-4E44-91F0-7F885F829699}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>au.Applications.MythClient.UI</RootNamespace>
-    <AssemblyName>au.Applications.MythClient.UI</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\build\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\build\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <!-- default AllowedReferenceRelatedFileExtensions is .pdb; .xml and I've removed xml -->
-    <AllowedReferenceRelatedFileExtensions>.pdb</AllowedReferenceRelatedFileExtensions>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="au.IO.Files.FileOperation, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ref\au.IO.Files.FileOperation.dll</HintPath>
-    </Reference>
-    <Reference Include="au.IO.Web.API.GitHub, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ref\au.IO.Web.API.GitHub.dll</HintPath>
-    </Reference>
-    <Reference Include="au.IO.Web.API.GitHub.Types, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ref\au.IO.Web.API.GitHub.Types.dll</HintPath>
-    </Reference>
-    <Reference Include="au.Settings.Types, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="au.UI.CaptionedPictureBox">
-      <HintPath>..\ref\au.UI.CaptionedPictureBox.dll</HintPath>
-    </Reference>
-    <Reference Include="au.UI.DirectoryBox">
-      <HintPath>..\ref\au.UI.DirectoryBox.dll</HintPath>
-    </Reference>
-    <Reference Include="au.UI.LatestVersion">
-      <HintPath>..\ref\au.UI.LatestVersion.dll</HintPath>
-    </Reference>
-    <Reference Include="au.UI.TaskDialog, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ref\au.UI.TaskDialog.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\Properties\AssemblyInfo.Common.cs">
-      <Link>Properties\AssemblyInfo.Common.cs</Link>
-    </Compile>
-    <Compile Include="AboutWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AboutWindow.Designer.cs">
-      <DependentUpon>AboutWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ActionKey.cs" />
-    <Compile Include="Actions\ActorFactory.cs" />
-    <Compile Include="Actions\IActorFactory.cs" />
-    <Compile Include="Actions\IRecordingsDeleter.cs" />
-    <Compile Include="Actions\IRecordingsExporter.cs" />
-    <Compile Include="Actions\RecordingsDeleter.cs" />
-    <Compile Include="Actions\RecordingsExporter.cs" />
-    <Compile Include="BrowsingDepth.cs" />
-    <Compile Include="ExceptionMessages.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ExceptionMessages.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Icons.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Icons.resx</DependentUpon>
-    </Compile>
-    <Compile Include="NavigationDirection.cs" />
-    <Compile Include="NeedsRecordingFilesBase.cs" />
-    <Compile Include="Render\ContentsRendererBase.cs" />
-    <Compile Include="Render\CoverArtContentsRendererBase.cs" />
-    <Compile Include="Render\IInfoActionButtonTag.cs" />
-    <Compile Include="Images.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Images.resx</DependentUpon>
-    </Compile>
-    <Compile Include="InfoText.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>InfoText.resx</DependentUpon>
-    </Compile>
-    <Compile Include="RecordingsNavigator.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RecordingsWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RecordingsWindow.Designer.cs">
-      <DependentUpon>RecordingsWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Render\EpisodeInfoRenderer.cs" />
-    <Compile Include="Render\IContentsRenderer.cs" />
-    <Compile Include="Render\IInfoRenderer.cs" />
-    <Compile Include="Render\ContentsRenderer.cs" />
-    <Compile Include="Render\InfoActionButtonTag.cs" />
-    <Compile Include="Render\InfoRenderer.cs" />
-    <Compile Include="Render\InfoRendererBase.cs" />
-    <Compile Include="Render\IShowItemTag.cs" />
-    <Compile Include="Render\MovieInfoRenderer.cs" />
-    <Compile Include="Render\RecordingsContentsRenderer.cs" />
-    <Compile Include="Render\RendererBase.cs" />
-    <Compile Include="Render\SeasonContentsRenderer.cs" />
-    <Compile Include="Render\SeasonInfoRenderer.cs" />
-    <Compile Include="Render\ShowContentsRenderer.cs" />
-    <Compile Include="Render\ShowInfoRenderer.cs" />
-    <Compile Include="ActionText.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ActionText.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Render\ShowItemTag.cs" />
-    <Compile Include="SettingsWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SettingsWindow.Designer.cs">
-      <DependentUpon>SettingsWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Titles.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Titles.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="AboutWindow.resx">
-      <DependentUpon>AboutWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ExceptionMessages.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ExceptionMessages.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Icons.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Icons.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Images.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Images.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="InfoText.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>InfoText.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RecordingsWindow.resx">
-      <DependentUpon>RecordingsWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ActionText.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ActionText.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SettingsWindow.resx">
-      <DependentUpon>SettingsWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Titles.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\back-disabled.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\reload.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\sort-title.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\menu.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\settings.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\about.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\date.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\title.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Recordings\Types\MythClient.Recordings.Types.csproj">
-      <Project>{37F3D175-92A1-45B3-BD9B-2AE6B3510FF1}</Project>
-      <Name>MythClient.Recordings.Types</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Settings\MythClient.Settings.csproj">
-      <Project>{D292E9A9-350F-4FDE-A0CA-848F664700F6}</Project>
-      <Name>MythClient.Settings</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Settings\Types\MythClient.Settings.Types.csproj">
-      <Project>{99922E64-A72C-465B-9536-ADF4A446E332}</Project>
-      <Name>MythClient.Settings.Types</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\mythtv.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\sort-date.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\back.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\reload-disabled.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\static1080p.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\export.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\delete.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\play.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\play-with.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.3</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="img\update.png" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0-windows</TargetFramework>
+		<UseWindowsForms>true</UseWindowsForms>
+		<AssemblyName>au.Applications.MythClient.UI</AssemblyName>
+		<RootNamespace>au.Applications.MythClient.UI</RootNamespace>
+		<Description>User interface for the MythClient application</Description>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+		<OutputPath>..\build\Debug\</OutputPath>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>au.Applications.MythClient.UI.Tests</_Parameter1>
+		</AssemblyAttribute>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<OutputPath>..\build\Release\</OutputPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Tests\**" />
+	  <EmbeddedResource Remove="Tests\**" />
+	  <None Remove="Tests\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Recordings\Types\MythClient.Recordings.Types.csproj" />
+	  <ProjectReference Include="..\Settings\MythClient.Settings.csproj" />
+	  <ProjectReference Include="..\Settings\Types\MythClient.Settings.Types.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="au.IO.Files.FileOperation">
+	    <HintPath>..\ref\au.IO.Files.FileOperation.dll</HintPath>
+	  </Reference>
+	  <Reference Include="au.Settings.Types">
+	    <HintPath>..\ref\au.Settings.Types.dll</HintPath>
+	  </Reference>
+	  <Reference Include="au.UI.CaptionedPictureBox">
+	    <HintPath>..\ref\au.UI.CaptionedPictureBox.dll</HintPath>
+	  </Reference>
+	  <Reference Include="au.UI.DirectoryBox">
+	    <HintPath>..\ref\au.UI.DirectoryBox.dll</HintPath>
+	  </Reference>
+	  <Reference Include="au.UI.LatestVersion">
+	    <HintPath>..\ref\au.UI.LatestVersion.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="ActionText.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>ActionText.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="ExceptionMessages.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>ExceptionMessages.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="Icons.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Icons.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="Images.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Images.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="InfoText.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>InfoText.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="Titles.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Titles.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+	
+	<ItemGroup>
+		<EmbeddedResource Update="ExceptionMessages.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>ExceptionMessages.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Icons.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Icons.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Images.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Images.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="InfoText.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>InfoText.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="ActionText.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>ActionText.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Titles.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Titles.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<Import Project="..\PackageInfo.Common.proj" />
 </Project>

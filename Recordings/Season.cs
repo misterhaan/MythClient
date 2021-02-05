@@ -53,7 +53,7 @@ namespace au.Applications.MythClient.Recordings {
 				if(episode.CompareTo(example) >= 0)
 					return episode;
 
-			return Episodes.LastOrDefault();
+			return Episodes?[Episodes.Count - 1];
 		}
 
 		/// <summary>

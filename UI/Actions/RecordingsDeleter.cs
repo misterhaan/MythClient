@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using au.Applications.MythClient.Recordings.Types;
-using au.UI.TaskDialog;
 
 namespace au.Applications.MythClient.UI.Actions {
 	/// <summary>
@@ -36,10 +36,7 @@ namespace au.Applications.MythClient.UI.Actions {
 			_navigator = navigator;
 		}
 
-		/// <summary>
-		/// Delete a single recording.
-		/// </summary>
-		/// <param name="episode">Episode to delete</param>
+		/// <inheritdoc />
 		public async Task DeleteAsync(IEpisode episode) {
 			DialogResult rerecord = AskToRerecord(false);
 			switch(rerecord) {
@@ -51,10 +48,7 @@ namespace au.Applications.MythClient.UI.Actions {
 			}
 		}
 
-		/// <summary>
-		/// Delete all recordings of a show.
-		/// </summary>
-		/// <param name="show">Show to delete</param>
+		/// <inheritdoc />
 		public async Task DeleteAsync(IShow show) {
 			DialogResult rerecord = AskToRerecord(true);
 			switch(rerecord) {
@@ -76,26 +70,39 @@ namespace au.Applications.MythClient.UI.Actions {
 		/// <param name="plural">True if more than one recording is being deleted</param>
 		/// <returns>User's choice:  Yes to delete and rerecord, No to delete without rerecording, or Cancel to not delete</returns>
 		protected virtual DialogResult AskToRerecord(bool plural) {
-			TaskDialog dialog = new TaskDialog {
-				WindowTitle = plural
+			TaskDialogCommandLinkButton justDelete = new TaskDialogCommandLinkButton(
+				ActionText.DeleteOptionTitle,
+				plural ? ActionText.DeleteOptionDescriptionPlural : ActionText.DeleteOptionDescription
+			);
+			TaskDialogCommandLinkButton deleteAndRerecord = new TaskDialogCommandLinkButton(
+				ActionText.DeleteRerecordOptionTitle,
+				plural ? ActionText.DeleteRerecordOptionDescriptionPlural : ActionText.DeleteRerecordOptionDescription
+			);
+			TaskDialogButton response = TaskDialog.ShowDialog(_owner, new TaskDialogPage {
+				Caption = plural
 					? ActionText.DeleteAllTitle
 					: ActionText.DeleteTitle,
-				MainInstruction = plural
+				Heading = plural
 					? ActionText.DeleteAllInstructions
 					: ActionText.DeleteInstructions,
-				Content = plural
+				Text = plural
 					? ActionText.DeleteAllNote
 					: ActionText.DeleteNote,
-				CommonButtons = TaskDialogCommonButtons.Cancel,
-				Buttons = new TaskDialogButton[] {
-					new TaskDialogButton((int)DialogResult.No, ActionText.DeleteOptionTitle, plural ? ActionText.DeleteOptionDescriptionPlural : ActionText.DeleteOptionDescription),
-					new TaskDialogButton((int)DialogResult.Yes, ActionText.DeleteRerecordOptionTitle,plural ? ActionText.DeleteRerecordOptionDescriptionPlural : ActionText.DeleteRerecordOptionDescription)
+				Buttons = {
+					justDelete,
+					deleteAndRerecord,
+					TaskDialogButton.Cancel
 				},
-				DefaultButton = (int)DialogResult.No,
-				PositionRelativeToWindow = true,
-				UseCommandLinks = true
-			};
-			return (DialogResult)dialog.Show(_owner);
+				DefaultButton = justDelete
+			});
+
+			return response == justDelete
+				? DialogResult.No
+				: response == deleteAndRerecord
+					? DialogResult.Yes
+					: response == TaskDialogButton.Cancel
+						? DialogResult.Cancel
+						: throw new Exception("Unexpected response from TaskDialog");
 		}
 	}
 }

@@ -210,7 +210,7 @@ namespace au.Applications.MythClient.Recordings.Tests {
 
 			ISeason foundSeason = show.FindSeason(searchSeason);
 
-			Assert.AreEqual(show.Seasons.Last(), foundSeason, $"{nameof(show.FindSeason)}() should return the last referenced season when the searched season would have been last.");
+			Assert.AreEqual(show.Seasons[show.Seasons.Count - 1], foundSeason, $"{nameof(show.FindSeason)}() should return the last referenced season when the searched season would have been last.");
 		}
 
 		private static Show GetShow() => new Show("test", "testing", "series");

@@ -12,8 +12,7 @@ namespace au.Applications.MythClient.Settings.Tests {
 			Assert.AreEqual(ServerSettings.DefaultPort, port, $"{nameof(settings.Port)} should have a default value of {ServerSettings.DefaultPort}.");
 		}
 
-		private ServerSettings GetSettings() {
-			return new ServerSettings();
-		}
+		private static ServerSettings GetSettings()
+			=> new ServerSettings();
 	}
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using au.Applications.MythClient.Recordings.Types;
@@ -126,7 +125,7 @@ namespace au.Applications.MythClient.UI.Tests {
 			TestingRecordingsNavigator navigator = GetNavigatorAtShowDepth();
 			A.CallTo(() => navigator.Recordings.FindShow(A<IShow>.Ignored)).Returns(navigator.Show);
 			A.CallTo(() => navigator.Show.Matches(A<IShow>.Ignored)).Returns(true);
-			ISeason foundSeason = navigator.Show.Seasons.First();
+			ISeason foundSeason = navigator.Show.Seasons[0];
 			navigator.Season = A.Fake<ISeason>();
 			A.CallTo(() => navigator.Season.Matches(foundSeason)).Returns(true);
 			A.CallTo(() => navigator.Show.FindSeason(A<ISeason>.Ignored)).Returns(foundSeason);

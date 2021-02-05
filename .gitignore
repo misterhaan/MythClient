@@ -18,3 +18,4 @@
 /TestResults
 /UI/obj
 /UI/Tests/obj
+*.csproj.user

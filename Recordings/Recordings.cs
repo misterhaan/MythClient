@@ -74,7 +74,7 @@ namespace au.Applications.MythClient.Recordings {
 				if(show.Matches(example) || comparer.Compare(show, example) > 0)
 					return show;
 
-			return Shows.LastOrDefault();
+			return Shows?[Shows.Count - 1];
 		}
 
 		/// <inheritdoc />

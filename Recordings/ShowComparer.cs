@@ -40,14 +40,14 @@ namespace au.Applications.MythClient.Recordings {
 			/// </summary>
 			/// <param name="title">Display title</param>
 			/// <returns>Sortable title</returns>
-			private string TitleSort(string title) {
+			private static string TitleSort(string title) {
 #pragma warning disable IDE0046 // Convert to conditional expression
 				if(title.StartsWith("The ", StringComparison.CurrentCultureIgnoreCase))
-					return title.Substring(4);
+					return title[4..];
 				if(title.StartsWith("An ", StringComparison.CurrentCultureIgnoreCase))
-					return title.Substring(3);
+					return title[3..];
 				if(title.StartsWith("A ", StringComparison.CurrentCultureIgnoreCase))
-					return title.Substring(2);
+					return title[2..];
 				return title;
 #pragma warning restore IDE0046 // Convert to conditional expression
 			}

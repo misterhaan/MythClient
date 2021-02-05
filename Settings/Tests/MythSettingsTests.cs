@@ -153,14 +153,12 @@ namespace au.Applications.MythClient.Settings.Tests {
 		}
 		#endregion HasRequiredSettings
 
-		private MythSettings GetSettings() {
-			return new MythSettings();
-		}
+		private static MythSettings GetSettings()
+			=> new MythSettings();
 
 		private static class PathAssert {
-			public static void AreSame(string expectedPath, string actualPath, string message) {
-				Assert.AreEqual(Path.GetFullPath(expectedPath).TrimEnd(Path.DirectorySeparatorChar), Path.GetFullPath(actualPath).TrimEnd(Path.DirectorySeparatorChar), true, CultureInfo.InvariantCulture, message);  // should be ordinal not invariant, but that's not an option
-			}
+			public static void AreSame(string expectedPath, string actualPath, string message)
+				=> Assert.AreEqual(Path.GetFullPath(expectedPath).TrimEnd(Path.DirectorySeparatorChar), Path.GetFullPath(actualPath).TrimEnd(Path.DirectorySeparatorChar), true, CultureInfo.InvariantCulture, message);  // should be ordinal not invariant, but that's not an option
 		}
 	}
 }

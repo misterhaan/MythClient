@@ -1,126 +1,78 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{243655BB-B552-4733-B5E1-5E1F4F8D72C1}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>au.Applications.MythClient</RootNamespace>
-    <AssemblyName>MythClient</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>mythtv.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>au.Applications.MythClient.MythClient</StartupObject>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>build\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisLogFile>C:\Applications\MythClient\MythClient.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSetDirectories>;C:\Applications\Visual Studio 10\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisRuleDirectories>;C:\Applications\Visual Studio 10\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>build\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>none</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisLogFile>build\MythClient.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSetDirectories>;C:\Applications\Visual Studio 10\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisRuleDirectories>;C:\Applications\Visual Studio 10\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
-    <Prefer32Bit>false</Prefer32Bit>
-    <!-- default AllowedReferenceRelatedFileExtensions is .pdb; .xml and I've removed xml -->
-    <AllowedReferenceRelatedFileExtensions>.pdb</AllowedReferenceRelatedFileExtensions>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="au.IO.Web.API.GitHub, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>ref\au.IO.Web.API.GitHub.dll</HintPath>
-    </Reference>
-    <Reference Include="au.IO.Web.API.GitHub.Types">
-      <HintPath>ref\au.IO.Web.API.GitHub.Types.dll</HintPath>
-    </Reference>
-    <Reference Include="au.Settings, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="au.UI.LatestVersion">
-      <HintPath>ref\au.UI.LatestVersion.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="MythClient.cs" />
-    <Compile Include="Properties\AssemblyInfo.Common.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="mythtv.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="IO.Web.API.MythTV\au.IO.Web.API.MythTV.csproj">
-      <Project>{F973404B-DC7C-41C5-885E-B309AB2ECFCA}</Project>
-      <Name>au.IO.Web.API.MythTV</Name>
-    </ProjectReference>
-    <ProjectReference Include="IO.Web.API.MythTV\Types\au.IO.Web.API.MythTV.Types.csproj">
-      <Project>{C69CF3E6-F727-4C02-A168-F5EB98FDD82C}</Project>
-      <Name>au.IO.Web.API.MythTV.Types</Name>
-    </ProjectReference>
-    <ProjectReference Include="Recordings\MythClient.Recordings.csproj">
-      <Project>{8c416d6c-0b03-4400-b84d-c585e4f2265f}</Project>
-      <Name>MythClient.Recordings</Name>
-    </ProjectReference>
-    <ProjectReference Include="Recordings\Types\MythClient.Recordings.Types.csproj">
-      <Project>{37F3D175-92A1-45B3-BD9B-2AE6B3510FF1}</Project>
-      <Name>MythClient.Recordings.Types</Name>
-    </ProjectReference>
-    <ProjectReference Include="Settings\MythClient.Settings.csproj">
-      <Project>{D292E9A9-350F-4FDE-A0CA-848F664700F6}</Project>
-      <Name>MythClient.Settings</Name>
-    </ProjectReference>
-    <ProjectReference Include="Settings\Types\MythClient.Settings.Types.csproj">
-      <Project>{99922E64-A72C-465B-9536-ADF4A446E332}</Project>
-      <Name>MythClient.Settings.Types</Name>
-    </ProjectReference>
-    <ProjectReference Include="UI\MythClient.UI.csproj">
-      <Project>{12A2C663-BD30-4E44-91F0-7F885F829699}</Project>
-      <Name>MythClient.UI</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.3</Version>
-    </PackageReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net5.0-windows</TargetFramework>
+		<RootNamespace>au.Applications.MythClient</RootNamespace>
+		<UseWindowsForms>true</UseWindowsForms>
+		<Description>Translates the MythWeb Recorded Programs page into a Windows form listing that directly launches the raw recording files.</Description>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<StartupObject>au.Applications.MythClient.MythClient</StartupObject>
+		<ApplicationIcon>mythtv.ico</ApplicationIcon>
+		<PackageIcon>mythtv.ico</PackageIcon>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="build\**" />
+		<Compile Remove="installer\**" />
+		<Compile Remove="IO.Web.API.MythTV\**" />
+		<Compile Remove="Recordings\**" />
+		<Compile Remove="ref\**" />
+		<Compile Remove="Settings\**" />
+		<Compile Remove="UI\**" />
+		<EmbeddedResource Remove="build\**" />
+		<EmbeddedResource Remove="installer\**" />
+		<EmbeddedResource Remove="IO.Web.API.MythTV\**" />
+		<EmbeddedResource Remove="Recordings\**" />
+		<EmbeddedResource Remove="ref\**" />
+		<EmbeddedResource Remove="Settings\**" />
+		<EmbeddedResource Remove="UI\**" />
+		<None Remove="build\**" />
+		<None Remove="installer\**" />
+		<None Remove="IO.Web.API.MythTV\**" />
+		<None Remove="Recordings\**" />
+		<None Remove="ref\**" />
+		<None Remove="Settings\**" />
+		<None Remove="UI\**" />
+		<None Include="LICENSE">
+		  <Pack>True</Pack>
+		  <PackagePath></PackagePath>
+		</None>
+		<None Include="mythtv.ico">
+		  <Pack>True</Pack>
+		  <PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="IO.Web.API.MythTV\au.IO.Web.API.MythTV.csproj" />
+	  <ProjectReference Include="Recordings\MythClient.Recordings.csproj" />
+	  <ProjectReference Include="Settings\MythClient.Settings.csproj" />
+	  <ProjectReference Include="Settings\Types\MythClient.Settings.Types.csproj" />
+	  <ProjectReference Include="UI\MythClient.UI.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="au.Settings">
+	    <HintPath>ref\au.Settings.dll</HintPath>
+	  </Reference>
+	  <Reference Include="au.UI.LatestVersion">
+	    <HintPath>ref\au.UI.LatestVersion.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+		<OutputPath>build\Debug\</OutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<OutputPath>build\Release\</OutputPath>
+	</PropertyGroup>
+
+	<Import Project="PackageInfo.Common.proj" />
 </Project>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using au.Applications.MythClient.Recordings.Types;
 using au.Applications.MythClient.Settings.Types;
@@ -91,7 +90,7 @@ namespace au.Applications.MythClient.Recordings.Tests {
 
 			IShow foundShow = recordings.FindShow(searchShow);
 
-			Assert.AreEqual(recordings.Shows.Last(), foundShow, $"{nameof(recordings.FindShow)}() should return the last referenced show when the searched show would have been last.");
+			Assert.AreEqual(recordings.Shows[recordings.Shows.Count - 1], foundShow, $"{nameof(recordings.FindShow)}() should return the last referenced show when the searched show would have been last.");
 		}
 
 		[DataTestMethod]
@@ -173,7 +172,7 @@ namespace au.Applications.MythClient.Recordings.Tests {
 			return show;
 		}
 
-		private ProgramList GetProgramList()
+		private static ProgramList GetProgramList()
 			=> new ProgramList {
 				Programs = new List<Program> {
 					new Program {

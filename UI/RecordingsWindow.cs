@@ -87,19 +87,19 @@ namespace au.Applications.MythClient.UI {
 		/// Launch the settings window and refresh recordings.
 		/// </summary>
 		private async Task ShowSettingsWindowAsync() {
-			using(SettingsWindow settingsWindow = new SettingsWindow(_settings.Server))
-				switch(settingsWindow.ShowDialog(this)) {
-					case DialogResult.OK:
-					case DialogResult.Yes:
-						// assume they changed something and grab the latest recordings
-						await RefreshRecordingsAsync().ConfigureAwait(false);
-						break;
-				}
+			using SettingsWindow settingsWindow = new SettingsWindow(_settings.Server);
+			switch(settingsWindow.ShowDialog(this)) {
+				case DialogResult.OK:
+				case DialogResult.Yes:
+					// assume they changed something and grab the latest recordings
+					await RefreshRecordingsAsync().ConfigureAwait(false);
+					break;
+			}
 		}
 
 		private void ShowAboutWindow() {
-			using(AboutWindow about = new AboutWindow())
-				about.ShowDialog(this);
+			using AboutWindow about = new AboutWindow();
+			about.ShowDialog(this);
 		}
 
 		/// <summary>

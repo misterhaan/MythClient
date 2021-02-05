@@ -5,21 +5,12 @@ using System.Windows.Forms;
 using au.Applications.MythClient.Recordings.Types;
 using au.Applications.MythClient.Settings.Types;
 using au.IO.Files.FileOperation;
-using au.UI.TaskDialog;
 
 namespace au.Applications.MythClient.UI.Actions {
 	/// <summary>
 	/// Handles export of recordings.
 	/// </summary>
 	internal class RecordingsExporter : NeedsRecordingFilesBase, IRecordingsExporter {
-		// the actual values here aren't important, but they can't overlap with DialogResult.Cancel or each other
-		private const int _formatIdSeasonEpisode = 80;
-		private const int _formatIdDateEpisode = 81;
-		private const int _formatIdEpisode = 82;
-		private const int _formatIdYear = 83;
-		private const int _formatIdDate = 84;
-		private const int _formatIdTitle = 85;
-
 		/// <summary>
 		/// Window to own dialogs
 		/// </summary>
@@ -70,10 +61,7 @@ namespace au.Applications.MythClient.UI.Actions {
 				Title = ActionText.ExportTitle
 			};
 
-		/// <summary>
-		/// Export all episodes of a show.
-		/// </summary>
-		/// <param name="show">Show to export</param>
+		/// <inheritdoc />
 		public void Export(IShow show) {
 			if(AskExportDetails(show.OldestEpisode, out string filenameFormat, out string exportPath))
 				using(CopyFilesOperation copy = new CopyFilesOperation()) {
@@ -90,10 +78,7 @@ namespace au.Applications.MythClient.UI.Actions {
 				}
 		}
 
-		/// <summary>
-		/// Export all episodes of a season.
-		/// </summary>
-		/// <param name="season">Season to export</param>
+		/// <inheritdoc />
 		public void Export(ISeason season) {
 			if(AskExportDetails(season.OldestEpisode, out string filenameFormat, out string exportPath))
 				using(CopyFilesOperation copy = new CopyFilesOperation()) {
@@ -109,10 +94,7 @@ namespace au.Applications.MythClient.UI.Actions {
 				}
 		}
 
-		/// <summary>
-		/// Export a single episode.
-		/// </summary>
-		/// <param name="episode">Episode to export</param>
+		/// <inheritdoc />
 		public void Export(IEpisode episode) {
 			string filenameFormat = AskExportFilenameFormat(episode, false);
 			if(!string.IsNullOrEmpty(filenameFormat)) {
@@ -165,34 +147,14 @@ namespace au.Applications.MythClient.UI.Actions {
 		/// <param name="plural">True if exporting more than one episode</param>
 		/// <returns>Chosen filename format, or null if canceled</returns>
 		private string AskExportFilenameFormat(IEpisode exampleEpisode, bool plural) {
-			TaskDialog dialog = new TaskDialog {
-				WindowTitle = plural
+			return TaskDialog.ShowDialog(_owner, new TaskDialogPage {
+				Caption = plural
 					? ActionText.ExportAllTitle
 					: ActionText.ExportTitle,
-				MainInstruction = ActionText.ExportInstructions,
-				Content = ActionText.ExportNote,
-				CommonButtons = TaskDialogCommonButtons.Cancel,
-				Buttons = GetFilenameFormatOptions(exampleEpisode).ToArray(),
-				PositionRelativeToWindow = true,
-				UseCommandLinks = true
-			};
-			switch(dialog.Show(_owner)) {
-				case _formatIdSeasonEpisode:
-					return ActionText.ExportFormatSeasonEpisode;
-				case _formatIdDateEpisode:
-					return ActionText.ExportFormatDateEpisode;
-				case _formatIdEpisode:
-					return ActionText.ExportFormatEpisode;
-				case _formatIdYear:
-					return ActionText.ExportFormatYear;
-				case _formatIdDate:
-					return ActionText.ExportFormatDate;
-				case _formatIdTitle:
-					return ActionText.ExportFormatTitle;
-				case (int)DialogResult.Cancel:
-				default:
-					return null;
-			}
+				Heading = ActionText.ExportInstructions,
+				Text = ActionText.ExportNote,
+				Buttons = GetFilenameFormatButtons(exampleEpisode)
+			}).Tag as string;
 		}
 
 		/// <summary>
@@ -200,18 +162,49 @@ namespace au.Applications.MythClient.UI.Actions {
 		/// </summary>
 		/// <param name="exampleEpisode">Example episode used to decide which options apply and to show a real example of each format</param>
 		/// <returns>Reasonable options for export filename</returns>
-		private IEnumerable<TaskDialogButton> GetFilenameFormatOptions(IEpisode exampleEpisode) {
-			if(!string.IsNullOrEmpty(exampleEpisode.SubTitle)) {
-				if(exampleEpisode.SeasonNumber > 0 && exampleEpisode.Number > 0)
-					yield return new TaskDialogButton(_formatIdSeasonEpisode, ActionText.ExportOptionSeasonEpisode, FormatEpisode(ActionText.ExportFormatSeasonEpisode, exampleEpisode));
-				yield return new TaskDialogButton(_formatIdDateEpisode, ActionText.ExportOptionDateEpisode, FormatEpisode(ActionText.ExportFormatDateEpisode, exampleEpisode));
-				yield return new TaskDialogButton(_formatIdEpisode, ActionText.ExportOptionEpisode, FormatEpisode(ActionText.ExportFormatEpisode, exampleEpisode));
-			} else {
-				yield return new TaskDialogButton(_formatIdYear, ActionText.ExportOptionYear, FormatEpisode(ActionText.ExportFormatYear, exampleEpisode));
-				yield return new TaskDialogButton(_formatIdDate, ActionText.ExportOptionDate, FormatEpisode(ActionText.ExportFormatDate, exampleEpisode));
-				yield return new TaskDialogButton(_formatIdTitle, ActionText.ExportOptionTitle, FormatEpisode(ActionText.ExportFormatTitle, exampleEpisode));
-			}
+		private static TaskDialogButtonCollection GetFilenameFormatButtons(IEpisode exampleEpisode) {
+			TaskDialogButtonCollection buttons = new TaskDialogButtonCollection();
+			if(!string.IsNullOrEmpty(exampleEpisode.SubTitle))
+				AddEpisodicFilenameFormatOptions(buttons, exampleEpisode);
+			else
+				AddNonEpisodicFilenameFormatOptions(buttons, exampleEpisode);
+			buttons.Add(TaskDialogButton.Cancel);
+			return buttons;
+		}
 
+		/// <summary>
+		/// Add export filename format options for episodic recordings based on an example episode to the button collection.
+		/// </summary>
+		/// <param name="buttons">Button collection options will be added to</param>
+		/// <param name="exampleEpisode">Example episode used to decide which options apply and to show a real example of each format</param>
+		private static void AddEpisodicFilenameFormatOptions(TaskDialogButtonCollection buttons, IEpisode exampleEpisode) {
+			if(exampleEpisode.SeasonNumber > 0 && exampleEpisode.Number > 0)
+				buttons.Add(new TaskDialogCommandLinkButton(ActionText.ExportOptionSeasonEpisode, FormatEpisode(ActionText.ExportFormatSeasonEpisode, exampleEpisode)) {
+					Tag = ActionText.ExportFormatSeasonEpisode
+				});
+			buttons.Add(new TaskDialogCommandLinkButton(ActionText.ExportOptionDateEpisode, FormatEpisode(ActionText.ExportFormatDateEpisode, exampleEpisode)) {
+				Tag = ActionText.ExportFormatDateEpisode
+			});
+			buttons.Add(new TaskDialogCommandLinkButton(ActionText.ExportOptionEpisode, FormatEpisode(ActionText.ExportFormatEpisode, exampleEpisode)) {
+				Tag = ActionText.ExportFormatEpisode
+			});
+		}
+
+		/// <summary>
+		/// Add export filename format options for non-episodic recordings based on an example episode to the button collection.
+		/// </summary>
+		/// <param name="buttons">Button collection options will be added to</param>
+		/// <param name="exampleEpisode">Example episode used to decide which options apply and to show a real example of each format</param>
+		private static void AddNonEpisodicFilenameFormatOptions(TaskDialogButtonCollection buttons, IEpisode exampleEpisode) {
+			buttons.Add(new TaskDialogCommandLinkButton(ActionText.ExportOptionYear, FormatEpisode(ActionText.ExportFormatYear, exampleEpisode)) {
+				Tag = ActionText.ExportFormatYear
+			});
+			buttons.Add(new TaskDialogCommandLinkButton(ActionText.ExportOptionDate, FormatEpisode(ActionText.ExportFormatDate, exampleEpisode)) {
+				Tag = ActionText.ExportFormatDate
+			});
+			buttons.Add(new TaskDialogCommandLinkButton(ActionText.ExportOptionTitle, FormatEpisode(ActionText.ExportFormatTitle, exampleEpisode)) {
+				Tag = ActionText.ExportFormatTitle
+			});
 		}
 
 		/// <summary>
@@ -233,7 +226,7 @@ namespace au.Applications.MythClient.UI.Actions {
 		/// <param name="format">Chosen filename format</param>
 		/// <param name="episode">Episode to format</param>
 		/// <returns>Filename (without extension) for the episode</returns>
-		private string FormatEpisode(string format, IEpisode episode)
+		private static string FormatEpisode(string format, IEpisode episode)
 			=> SanitizeFilename(string.Format(format, episode.ShowTitle, episode.SubTitle, episode.FirstAired, episode.SeasonNumber, episode.Number));
 
 		/// <summary>

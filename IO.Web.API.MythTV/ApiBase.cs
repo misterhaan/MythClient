@@ -35,7 +35,7 @@ namespace au.IO.Web.API.MythTV {
 		/// <param name="url">Full URL to the API GET request</param>
 		/// <returns>API result as the requested type</returns>
 		/// <exception cref="Exception">Thrown when result cannot be deserialized into the requested type</exception>
-		protected async Task<T> GetRequest<T>(Uri url) {
+		protected static async Task<T> GetRequest<T>(Uri url) {
 			HttpWebRequest req = WebRequest.CreateHttp(url);
 			using(WebResponse response = await req.GetResponseAsync().ConfigureAwait(false))
 			using(Stream responseStream = response.GetResponseStream())
@@ -49,17 +49,16 @@ namespace au.IO.Web.API.MythTV {
 		/// </summary>
 		/// <param name="url">Full URL to the API POST request</param>
 		/// <returns>API result as a boolean</returns>
-		protected async Task<bool> PostRequestAsBool(Uri url) {
+		protected static async Task<bool> PostRequestAsBool(Uri url) {
 			HttpWebRequest req = WebRequest.CreateHttp(url);
 			req.Method = "POST";
-			using(WebResponse response = await req.GetResponseAsync().ConfigureAwait(false))
-			using(Stream responseStream = response.GetResponseStream())
-			using(StreamReader reader = new StreamReader(responseStream)) {
-				string responseText = await reader.ReadToEndAsync().ConfigureAwait(false);
-				MemoryStream translatedStream = new MemoryStream(Encoding.UTF8.GetBytes(responseText.Replace("bool>", "boolean>")));
-				bool? value = new XmlSerializer(typeof(bool)).Deserialize(translatedStream) as bool?;
-				return value.HasValue && value.Value;
-			}
+			using WebResponse response = await req.GetResponseAsync().ConfigureAwait(false);
+			using Stream responseStream = response.GetResponseStream();
+			using StreamReader reader = new StreamReader(responseStream);
+			string responseText = await reader.ReadToEndAsync().ConfigureAwait(false);
+			MemoryStream translatedStream = new MemoryStream(Encoding.UTF8.GetBytes(responseText.Replace("bool>", "boolean>")));
+			bool? value = new XmlSerializer(typeof(bool)).Deserialize(translatedStream) as bool?;
+			return value.HasValue && value.Value;
 		}
 
 		/// <summary>
@@ -67,11 +66,11 @@ namespace au.IO.Web.API.MythTV {
 		/// </summary>
 		/// <param name="url">Full URL to the API GET request</param>
 		/// <returns>API result as an image</returns>
-		protected async Task<Image> GetRequestAsImage(Uri url) {
+		protected static async Task<Image> GetRequestAsImage(Uri url) {
 			HttpWebRequest req = WebRequest.CreateHttp(url);
-			using(WebResponse response = await req.GetResponseAsync().ConfigureAwait(false))
-			using(Stream responseStream = response.GetResponseStream())
-				return Image.FromStream(responseStream);
+			using WebResponse response = await req.GetResponseAsync().ConfigureAwait(false);
+			using Stream responseStream = response.GetResponseStream();
+			return Image.FromStream(responseStream);
 		}
 	}
 }

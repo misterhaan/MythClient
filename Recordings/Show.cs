@@ -66,7 +66,7 @@ namespace au.Applications.MythClient.Recordings {
 				if(season.Matches(example) || season.Number > example.Number)
 					return season;
 
-			return Seasons.LastOrDefault();
+			return Seasons?[Seasons.Count - 1];
 		}
 
 		/// <summary>

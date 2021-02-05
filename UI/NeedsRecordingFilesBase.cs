@@ -24,9 +24,9 @@ namespace au.Applications.MythClient.UI {
 		/// <exception cref="FileNotFoundException">When the file doesn't exist</exception>
 		protected FileInfo GetRecordingFile(IEpisode episode) {
 			FileInfo file = new FileInfo(Path.Combine(_settings.Server.RawFilesDirectory, episode.Filename));
-			if(!file.Exists)
-				throw new FileNotFoundException(ExceptionMessages.FileNotFound, file.FullName);
-			return file;
+			return !file.Exists
+				? throw new FileNotFoundException(ExceptionMessages.FileNotFound, file.FullName)
+				: file;
 		}
 
 		/// <summary>
