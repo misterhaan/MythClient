@@ -5,6 +5,9 @@ Download the latest installer from [track7.org](http://www.track7.org/code/vs/my
 
 ## Revision History
 
+### 3.0.1
+* Fix URL and video file launching
+
 ### 3.0.0
 * Update to .NET 5.0
 
