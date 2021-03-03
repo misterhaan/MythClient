@@ -19,7 +19,7 @@ namespace au.Applications.MythClient {
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 
-			SettingsManager settingsManager = new SettingsManager();
+			SettingsManager settingsManager = new();
 
 			if(PromptForRequiredSettings(settingsManager.Settings))
 				Application.Run(
@@ -43,7 +43,7 @@ namespace au.Applications.MythClient {
 		/// <returns>True if required settings have values</returns>
 		private static bool PromptForRequiredSettings(IMythSettings settings) {
 			if(!settings.HasRequiredSettings)
-				using(SettingsWindow window = new SettingsWindow(settings.Server))
+				using(SettingsWindow window = new(settings.Server))
 					window.ShowDialog();
 			return settings.HasRequiredSettings;
 		}

@@ -13,7 +13,7 @@ namespace au.Applications.MythClient.UI {
 	/// Main window of the MythClient application
 	/// </summary>
 	public partial class RecordingsWindow : Form {
-		private static readonly Dictionary<RecordingSortOption, Bitmap> _sortIconMap = new Dictionary<RecordingSortOption, Bitmap> {
+		private static readonly Dictionary<RecordingSortOption, Bitmap> _sortIconMap = new() {
 			[RecordingSortOption.OldestRecorded] = Icons.Material_SortDate24,
 			[RecordingSortOption.Title] = Icons.Material_SortTitle24
 		};
@@ -87,7 +87,7 @@ namespace au.Applications.MythClient.UI {
 		/// Launch the settings window and refresh recordings.
 		/// </summary>
 		private async Task ShowSettingsWindowAsync() {
-			using SettingsWindow settingsWindow = new SettingsWindow(_settings.Server);
+			using SettingsWindow settingsWindow = new(_settings.Server);
 			switch(settingsWindow.ShowDialog(this)) {
 				case DialogResult.OK:
 				case DialogResult.Yes:
@@ -98,7 +98,7 @@ namespace au.Applications.MythClient.UI {
 		}
 
 		private void ShowAboutWindow() {
-			using AboutWindow about = new AboutWindow();
+			using AboutWindow about = new();
 			about.ShowDialog(this);
 		}
 
