@@ -559,7 +559,7 @@ namespace au.Applications.MythClient.UI {
 		/// <param name="episode">Episode to play</param>
 		private void Play(IEpisode episode) {
 			try {
-				Process.Start(GetRecordingFileName(episode));
+				Process.Start(new ProcessStartInfo(GetRecordingFileName(episode)) { UseShellExecute = true });
 			} catch(FileNotFoundException e) {
 				MessageBox.Show(_owner, e.Message, ActionText.PlayCaption, MessageBoxButtons.OK, MessageBoxIcon.Stop);
 			}
@@ -719,7 +719,7 @@ namespace au.Applications.MythClient.UI {
 		}
 
 		private ContextMenuStrip BuildMovieContextMenu() {
-			ContextMenuStrip menu = new ContextMenuStrip();
+			ContextMenuStrip menu = new();
 			menu.Items.AddRange(new ToolStripItem[] {
 				new ToolStripMenuItem(ActionText.PlayMenu, Icons.Material_Play18, MenuShowPlayNext_Click),
 				new ToolStripMenuItem(ActionText.PlayWithMenu, Icons.Material_PlayWith18, MenuShowPlayNextWith_Click),
@@ -733,7 +733,7 @@ namespace au.Applications.MythClient.UI {
 			=> _exporter.Export(_show.NewestEpisode);
 
 		private ContextMenuStrip BuildShowContextMenu() {
-			ContextMenuStrip menu = new ContextMenuStrip();
+			ContextMenuStrip menu = new();
 			menu.Items.AddRange(new ToolStripItem[] {
 				new ToolStripMenuItem(ActionText.PlayNextMenu, Icons.Material_Play18, MenuShowPlayNext_Click),
 				new ToolStripMenuItem(ActionText.PlayNextWithMenu, Icons.Material_PlayWith18, MenuShowPlayNextWith_Click),
@@ -761,7 +761,7 @@ namespace au.Applications.MythClient.UI {
 			=> await _deleter.DeleteAsync(_show).ConfigureAwait(false);
 
 		private ContextMenuStrip BuildSeasonContextMenu() {
-			ContextMenuStrip menu = new ContextMenuStrip();
+			ContextMenuStrip menu = new();
 			menu.Items.AddRange(new ToolStripItem[] {
 				new ToolStripMenuItem(ActionText.PlayNextMenu, Icons.Material_Play18, MenuSeasonPlayNext_Click),
 				new ToolStripMenuItem(ActionText.PlayNextWithMenu, Icons.Material_PlayWith18, MenuSeasonPlayNextWith_Click),
@@ -785,8 +785,8 @@ namespace au.Applications.MythClient.UI {
 			=> _exporter.Export(_season);
 
 		private ContextMenuStrip BuildEpisodeContextMenu() {
-			ContextMenuStrip menu = new ContextMenuStrip();
-			menu.Items.AddRange(new ToolStripItem[]{
+			ContextMenuStrip menu = new();
+			menu.Items.AddRange(new ToolStripItem[] {
 				new ToolStripMenuItem(ActionText.PlayMenu, Icons.Material_Play18, MenuEpisodePlay_Click),
 				new ToolStripMenuItem(ActionText.PlayWithMenu, Icons.Material_PlayWith18, MenuEpisodePlayWith_Click),
 				new ToolStripMenuItem(ActionText.ExportMenu, Icons.Material_Export18, MenuEpisodeExport_Click),

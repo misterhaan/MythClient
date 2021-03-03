@@ -17,6 +17,6 @@ namespace au.Applications.MythClient.UI {
 		}
 
 		private void _lnkURL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-			=> Process.Start(_lnkURL.Text);
+			=> Process.Start(new ProcessStartInfo(_lnkURL.Text) { UseShellExecute = true });
 	}
 }

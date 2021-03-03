@@ -40,8 +40,8 @@ namespace au.Applications.MythClient.UI {
 			ushort port = (ushort)_numPort.Value;
 			if(port == 0)
 				port = ServerSettings.DefaultPort;
-			UriBuilder mythServerApiUrl = new UriBuilder(Uri.UriSchemeHttp, _txtServerName.Text.Trim(), port);
-			Process.Start(mythServerApiUrl.Uri.ToString());
+			UriBuilder mythServerApiUrl = new(Uri.UriSchemeHttp, _txtServerName.Text.Trim(), port);
+			Process.Start(new ProcessStartInfo(mythServerApiUrl.Uri.ToString()) { UseShellExecute = true });
 		}
 
 		/// <summary>
